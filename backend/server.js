@@ -9,7 +9,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB Connected"))
@@ -65,3 +64,6 @@ const authenticateUser = (req, res, next) => {
 app.post("/protected", authenticateUser, (req, res) => {
     res.json({ message: "Access Granted", userID: req.user.userID });
 })
+
+const port = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
