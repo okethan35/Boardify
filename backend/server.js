@@ -65,5 +65,5 @@ app.post("/protected", authenticateUser, (req, res) => {
     res.json({ message: "Access Granted", userID: req.user.userID });
 })
 
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
