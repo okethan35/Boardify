@@ -12,8 +12,6 @@ app.use(cors());
 app.options("*", cors());
 
 mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
 }).then(() => console.log("MongoDB Connected"))
   .catch(err => console.log("MongoDB Connection Error: ", err));
 
@@ -40,7 +38,9 @@ app.post('/login', async (req, res) => {
         const {email, password} = req.body;
         
         const user = await User.findOne({ email });
+        console.log(user);
         if(!user || !(await user.comparePassword(password))){
+            console.log(user.comparePassword(password));
             return res.status(400).json({ message: "Invalid Credentials" });
         }
 
