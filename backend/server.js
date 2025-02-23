@@ -40,7 +40,7 @@ app.post('/login', async (req, res) => {
         const user = await User.findOne({ email });
         console.log(user);
         if(!user || !(await user.comparePassword(password))){
-            console.log(user.comparePassword(password));
+            console.log("comparePassword: " + await user.comparePassword(password));
             return res.status(400).json({ message: "Invalid Credentials" });
         }
 

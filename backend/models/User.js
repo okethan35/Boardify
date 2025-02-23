@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const UserSchema = new mongoose.Schema({
-    username: { type: String, required: true},
+    username: { type: String, required: true, unique: true},
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true}
 });
@@ -14,6 +14,8 @@ UserSchema.pre("Save", async function (next) {
 })
 
 UserSchema.methods.comparePassword = function (password) {
+    console.log("Entered Password: " + password);
+    console.log("Hashed Password: " + this.password);
     return bcrypt.compare(password, this.password);
 }
 
