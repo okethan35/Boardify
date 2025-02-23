@@ -1,5 +1,5 @@
-import Navbar from "./NavBar.js";
-import Body from "./Body.js";
+import Navbar from "./NavBar.jsx";
+import Body from "./Body.jsx";
 
 const Home = () => {
   return (
