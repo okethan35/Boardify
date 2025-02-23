@@ -16,14 +16,14 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.post('/register', async (req, res) => {
     try {
-        const {username, password} = req.body;
+        const {username, email, password} = req.body;
 
-        const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "User already exists"});
         }
 
-        const newUser = new User({ username, password });
+        const newUser = new User({ username, email, password });
         await newUser.save();
 
         res.status(201).json({ message: "User registered successfully" });
@@ -34,9 +34,9 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     try {
-        const {username, password} = req.body;
+        const {email, password} = req.body;
         
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email });
         if(!user || !(await user.comparePassword(password))){
             return res.status(400).json({ message: "Invalid Credentials" });
         }
