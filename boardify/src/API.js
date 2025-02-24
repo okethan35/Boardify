@@ -1,114 +1,133 @@
 require('dotenv').config();
+const crypto = require('crypto');
 const axios = require('axios');
 const qs = require('qs');
+const express = require('express');
+const open = require('open').default;
 const readline = require('readline');
 
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-
-async function getAccessToken() {
-    try {
-        const tokenUrl = "https://accounts.spotify.com/api/token";
-        const headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
-        };
-
-        const data = qs.stringify({ grant_type: "client_credentials" });
-        const response = await axios.post(tokenUrl, data, { headers });
-        return response.data.access_token;
-    } catch (error) {
-        console.error("Error fetching access token:", error.response ? error.response.data : error.message);
-        return null;
-    }
-}
-
-async function getUserProfile(username, accessToken) {
-    try {
-        const response = await axios.get(`https://api.spotify.com/v1/users/${username}`, {
-            headers: { Authorization: `Bearer ${accessToken}` }
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching user profile:", error.response ? error.response.data : error.message);
-        return null;
-    }
-}
-
-async function getUserPlaylists(username, accessToken) {
-    try {
-        const response = await axios.get(`https://api.spotify.com/v1/users/${username}/playlists`, {
-            headers: { Authorization: `Bearer ${accessToken}` }
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching user playlists:", error.response ? error.response.data : error.message);
-        return null;
-    }
-}
-
-async function getPlaylistTracks(playlistId, accessToken) {
-    try {
-        const response = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
-            headers: { Authorization: `Bearer ${accessToken}` }
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching playlist tracks:", error.response ? error.response.data : error.message);
-        return null;
-    }
-}
-
-async function displayUserData(username) {
-    const accessToken = await getAccessToken();
-    if (!accessToken) return;
-
-    const userProfile = await getUserProfile(username, accessToken);
-    if (!userProfile) return;
-    console.log("User Profile:");
-    console.log(`Display Name: ${userProfile.display_name}`);
-    console.log(`Followers: ${userProfile.followers ? userProfile.followers.total : 'N/A'}`);
-    console.log(`Profile URL: ${userProfile.external_urls ? userProfile.external_urls.spotify : 'N/A'}`);
-    if (userProfile.images && userProfile.images.length > 0) {
-        console.log(`Profile Image: ${userProfile.images[0].url}`);
-    }
-
-    const playlists = await getUserPlaylists(username, accessToken);
-    if (playlists && playlists.items && playlists.items.length > 0) {
-        console.log(`Public Playlists (${playlists.items.length}):`);
-        playlists.items.forEach((playlist, index) => {
-            console.log(`${index + 1}. ${playlist.name} (Tracks: ${playlist.tracks.total})`);
-        });
-
-        const firstPlaylist = playlists.items[0];
-        const tracksData = await getPlaylistTracks(firstPlaylist.id, accessToken);
-        if (tracksData && tracksData.items && tracksData.items.length > 0) {
-            const artistsSet = new Set();
-            tracksData.items.forEach(item => {
-                if (item.track && item.track.artists) {
-                    item.track.artists.forEach(artist => artistsSet.add(artist.name));
-                }
-            });
-            console.log(`Artists featured in the first playlist "${firstPlaylist.name}":`);
-            console.log(Array.from(artistsSet).join(", "));
-        } else {
-            console.log(`No tracks found for playlist "${firstPlaylist.name}".`);
-        }
-    } else {
-        console.log("No public playlists found for this user.");
-    }
-}
+const redirectUri = process.env.SPOTIFY_REDIRECT_URI;
 
 const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+  input: process.stdin,
+  output: process.stdout
 });
 
-rl.question("Enter Spotify username: ", (usernameInput) => {
-    displayUserData(usernameInput.trim())
-        .then(() => rl.close())
-        .catch(err => {
-            console.error("An error occurred:", err);
-            rl.close();
-        });
-});
+let appAccessToken = null;
+let userAccessToken = null;
+
+function generateRandomString(length) {
+  return crypto.randomBytes(Math.ceil(length/2))
+    .toString('hex')
+    .slice(0, length);
+}
+
+async function getAppAccessToken() {
+  const authString = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+  const response = await axios.post(
+    'https://accounts.spotify.com/api/token',
+    qs.stringify({ grant_type: 'client_credentials' }),
+    { headers: { Authorization: `Basic ${authString}` } }
+  );
+  return response.data.access_token;
+}
+
+async function authenticateUser() {
+  const state = generateRandomString(16);
+  const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user-top-read&state=${state}`;
+
+  return new Promise((resolve, reject) => {
+    const app = express();
+    let server = null;
+
+    app.get('/callback', async (req, res) => {
+      try {
+        const tokenResponse = await axios.post(
+          'https://accounts.spotify.com/api/token',
+          qs.stringify({
+            grant_type: 'authorization_code',
+            code: req.query.code,
+            redirect_uri: redirectUri
+          }),
+          {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+            }
+          }
+        );
+
+        userAccessToken = tokenResponse.data.access_token;
+        res.send('Authentication successful! You may close this window.');
+        resolve(userAccessToken);
+      } catch (error) {
+        reject(error);
+      } finally {
+        server.close();
+      }
+    });
+
+    server = app.listen(8888, () => {
+      open(authUrl);
+      console.log('\n=== Please authenticate in the browser ===');
+    });
+  });
+}
+
+async function getPublicUserData(username) {
+  try {
+    const response = await axios.get(`https://api.spotify.com/v1/users/${username}`, {
+      headers: { Authorization: `Bearer ${appAccessToken}` }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching public profile:', error.response?.data?.error?.message);
+    return null;
+  }
+}
+
+async function main() {
+  try {
+    appAccessToken = await getAppAccessToken();
+    
+    rl.question('Enter Spotify username to view public info: ', async (targetUsername) => {
+      const cleanUsername = targetUsername.split('?')[0].trim();
+      
+      const publicUser = await getPublicUserData(cleanUsername);
+      if (publicUser) {
+        console.log('\n=== Public User Profile ===');
+        console.log(`Name: ${publicUser.display_name}`);
+        console.log(`Followers: ${publicUser.followers?.total || 'N/A'}`);
+        console.log(`Profile URL: ${publicUser.external_urls.spotify}`);
+      }
+
+      console.log('\n=== Now authenticate your account ===');
+      await authenticateUser();
+      
+      const currentUser = await axios.get('https://api.spotify.com/v1/me', {
+        headers: { Authorization: `Bearer ${userAccessToken}` }
+      });
+      
+      console.log('\n=== Authenticated User ===');
+      console.log(`Logged in as: ${currentUser.data.display_name}`);
+      
+      const topTracks = await axios.get('https://api.spotify.com/v1/me/top/tracks', {
+        headers: { Authorization: `Bearer ${userAccessToken}` }
+      });
+      
+      console.log('\nYour Personal Top Tracks:');
+      topTracks.data.items.forEach((track, index) => {
+        console.log(`${index + 1}. ${track.name} - ${track.artists[0].name}`);
+      });
+
+      rl.close();
+    });
+  } catch (error) {
+    console.error('Error:', error.message);
+    rl.close();
+  }
+}
+
+main();
