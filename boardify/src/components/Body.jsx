@@ -3,11 +3,13 @@ import pass1 from '../assets/boarding_pass_1.jpg'
 import pass2 from '../assets/boarding_pass_2.jpg'
 import heart_icon from '../assets/heart-regular.svg'
 import comment_icon from '../assets/comment-regular.svg'
+import AuthenticateButton from './AuthenticateButton'
 
 export default function Body(){
     return (
         <>
             <div className='body'>
+                <AuthenticateButton />
                 <h1>Your Feed</h1>
                 <hr/>
                 <div className='feed'>

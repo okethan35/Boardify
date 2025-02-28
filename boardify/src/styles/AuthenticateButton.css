@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'Gotham';
+    src: local('Gotham'), url(../assets/GothamPro-Black.woff) format('woff');
+}
+
+.authenticate{
+    width: 15vw;
+    padding: 1vw;
+    aspect-ratio: 5/2;
+    border-radius: 5000px;
+    background-color: #1DB954;
+    font-size: 1.5vw;
+    font-family: 'Gotham', sans-serif;
+    transition: 0.1s ease;
+}
+.authenticate img{
+    width: 60%;
+}
+.authenticate:hover{
+    filter: brightness(75%);
+}
+.authenticate:active{
+    transform: scale(0.95);
+}

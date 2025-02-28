@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom"; // Import Link
 import { loginUser } from "../api/auth.jsx";
 import "../styles/Login.css";
-import Navbar from "./NavBar.jsx";
+import Navbar from "../components/NavBar.jsx";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Login = () => {
       const token = await loginUser(formData.email, formData.password);
       if (localStorage.getItem("token")) {
         alert("Login successful! Redirecting...");
-        navigate("/home");
+        navigate("/");
       } else {
         alert("Login failed. Check credentials.");
       }

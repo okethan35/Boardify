@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../api/auth.jsx"; // Import function
 import "../styles/Login.css";
-import Navbar from "./NavBar.jsx";
+import Navbar from "../components/NavBar.jsx";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Signup = () => {
     try {
       await registerUser(formData.username, formData.email, formData.password);
       alert("Signup successful! Redirecting to login...");
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error("Signup Error:", error);
       alert("Signup failed. Please try again.");

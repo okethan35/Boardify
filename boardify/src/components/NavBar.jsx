@@ -11,8 +11,9 @@ export default function NavBar() {
         </Link>
       </div>
       <ul className="nav-list">
-        <li className="nav-items"><Link to="/home">HOME</Link></li>
+        <li className="nav-items"><Link to="/">HOME</Link></li>
         <li className="nav-items"><Link to="/profile">PROFILE</Link></li>
+        <li className="nav-items"><Link to="/login">LOG IN</Link></li>
       </ul>
     </div>
   );
