@@ -7,6 +7,6 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 // WORK ON THIS
-app.post("/protected", authenticateUser, protectedRoute);
+//app.post("/protected", authenticateUser, protectedRoute);
 
 module.exports = router;

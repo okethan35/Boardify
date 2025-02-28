@@ -1,7 +1,6 @@
 const API_URL = process.env.REACT_APP_API_URL; 
 
 const connectSpotify = async () => {
-    console.log("YAY");
     const token = localStorage.getItem("token");
 
     try {
@@ -14,6 +13,9 @@ const connectSpotify = async () => {
         });
 
         const data = await response.json();
+        if (data.url) {
+            window.location.href = data.url; // Redirect to Spotify authorization URL
+        }
         console.log(data);
     } catch (error) {
         console.error("Error authenticating with Spotify", error);
