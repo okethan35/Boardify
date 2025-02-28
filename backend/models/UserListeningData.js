@@ -16,4 +16,4 @@ const UserListeningDataSchema = new mongoose.Schema({
 })
 
 const UserListeningData = mongoose.model("UserListeningData", UserListeningDataSchema);
-modules.export = UserListeningData;
+module.exports = UserListeningData;
