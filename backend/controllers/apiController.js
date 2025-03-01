@@ -28,7 +28,7 @@ function base64URLEncode(buffer) {
 async function authenticateUser(req, res) {
     // Clear any previous authentication
     userAccessToken = null;
-    const state = generateRandomString(16);
+    const state = JSON.stringify({ token });
     const codeVerifier = generateRandomString(64);
     const codeChallenge = base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest());
     const scope = 'user-top-read user-read-private';
@@ -48,8 +48,12 @@ async function authenticateUser(req, res) {
 
 async function handleSpotifyCallback(req, res){
     try { 
-        const { code } = req.query;
-        const token = req.headers['authorization']?.split(' ')[1];
+        const { code, state } = req.query;
+        if (!state) {
+            return res.status(400).json({ error: 'State parameter missing.' });
+        }
+
+        const { token } = JSON.parse(state); // Extract the token from the state
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized, token missing' });
         }
