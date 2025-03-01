@@ -4,7 +4,7 @@ const { authenticateUser, handleSpotifyCallback } = require('../controllers/apiC
 const router = express.Router();
 
 router.post('/auth', authenticateUser);
-router.post('/callback', handleSpotifyCallback);
+router.get('/callback', handleSpotifyCallback);
 
 module.exports = router;
 

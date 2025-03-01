@@ -3,7 +3,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 const registerUser = async (username, email, password) => {
   console.log("API_URL:", API_URL);
   try {
-    const response = await fetch(`${API_URL}/register`, {
+    const response = await fetch(`${API_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,7 @@ const registerUser = async (username, email, password) => {
 
 const loginUser = async (email, password) => {
   try {
-    const response = await fetch(`${API_URL}/login`, {
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const loginUser = async (email, password) => {
   }
 };
 
-const accessProtectedRoute = async () => {
+/*const accessProtectedRoute = async () => {
   const token = localStorage.getItem("token");
 
   try {
@@ -66,5 +66,5 @@ const accessProtectedRoute = async () => {
     console.error("Error accessing protected route:", error);
   }
 };
-
-export { registerUser, loginUser, accessProtectedRoute };
+*/
+export { registerUser, loginUser/*, accessProtectedRoute*/ };
