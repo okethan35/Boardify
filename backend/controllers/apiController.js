@@ -40,6 +40,7 @@ async function authenticateUser(req, res) {
     authUrl.searchParams.append('redirect_uri', redirectUri);
     authUrl.searchParams.append('scope', scope);
     authUrl.searchParams.append('state', state);
+    authUrl.searchParams.append('codeVerifier', codeVerifier);
     authUrl.searchParams.append('code_challenge_method', 'S256');
     authUrl.searchParams.append('code_challenge', codeChallenge);
     authUrl.searchParams.append('show_dialog', 'true'); // Force re-authorization
@@ -49,7 +50,7 @@ async function authenticateUser(req, res) {
 
 async function handleSpotifyCallback(req, res){
     try { 
-        const { code, state } = req.query;
+        const { code, state, codeVerifier } = req.query;
         if (!state) {
             return res.status(400).json({ error: 'State parameter missing.' });
         }
