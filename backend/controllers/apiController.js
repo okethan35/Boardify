@@ -28,6 +28,7 @@ function base64URLEncode(buffer) {
 async function authenticateUser(req, res) {
     // Clear any previous authentication
     userAccessToken = null;
+    const token = req.headers['authorization']?.split(' ')[1]
     const state = JSON.stringify({ token });
     const codeVerifier = generateRandomString(64);
     const codeChallenge = base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest());
