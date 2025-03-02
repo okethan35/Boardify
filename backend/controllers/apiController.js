@@ -118,11 +118,11 @@ async function handleSpotifyCallback(req, res){
         console.log("ERROR 8");
         
         console.log("TRACKS: ");
-        for(item in tracksResponse){
-            console.log(item.name, " ", item.artist[0]);
+        for(item of tracksResponse.data.items){
+            console.log(item.name, " by ", item.artist[0]);
         }
         console.log("Artists: ");
-        for(item in artistsResponse){
+        for(item of artistsResponse.data.items){
             console.log(item.name);
         }
         console.log("PROFILE: ");
