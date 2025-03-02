@@ -105,9 +105,7 @@ async function handleSpotifyCallback(req, res){
                 name: track.name,
                 artist: track.artists[0].name
             })),
-            topArtists: artistsResponse.data.items.map(artist => ({
-                name: artist.name
-            })),
+            topArtists: artistsResponse.data.items.map(artist => artist.name),
             profile: {
                 displayName: userProfileResponse.data.display_name,
                 profileID: userProfileResponse.data.id,
