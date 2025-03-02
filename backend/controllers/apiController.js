@@ -116,6 +116,21 @@ async function handleSpotifyCallback(req, res){
             }
         });
         console.log("ERROR 8");
+        
+        console.log("TRACKS: ");
+        for(item in tracksResponse){
+            console.log(item.name, " ", item.artist[0]);
+        }
+        console.log("Artists: ");
+        for(item in artistsResponse){
+            console.log(item.name);
+        }
+        console.log("PROFILE: ");
+        console.log(userProfileResponse.data.display_name);
+        console.log(userProfileResponse.data.id);
+        console.log(userProfileResponse.data.followers);
+        console.log(userProfileResponse.data.external_urls.spotify);
+
         await userSpotifyData.save();
         console.log("ERROR 9");
         
