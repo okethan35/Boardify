@@ -119,7 +119,7 @@ async function handleSpotifyCallback(req, res){
         
         console.log("TRACKS: ");
         for(item of tracksResponse.data.items){
-            console.log(item.name, " by ", item.artist[0]);
+            console.log(item.name, " by ", item.artists[0]);
         }
         console.log("Artists: ");
         for(item of artistsResponse.data.items){
