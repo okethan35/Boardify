@@ -29,8 +29,8 @@ async function authenticateUser(req, res) {
     // Clear any previous authentication
     userAccessToken = null;
     const token = req.headers['authorization']?.split(' ')[1]
-    const state = JSON.stringify({ token, codeVerifier });
     const codeVerifier = generateRandomString(64);
+    const state = JSON.stringify({ token, codeVerifier });
     const codeChallenge = base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest());
     const scope = 'user-top-read user-read-private';
   
