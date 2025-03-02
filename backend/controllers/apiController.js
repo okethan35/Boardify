@@ -119,7 +119,7 @@ async function handleSpotifyCallback(req, res){
         await userSpotifyData.save();
 
         
-        //res.json({ message: 'Authentication successful!', token: userAccessToken});
+        res.json({ message: 'Authentication successful!', token: userAccessToken});
     } catch(error){
         console.error('Error in Spotify Callback');
         res.status(500).json({error: `Error: ${error.message}`});
