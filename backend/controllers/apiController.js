@@ -29,7 +29,7 @@ async function authenticateUser(req, res) {
     // Clear any previous authentication
     userAccessToken = null;
     const token = req.headers['authorization']?.split(' ')[1]
-    const state = JSON.stringify({ token });
+    const state = JSON.stringify({ token, codeVerifier });
     const codeVerifier = generateRandomString(64);
     const codeChallenge = base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest());
     const scope = 'user-top-read user-read-private';
@@ -40,7 +40,6 @@ async function authenticateUser(req, res) {
     authUrl.searchParams.append('redirect_uri', redirectUri);
     authUrl.searchParams.append('scope', scope);
     authUrl.searchParams.append('state', state);
-    authUrl.searchParams.append('codeVerifier', codeVerifier);
     authUrl.searchParams.append('code_challenge_method', 'S256');
     authUrl.searchParams.append('code_challenge', codeChallenge);
     authUrl.searchParams.append('show_dialog', 'true'); // Force re-authorization
@@ -50,12 +49,12 @@ async function authenticateUser(req, res) {
 
 async function handleSpotifyCallback(req, res){
     try { 
-        const { code, state, codeVerifier } = req.query;
+        const { code, state } = req.query;
         if (!state) {
             return res.status(400).json({ error: 'State parameter missing.' });
         }
 
-        const { token } = JSON.parse(state); // Extract the token from the state
+        const { token, codeVerifier } = JSON.parse(state); // Extract the token from the state
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized, token missing' });
         }
@@ -71,6 +70,7 @@ async function handleSpotifyCallback(req, res){
               code: req.query.code,
               redirect_uri: redirectUri,
               code_verifier: codeVerifier,
+              client_secret: process.env.SPOTIFY_CLIENT_SECRET,
               client_id: clientId
             }),
             {
