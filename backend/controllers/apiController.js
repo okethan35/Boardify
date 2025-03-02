@@ -111,7 +111,7 @@ async function handleSpotifyCallback(req, res){
             profile: {
                 displayName: userProfileResponse.data.display_name,
                 profileID: userProfileResponse.data.id,
-                followers: userProfileResponse.data.followers,
+                followers: userProfileResponse.data.followers.total,
                 profileURL: userProfileResponse.data.external_urls.spotify
             }
         });
@@ -119,7 +119,7 @@ async function handleSpotifyCallback(req, res){
         
         console.log("TRACKS: ");
         for(item of tracksResponse.data.items){
-            console.log(item.name, " by ", item.artists[0]);
+            console.log(item.name, " by ", item.artists[0].name);
         }
         console.log("Artists: ");
         for(item of artistsResponse.data.items){
@@ -128,7 +128,7 @@ async function handleSpotifyCallback(req, res){
         console.log("PROFILE: ");
         console.log(userProfileResponse.data.display_name);
         console.log(userProfileResponse.data.id);
-        console.log(userProfileResponse.data.followers);
+        console.log(userProfileResponse.data.followers.total);
         console.log(userProfileResponse.data.external_urls.spotify);
 
         await userSpotifyData.save();

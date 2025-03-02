@@ -11,7 +11,7 @@ const UserListeningDataSchema = new mongoose.Schema({
         type: {
             displayName: { type: String }, 
             profileID: { type: String }, 
-            followers: { type: String }, 
+            followers: { type: Number }, 
             profileURL: { type: String } 
         },
         required: false
