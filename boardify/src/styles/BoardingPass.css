@@ -1,0 +1,155 @@
+
+.boarding-pass-container {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: x-large;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #535e73;
+}
+
+.boarding-pass {
+    position: relative;
+    width: 669px;
+    height: 260px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(210, 10, 110, 0.2);
+    overflow: hidden;
+    border: 2px solid rgb(29, 19, 65);
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+}
+
+.header {
+    background: #995f24;
+    color: rgb(15, 6, 49);
+    text-align: center;
+    padding: 5px;
+    font-size: 18px;
+    font-variant: bold;
+    width: 10%;
+    position: abosolute;
+    left:0;
+    top:0;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+
+    /*rotate 'boardify'*/
+}
+
+.details {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    /* gap: 10px; */
+    font-size: 14px;
+    margin-left: -5%;
+    flex: 2;   
+}
+
+.details div {
+    padding: 8px;
+}
+
+.qr-code {
+position: absolute;
+bottom: 10px;
+right: 35px;
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100px;
+height: auto;
+
+}
+
+.horizontal-line{
+    position: absolute;
+    bottom: 40px;
+    left: 10.4%;
+    width: 59.3%;
+    height: 2px;
+    /*background-color: burlywood;*/
+
+}
+.dotted-line{
+    width: 2px;
+    height: 100%;
+    position: absolute;
+    left: 70%;
+    top: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        black 0px,
+        black 5px,
+        transparent 5px,
+        transparent 10px
+    );
+}
+        
+ 
+.qr-code img {
+width: 120px;
+height: auto;
+
+
+}
+.Board {
+    align-items: center;
+}
+
+.Board-container{
+    font-size:larger;
+    display: flex;
+    color:rgb(94, 4, 73);
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 22px;
+    right: 10px;
+}
+.details-container { 
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+flex-wrap: nowrap;
+padding-bottom: 5px;
+width: 90%;
+justify-content: flex-end;
+}
+
+.top-tracks-container{
+    font-size: medium;
+    display: flex;
+    flex-direction: column;
+align-items: flex-start;
+    position:absolute;
+    right: 10px;
+    top: 30px;
+    width: 25%;
+    height: 200px;
+    overflow-y: auto; /* adds scroll if content overflows?*/
+    padding: 10px;
+}
+
+/*save ticket button-*/
+#download-button {
+    background-color: #947ee3; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px; /* Rounded corners */
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+#download-button:hover {
+    background-color: #427371; 
+}
