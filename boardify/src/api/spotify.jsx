@@ -1,8 +1,5 @@
 const API_URL = process.env.REACT_APP_API_URL; 
 
-const testButton = () => {
-    console.log("TEST");
-}
 const connectSpotify = async () => {
     const token = localStorage.getItem("token");
     console.log(token);

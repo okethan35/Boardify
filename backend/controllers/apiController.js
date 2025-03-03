@@ -28,9 +28,10 @@ function base64URLEncode(buffer) {
 async function authenticateUser(req, res) {
     // Clear any previous authentication
     userAccessToken = null;
+    const frontendRedirectUrl = "http://localhost:3000";
     const token = req.headers['authorization']?.split(' ')[1]
     const codeVerifier = generateRandomString(64);
-    const state = JSON.stringify({ token, codeVerifier });
+    const state = JSON.stringify({ token, codeVerifier, frontendRedirectUrl });
     const codeChallenge = base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest());
     const scope = 'user-top-read user-read-private';
   
@@ -49,7 +50,7 @@ async function authenticateUser(req, res) {
 
 async function handleSpotifyCallback(req, res){
     try { 
-        const { code, state } = req.query;
+        const { code, state, frontendRedirectUrl } = req.query;
         if (!state) {
             return res.status(400).json({ error: 'State parameter missing.' });
         }
@@ -62,7 +63,6 @@ async function handleSpotifyCallback(req, res){
         if(!code) {
             return res.status(400).json({error: 'Authorization code not provided.'});
         }
-        console.log("ERROR 1");
         const tokenResponse = await axios.post(
             'https://accounts.spotify.com/api/token',
             qs.stringify({
@@ -79,26 +79,20 @@ async function handleSpotifyCallback(req, res){
               }
             }
         );
-        console.log("ERROR 2");
         userAccessToken = tokenResponse.data.access_token; 
-        console.log("ERROR 3");
         const userProfileResponse = await axios.get('https://api.spotify.com/v1/me', {
             headers: { Authorization: `Bearer ${userAccessToken}`}
         });
-        console.log("ERROR 4");
         const tracksResponse = await axios.get(`https://api.spotify.com/v1/me/top/tracks`, {
             headers: { Authorization: `Bearer ${userAccessToken}` },
             params: { time_range: 'short_term', limit: 5 }
         });
-        console.log("ERROR 5");
         const artistsResponse = await axios.get(`https://api.spotify.com/v1/me/top/artists`, {
             headers: { Authorization: `Bearer ${userAccessToken}` },
             params: { time_range: 'short_term', limit: 5 }
         });
-        console.log("ERROR 6");
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const { userId } = decoded;
-        console.log("ERROR 7");
         const userSpotifyData = new UserListeningData({
             userID: userId,
             topTracks: tracksResponse.data.items.map(track => ({
@@ -113,7 +107,6 @@ async function handleSpotifyCallback(req, res){
                 profileURL: userProfileResponse.data.external_urls.spotify
             }
         });
-        console.log("ERROR 8");
         
         console.log("TRACKS: ");
         for(item of tracksResponse.data.items){
@@ -130,9 +123,8 @@ async function handleSpotifyCallback(req, res){
         console.log(userProfileResponse.data.external_urls.spotify);
 
         await userSpotifyData.save();
-        console.log("ERROR 9");
         
-        res.json({ message: 'Authentication successful!', token: userAccessToken});
+        res.redirect(`${frontendRedirectUrl}?success=true`);
     } catch(error){
         console.error('Error in Spotify Callback');
         res.status(500).json({error: `Error: ${error.message}`});
