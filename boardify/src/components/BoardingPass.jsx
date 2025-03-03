@@ -4,7 +4,59 @@ import '../styles/BoardingPass.css';
 import { useState, useEffect } from "react"; 
 
 export default function BoardingPass({ user }) {
+    const [topTracks, setTopTracks] = useState([]);
 
+    async function fetchUserTopTracks(token){
+        try {
+            const trackResponse = await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5',
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+
+                    },
+                }
+            );
+            const trackData = await trackResponse.json();
+
+            const topTracks = trackData.items.map((track) => ({
+                name: track.name, artist: track.artists.map(artist => artist.name).join(' , ')
+                //artists names 
+                }));
+            
+                return topTracks; }
+                //catch the try error
+                catch (error){
+                    console.error('Error retrieving top tracks:', error);
+                    return [];
+                    }
+                }
+            //functioni to update top tracks to boarding pass; pass funciton
+            function passtopTracksBoardingPass(topTracks){
+                setTopTracks(topTracks);
+            }
+    
+            //function initilaize boarding
+            async function initializeBoardingPass() {
+            const token = localStorage.getItem('spotify_token');
+            const userId = localStorage.getItem('spotify_user_ID');
+            
+            if (!token || !userId) {
+                console.error('Token or user ID not found.');
+                return;
+            }
+                        // Fetch top tracks and artists
+                        const topTracks = await fetchUserTopTracks(token);
+            
+            // Update the boarding pass with the fetched data
+            updateBoardingPassWithTopTracks(topTracks);
+            
+            }
+
+            useEffect(()=> {
+                initilializeBoardingPass();
+            }, []);
+           
+            
     /*
     const[topTracks, setTopTracks] = useState([]);
 
