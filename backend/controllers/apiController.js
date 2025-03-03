@@ -50,12 +50,12 @@ async function authenticateUser(req, res) {
 
 async function handleSpotifyCallback(req, res){
     try { 
-        const { code, state, frontendRedirectUrl } = req.query;
+        const { code, state } = req.query;
         if (!state) {
             return res.status(400).json({ error: 'State parameter missing.' });
         }
 
-        const { token, codeVerifier } = JSON.parse(state); // Extract the token from the state
+        const { token, codeVerifier, frontendRedirectUrl } = JSON.parse(state); // Extract the token from the state
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized, token missing' });
         }
