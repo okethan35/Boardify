@@ -24,7 +24,6 @@ const connectSpotify = async () => {
 
 const getUserData = async () =>{
     const token = localStorage.getItem("token");
-    console.log("TOKEN:", token)
     try {
         const response = await fetch(`${API_URL}/api/getUserData`, {
             method: 'GET',
@@ -35,7 +34,7 @@ const getUserData = async () =>{
         });
 
         const data = await response.json();
-        
+
         console.log("USERDATA", data.userData);
     } catch (error) {
         console.error("Error retrieving data", error);
