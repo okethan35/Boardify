@@ -12,10 +12,16 @@ const UserListeningDataSchema = new mongoose.Schema({
             displayName: { type: String }, 
             profileID: { type: String }, 
             followers: { type: Number }, 
-            profileURL: { type: String } 
+            profileURL: { type: String },
+            profileImg: { 
+                url: { type: String, required: false },
+                height: { type: Number, required: false },
+                width: { type: Number, required: false }
+            }
         },
         required: false
-    }
+    },
+    timeCreated: {type: Date, default: Date.now}
 })
 
 const UserListeningData = mongoose.model("UserListeningData", UserListeningDataSchema);
