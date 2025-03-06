@@ -22,7 +22,7 @@ const Login = () => {
       const token = await loginUser(formData.email, formData.password);
       if (localStorage.getItem("token")) {
         alert("Login successful! Redirecting...");
-        navigate("/");
+        navigate("/home");
       } else {
         alert("Login failed. Check credentials.");
       }
