@@ -118,11 +118,11 @@ async function handleSpotifyCallback(req, res){
         for(item of artistsResponse.data.items){
             console.log(item.name);
         }
-        console.log("GENRE:", artistsResponse.data.items[0].genres);
-        console.log("GENRE:", artistsResponse.data.items[1].genres);
-        console.log("GENRE:", artistsResponse.data.items[2].genres);
-        console.log("GENRE:", artistsResponse.data.items[3].genres);
-        console.log("GENRE:", artistsResponse.data.items[4].genres);
+        console.log("GENRE:", artistsResponse.data.items[0].name ,artistsResponse.data.items[0].genres);
+        console.log("GENRE:", artistsResponse.data.items[0].name ,artistsResponse.data.items[1].genres);
+        console.log("GENRE:", artistsResponse.data.items[0].name ,artistsResponse.data.items[2].genres);
+        console.log("GENRE:", artistsResponse.data.items[0].name ,artistsResponse.data.items[3].genres);
+        console.log("GENRE:", artistsResponse.data.items[0].name ,artistsResponse.data.items[4].genres);
         console.log("PROFILE: ");
         console.log(userProfileResponse.data.display_name);
         console.log(userProfileResponse.data.id);
