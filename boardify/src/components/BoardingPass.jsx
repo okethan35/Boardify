@@ -1,143 +1,84 @@
-
 import { html2canvas } from 'html2canvas';
 import '../styles/BoardingPass.css';
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 
 export default function BoardingPass({ user }) {
-    const [topTracks, setTopTracks] = useState([]);
 
-    async function fetchUserTopTracks(token){
+    // Function fetch tracks
+    async function fetchUserTopTracks(token) {
         try {
-            const trackResponse = await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5',
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-
-                    },
+            const trackResponse = await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            );
+            });
             const trackData = await trackResponse.json();
 
-            const topTracks = trackData.items.map((track) => ({
-                name: track.name, artist: track.artists.map(artist => artist.name).join(' , ')
-                //artists names 
-                }));
-            
-                return topTracks; }
-                //catch the try error
-                catch (error){
-                    console.error('Error retrieving top tracks:', error);
-                    return [];
-                    }
-                }
-            //functioni to update top tracks to boarding pass; pass funciton
-            function passtopTracksBoardingPass(topTracks){
-                setTopTracks(topTracks);
-            }
-    
-            //function initilaize boarding
-            async function initializeBoardingPass() {
-            const token = localStorage.getItem('spotify_token');
-            const userId = localStorage.getItem('spotify_user_ID');
-            
-            if (!token || !userId) {
-                console.error('Token or user ID not found.');
-                return;
-            }
-                        // Fetch top tracks and artists
-                        const topTracks = await fetchUserTopTracks(token);
-            
-            // Update the boarding pass with the fetched data
-            updateBoardingPassWithTopTracks(topTracks);
-            
-            }
+            const topTracks = trackData.items.map(track => ({
+                name: track.name,
+                artist: track.artists.map(artist => artist.name).join(' , ')
+            }));
 
-            useEffect(()=> {
-                initilializeBoardingPass();
-            }, []);
-           
-            
-    /*
-    const[topTracks, setTopTracks] = useState([]);
+            return topTracks;
+        } catch (error) {
+            console.error('Error retrieving top tracks:', error);
+            return [];
+        }
+    }
 
+    // update top tracks on boarding pass
+    const updateTopTracksBoardingPass = (topTracks) => {
+        if (topTracks.length > 0) {
+            setTopTracks(topTracks.map(track => `${track.name} by ${track.artist}`).join(', '));
+        } else {
+            setTopTracks('No top tracks found.');
+        }
+    };
+
+    // State for the top tracks
+    const [topTracks, setTopTracks] = useState('');
+
+    // Function to initialize boarding pass data
+    async function initializeBoardingPass() {
+        const token = localStorage.getItem('spotify_token');
+        const userId = localStorage.getItem('spotify_user_id');
+
+        if (!token || !userId) {
+            console.error('Access token or user ID not found in local storage.');
+            return;
+        }
+
+        // Fetch top tracks and artists
+        const topTracks = await fetchUserTopTracks(token);
+
+        // Update the boarding pass with the fetched data
+        updateTopTracksBoardingPass(topTracks);
+    }
+
+    // Call to initialize the boarding pass after the component mounts
     useEffect(() => {
-        if (user.accessToken) {
-            fetchUserData(user.accessToken);
-        }
-    }, [user.accessToken]);
+        initializeBoardingPass();
+    }, []);
 
+    const handleDownload = () => {
+        const boardingPassElement = document.querySelector('.boarding-pass');
 
-// get user profile & top tracks
-        async function fetchUserData(accessToken) {
-            try {
-                // Fetch user profile
-                const profileResponse = await fetch('https://api.spotify.com/v1/me', {
-                    headers: { 'Authorization': `Bearer ${accessToken}`
-                    }  // Authorization:'Bearer 1POdFZRZbvb...qqillRxMr2z'
-                });
-                const profileData = await profileResponse.json();
-
-               // const userName = profileData.display_name; // User's display name on pass
-
-// Fetch top tracks
-                const tracksResponse = await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5', {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`
-                    }
-                });
-                const tracksData = await tracksResponse.json();
-                setTopTracks(tracksData.items.map(track => track.name));
-                //const topTracks = tracksData.items.map(track => track.name); // get tracsongsk names
-
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+        if (!boardingPassElement) {
+            console.error("Boarding pass content not found");
+            return;
         }
 
-       /* function generateBoardingPass(name, flight, from, to, carrier, date) {
-            document.getElementById('passenger-name').textContent = name;
-            document.getElementById('flight-number').textContent = flight;
-            document.getElementById('from-airport').textContent = from;
-            document.getElementById('to-airport').textContent = to;
-            document.getElementById('music-genre').textContent = carrier;
-            document.getElementById('flight-date').textContent = boardingtime;
-*/
+        html2canvas(boardingPassElement).then(canvas => {
+            // Convert to image PNG
+            const image = canvas.toDataURL('image/png');
 
-//updating top songs
-          //  const topTracksElement = document.getElementById('top-tracks');
-          //  topTracksElement.textContent = topTracks.join(',');
-
-
-            //qr code -- need to put spotify code here
-          //  const qrData = `Name:${name}|Flight:${flight}|From:${from}|To:${to}|Carrier:${carrier}|Date:${date}`;
-          //  document.getElementById('barcode').src = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(qrData)}&code=Code128&translate-esc=on`;
-      //  }
-
-    //save boarding pass
-   // document.getElementById('download-button').addEventListener('click', () => {
-         //const boardingPassElement = document.querySelector('.boarding-pass');
-
-         const handleDownload = () => {
-              const boardingPassE = document.querySelector('.boarding-pass');
-
-              if(!boardingPassE) {
-                console.error("Boarding pass content not found");
-                return;
-              }
-
-
-            html2canvas(boardingPassE).then(canvas => {
-                // using canvas to convert to image png
-                const image = canvas.toDataURL('image/png');
-
-                // Create a temporary link to download the image
-                const link = document.createElement('a');
-                link.href = image;
-                link.download = 'boardify.png'; // name of the download
-                link.click();
-            });
-        };
-        
+            // Create a temp link to download the image
+            const link = document.createElement('a');
+            link.href = image;
+            link.download = 'boardify.png'; // Name of the download
+            link.click();
+        });
+    };
 
             return (
                 <div className="boarding-pass-container">
