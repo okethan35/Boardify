@@ -118,11 +118,13 @@ async function handleSpotifyCallback(req, res){
         for(item of artistsResponse.data.items){
             console.log(item.name);
         }
+        console.log("GENRE:", artistsResponse.data.items[0].genres[0]);
         console.log("PROFILE: ");
         console.log(userProfileResponse.data.display_name);
         console.log(userProfileResponse.data.id);
         console.log(userProfileResponse.data.followers.total);
         console.log(userProfileResponse.data.external_urls.spotify);
+        console.log(profileImg: userProfileResponse.data.images[0]);
 
         await userSpotifyData.save();
         
