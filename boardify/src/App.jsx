@@ -1,37 +1,21 @@
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
-import NavBar from './components/NavBar';
-import Body from './components/Body';
-import BoardingPass from './components/BoardingPass';
+import Home from './Pages/Home'
+import Signup from "./Pages/Signup";
+import Login from "./Pages/Login";
 
 function App() {
-  const user = {
-    tracks: [["Take A Bite", "beabadoobee"],
-      ["Wake Me Up (feat. Justice)", "The Weeknd"],
-      ["Open Hearts", "The Weeknd"],
-      ["No Surprises", "Radiohead"],
-      ["Cigarette Butt", "BUBBLE TEA AND CIGARETTES"]
-      ],
-    artists: ["The Weeknd",
-      "beabadoobee",
-      "Twenty One Pilots",
-      "Daniel Caesar",
-      "Brent Faiyaz"],
-    genres: [
-      "Pop",
-      "Indie Rock",
-      "Rap",
-      "R&B",
-      "Alternative"
-    ]
-  }
-
   return (
     <div className="App">
-     {/* <NavBar />
-     <Body />*/}
-    <BoardingPass user={user}/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/signup" element={<Signup/>}/>
+          <Route path="/login" element={<Login/>}/>
+        </Routes>
+      </BrowserRouter>
     </div>
-
   );
 }
 

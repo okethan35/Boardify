@@ -127,8 +127,8 @@ export default function BoardingPass({ user }) {
                                 <div className="top-tracks-container">
                                     <div>
                                         <strong>Top Tracks:</strong>
-                                        <div>{user.topTracks.join(', ')}</div>
-                                    </div>
+                                        <div>{user.tracks.map(track => `${track[0]} by ${track[1]}`).join(', ')}</div>
+                                        </div>
                                     </div>
                                 <div className="qr-code">
                             <img
