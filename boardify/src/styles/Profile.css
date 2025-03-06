@@ -1,47 +1,46 @@
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #222222;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    color: #f2e5c1ff;
-  }
+  margin: 0;
+  padding: 0;
+  background-color: #222222;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: #f2e5c1ff;
+}
   
-  .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    min-height: 90vh;
-  }
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-height: 90vh;
+}
   
-  .profile-box {
-    background-color: #333333;
-    width: 80%;
-    max-width: 600px;
-    padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    margin-top: 2rem;
-  }
+.profile-box {
+  background-color: #333333;
+  width: 80%;
+  max-width: 600px;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  margin-top: 2rem;
+}
   
-  .profile-picture {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #f2e5c1ff;
-    margin-bottom: 1rem;
-  }
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #f2e5c1ff;
+  margin-bottom: 1rem;
+}
   
-  .profile-info h2 {
-    margin: 0.5rem 0;
-    font-size: 1.8rem;
-  }
+.profile-info h2 {
+  margin: 0.5rem 0;
+  font-size: 1.8rem;
+}
   
-  .profile-info p {
-    line-height: 1.6;
-    font-size: 1rem;
-    margin: 0.5rem 0;
-  }
-  
+.profile-info p {
+  line-height: 1.6;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
