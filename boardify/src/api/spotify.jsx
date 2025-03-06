@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 const API_URL = process.env.REACT_APP_API_URL; 
 
 const connectSpotify = async () => {
@@ -21,4 +22,25 @@ const connectSpotify = async () => {
     }
 };
 
-export { connectSpotify };
+const getUserData = async () =>{
+    const token = localStorage.getItem("token");
+    try {
+        const response = await fetch(`${API_URL}/api/getUserData`, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Include the JWT token
+            }
+        });
+
+        const data = await response.json();
+        const userData = jwtDecode(data);
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error("Error authenticating with Spotify", error);
+        throw error;
+    }
+}
+
+export { connectSpotify, getUserData };
