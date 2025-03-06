@@ -10,7 +10,7 @@ export default function DisplayButton(){
     return (
         <>
             <p>{data}</p>
-            <button onClick={handleButtonClick}/>
+            <button onClick={getUserData}/>
         </>
     )
 }
