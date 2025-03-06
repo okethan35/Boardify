@@ -5,7 +5,6 @@ import { testButton, connectSpotify } from '../api/spotify.jsx';
 export default function AuthenticateButton(){
 
     const handleClick = async () => {
-        console.log("First Press");
         try {
             const response = await connectSpotify(); // Call the backend to get the Spotify URL
             if (response.url) {
@@ -16,6 +15,7 @@ export default function AuthenticateButton(){
         } catch (error) {
             console.error("Error connecting to Spotify:", error);
         }
+        
     };
 
     return (
