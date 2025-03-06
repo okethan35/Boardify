@@ -100,11 +100,13 @@ async function handleSpotifyCallback(req, res){
                 artist: track.artists[0].name
             })),
             topArtists: artistsResponse.data.items.map(artist => artist.name),
+            topGenre: artists.Reponse.data.items[0].genres[0],
             profile: {
                 displayName: userProfileResponse.data.display_name,
                 profileID: userProfileResponse.data.id,
                 followers: userProfileResponse.data.followers.total,
-                profileURL: userProfileResponse.data.external_urls.spotify
+                profileURL: userProfileResponse.data.external_urls.spotify,
+                profileImg: userProfileResponse.data.images[0]
             }
         });
         
@@ -130,37 +132,29 @@ async function handleSpotifyCallback(req, res){
         res.status(500).json({error: `Error: ${error.message}`});
     }
 }
-  
-/*
-async function getUserProfile() {
-  try{
-    const response = await axios.get('https://api.spotify.com/v1/me', {
-        headers: { Authorization: `Bearer ${userAccessToken}`}
-    });
-    res.json(response.data);
-  } catch(error){
-    res.status(500).json({error: `Error fetching user profile: ${error.message}`});
-  }
-}
 
-async function getTopItems(type) {
+async function getUserData(req, res) {
     try {
-        const type = req.params.type;
-        const response = await axios.get(`https://api.spotify.com/v1/me/top/${type}`, {
-            headers: { Authorization: `Bearer ${userAccessToken}` },
-            params: { time_range: 'medium_term', limit: 5 }
-        });
-        res.json(response.data.items);
-    } catch(error) {
-        res.status(500).json({error: `Error fetching top ${type}: ${error.message}`});
+        const userId = req.body;
+
+        const userDataList = await UserListeningData.find({userID: userId}).sort({timeCreated: -1});
+        if(!userDataList){
+            return res.status(400).json({ message: "User has not connected to Spotify yet." });
+        }
+        
+        const userData = userDataList[0];
+        const token = jwt.sign({ userData: userData }, process.env.JWT_SECRET);
+
+        res.json({ token });
+    } catch(error){
+        res.status(500).json({message: "Error fetching user data."});
     }
 }
-*/
 
+
+  
 module.exports = {
     authenticateUser,
-    handleSpotifyCallback
+    handleSpotifyCallback,
+    getUserData
 }
-
-//TODO: make it all work as one cohesive function here or in front end, doesn't matter.
-//      introduce code to push all of the user listening data to database
