@@ -136,7 +136,7 @@ async function handleSpotifyCallback(req, res){
 
 async function getUserData(req, res) {
     try {
-        const userId = req.body;
+        const { userId } = req.body;
 
         const userDataList = await UserListeningData.find({userID: userId}).sort({timeCreated: -1});
         if(!userDataList){
@@ -146,7 +146,7 @@ async function getUserData(req, res) {
         const userData = userDataList[0];
         const token = jwt.sign({ userData: userData }, process.env.JWT_SECRET);
 
-        res.json({ token });
+        res.json({ token, userData });
     } catch(error){
         res.status(500).json({message: "Error fetching user data."});
     }
