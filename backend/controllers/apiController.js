@@ -136,7 +136,7 @@ async function handleSpotifyCallback(req, res){
 
 async function getUserData(req, res) {
     try {
-        const { token } = req.body;
+        const token = req.headers['authorization']?.split(' ')[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const { userId } = decoded;
 
