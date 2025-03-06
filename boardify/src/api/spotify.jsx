@@ -43,4 +43,4 @@ const getUserData = async () =>{
     }
 }
 
-export { connectSpotify };
+export { connectSpotify, getUserData };
