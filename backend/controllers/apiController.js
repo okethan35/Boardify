@@ -100,7 +100,7 @@ async function handleSpotifyCallback(req, res){
                 artist: track.artists[0].name
             })),
             topArtists: artistsResponse.data.items.map(artist => artist.name),
-            topGenre: artistsResponse.data.items[0].genres[0],
+            topGenre: tracksResponse.data.items[0].genres[0],
             profile: {
                 displayName: userProfileResponse.data.display_name,
                 profileID: userProfileResponse.data.id,
@@ -118,11 +118,11 @@ async function handleSpotifyCallback(req, res){
         for(item of artistsResponse.data.items){
             console.log(item.name);
         }
-        console.log("GENRE:", artistsResponse.data.items[0].name ,artistsResponse.data.items[0].genres);
-        console.log("GENRE:", artistsResponse.data.items[0].name ,artistsResponse.data.items[1].genres);
-        console.log("GENRE:", artistsResponse.data.items[0].name ,artistsResponse.data.items[2].genres);
-        console.log("GENRE:", artistsResponse.data.items[0].name ,artistsResponse.data.items[3].genres);
-        console.log("GENRE:", artistsResponse.data.items[0].name ,artistsResponse.data.items[4].genres);
+        console.log("GENRE:", tracksResponse.data.items[0].name ,tracksResponse.data.items[0].genres);
+        console.log("GENRE:", tracksResponse.data.items[1].name ,tracksResponse.data.items[1].genres);
+        console.log("GENRE:", tracksResponse.data.items[2].name ,tracksResponse.data.items[2].genres);
+        console.log("GENRE:", tracksResponse.data.items[3].name ,tracksResponse.data.items[3].genres);
+        console.log("GENRE:", tracksResponse.data.items[4].name ,tracksResponse.data.items[4].genres);
         console.log("PROFILE: ");
         console.log(userProfileResponse.data.display_name);
         console.log(userProfileResponse.data.id);
