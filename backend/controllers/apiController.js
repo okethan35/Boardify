@@ -147,6 +147,8 @@ async function getUserData(req, res) {
         
         const userData = userDataList[0];
         console.log(userData);
+        console.log(userDataList);
+        console.log("HERE");
         const resToken = jwt.sign({ userData: userData }, process.env.JWT_SECRET);
 
         res.json({ resToken, userData });
