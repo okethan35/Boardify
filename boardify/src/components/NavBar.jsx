@@ -3,11 +3,6 @@ import logo from "../assets/logo.png";
 import { useState } from "react";
 import "../styles/NavBar.css";
 
-const users = [
-  { _id: "1", username: "john_doe", profilePic: "/images/john.jpg" },
-  { _id: "2", username: "jane_smith", profilePic: "/images/jane.jpg" },
-  { _id: "3", username: "mike_williams", profilePic: "/images/mike.jpg" },
-];
 
 export default function NavBar() {
   const [query, setQuery] = useState("");
@@ -20,11 +15,13 @@ export default function NavBar() {
       setResults([]);
       return;
     }
-
-    const filteredResults = users.filter(user =>
-      user.username.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setResults(filteredResults);
+    try {
+      const response = await fetch(`/api/search?query=${value}`);
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
 
   };
   return (
@@ -47,7 +44,6 @@ export default function NavBar() {
         {results.map(user => (
           <li key={user._id} className="search-item">
             <Link to={`/profile/${user.username}`}>
-              <img src={user.profilePic} alt={user.username} className="search-img" />
               {user.username}
             </Link>
           </li>
