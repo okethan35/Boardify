@@ -207,9 +207,9 @@ section {
 
 /* Ensuring heart and comment icons are the same size as others */
 .actions-icons input {
-  width: 40px; /* Same size as other icons in the layout */
-  height: 40px; /* Keep the icon square */
-  margin: 5px 10px; /* Matching spacing from other icons */
+  width: 40px; 
+  height: 40px; 
+  margin: 5px 10px; 
   filter: invert(97%) sepia(10%) saturate(1024%) hue-rotate(325deg) brightness(101%) contrast(90%);
 }
 
@@ -252,70 +252,6 @@ section {
   color: #8b8b8b;
   margin-top: 0.5rem;
 }
-
-/* Suggest Section CSS */
-.suggest-container {
-  max-width: 300px;
-  width: 100%;
-}
-
-.suggest-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.suggest-heading h2 {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #8b8b8b;
-}
-
-.suggest-heading a {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text-color);
-}
-
-.profile-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.8rem;
-}
-
-.side-profile {
-  display: flex;
-  align-items: center;
-  column-gap: 0.8rem;
-}
-
-.side-profile img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-  border: 2px solid rgba(214, 36, 158, 1);
-}
-
-.username {
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.popular {
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-
-.follow-btn {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--blue);
-}
-
 /* Making Responsive */
 @media (max-width: 875px) {
   .nav {

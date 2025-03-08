@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import '../styles/Body.css';
 import pass1 from '../assets/boarding_pass_1.jpg';
 import pass2 from '../assets/boarding_pass_2.jpg';
@@ -6,82 +7,132 @@ import comment_icon from '../assets/comment-regular.svg';
 import AuthenticateButton from './AuthenticateButton';
 
 export default function Body() {
-  return (
-    <>
-      <div className="body">
-        <AuthenticateButton />
-        <h1>Your Feed</h1>
-        <hr />
-        <div className="feed">
-          <div className="post-container">
-            {/* Post 1 */}
-            <div className="post-box">
-              <div className="post-top">
-                <div className="post-profile">
-                  <img src="img/profile1.jpg" alt="Profile" />
-                  <div className="name-location">
-                    <h3 className="profile-name">Bloopy</h3>
-                    <span className="location">New York</span>
-                  </div>
-                </div>
-                <i className="bx bx-dots-vertical-rounded info-icon"></i>
-              </div>
-              <img src={pass1} alt="Boarding Pass 1" className="post-image" />
-              <div className="post-bottom">
-                <div className="actions-icons">
-                  <input type="image" src={heart_icon} alt="Like" />
-                  <input type="image" src={comment_icon} alt="Comment" />
-                </div>
-                <h3 className="likes">8,148 likes</h3>
-                <div className="comment">
-                  <p>
-                    <a href="#">Lilypa</a>
-                    <span>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum deleniti, quis mollitia adipisci dolore doloremque!{' '}
-                      <span className="hashtag">#iron</span>
-                    </span>
-                  </p>
-                </div>
-                <span className="view-more">view all 148 comments</span>
-                <span className="post-time">12 hours ago</span>
-              </div>
-            </div>
+  const [posts, setPosts] = useState([
+      {
+        id: 1,
+        username: "Bloopy",
+        profileImage: "img/profile1.jpg",
+        imageUrl: pass1,
+        likes: 8148,
+        liked: false,
+        comments: [
+          { user: "Bloopy", text: "i don't know why this is my top artist..." },
+        ],
+        timestamp: "12 hours ago",
+      },
+      {
+        id: 2,
+        username: "Juna",
+        profileImage: "img/profile2.jpg",
+        imageUrl: pass2,
+        likes: 5312,
+        liked: false,
+        comments: [
+          { user: "Juna", text: "Look at my Boardify for this month!" },
+        ],
+        timestamp: "8 hours ago",
+      },
+    ]);
+    
 
-            {/* Post 2 */}
-            <div className="post-box">
-              <div className="post-top">
-                <div className="post-profile">
-                  <img src="img/profile2.jpg" alt="Profile" />
-                  <div className="name-location">
-                    <h3 className="profile-name">Jono</h3>
-                    <span className="location">Los Angeles</span>
+  //fetching user's post form backend
+  useEffect(() => {
+    fetch("backendAPI") //backend API insersion needed
+    .then((res) => res.json())
+    .then((data) => setPosts(data))
+    .catch((err) => console.error("Error in fetching posts:", err))
+  }, []);
+
+    //likes handle
+    const handleLike = async (postId) => {
+      setPosts((prevPosts)=>
+      prevPosts.map((post) =>
+        post.id === postId ? { ...post, liked: !post.liked, likes: post.liked ? post.likes - 1 : post.likes + 1 } :post)
+      );
+
+      await fetch('backendAPI/${postId}/like', {
+        method: "POST",
+        headers: {"Content-Type": "application/json" },
+      }).crach((err) => console.error("Error liking post:", err));
+    };
+
+    //handle comments
+    const handleComment = async (postId, commentText) => {
+      if(!commentText.trim()) return;
+
+      const newComment = {user: "You", text: commentText};
+      setPosts((prevPosts) => 
+      prevPosts.map((post) => post.id === postId ? { ...post, comments: [...post.comments, newComment] } : post
+      )
+    );
+    await fetch('backendurl', {
+      method: "POST",
+      headers: {"Content_Type": "application/json" },
+      body: JSON.stringify({text: commentText }),
+      }).catch((err) => console.error("Error adding comment:", err));
+    };
+
+    return (
+      <>
+        <div className="body">
+          <AuthenticateButton />
+          <h1>Your Feed</h1>
+          <hr />
+          <div className="feed">
+            <div className="post-container">
+              {posts.map((post) => (
+                <div key={post.id} className="post-box">
+                  <div className="post-top">
+                    <div className="post-profile">
+                      <img
+                        src={post.profileImage || "img/default-profile.jpg"}
+                        alt="Profile"
+                      />
+                      <div className="name-username">
+                        <h3 className="profile-name">{post.username}</h3>
+                      </div>
+                    </div>
+                    <i className="bx bx-dots-vertical-rounded info-icon"></i>
+                  </div>
+                  <img
+                    src={post.imageUrl || pass1}
+                    alt="User Post"
+                    className="post-image"
+                  />
+                  <div className="post-bottom">
+                    <div className="actions-icons">
+                      <input
+                        type="image"
+                        src={heart_icon}
+                        alt="Like"
+                        onClick={() => handleLike(post.id)}
+                      />
+                      <input
+                        type="image"
+                        src={comment_icon}
+                        alt="Comment"
+                        onClick={() => handleComment(post.id, "Wow! What's your playlist?")}
+                      />
+                    </div>
+                    <h3 className="likes">{post.likes} likes</h3>
+                    <div className="comment">
+                      {post.comments.map((comment, index) => (
+                        <p key={index}>
+                          <a href="#">{comment.user}</a>
+                          <span>{comment.text}</span>
+                        </p>
+                      ))}
+                    </div>
+                    <span className="view-more">
+                      View all {post.comments.length} comments
+                    </span>
+                    <span className="post-time">{post.timestamp}</span>
                   </div>
                 </div>
-                <i className="bx bx-dots-vertical-rounded info-icon"></i>
-              </div>
-              <img src={pass2} alt="Boarding Pass 2" className="post-image" />
-              <div className="post-bottom">
-                <div className="actions-icons">
-                  <input type="image" src={heart_icon} alt="Like" />
-                  <input type="image" src={comment_icon} alt="Comment" />
-                </div>
-                <h3 className="likes">5,312 likes</h3>
-                <div className="comment">
-                  <p>
-                    <a href="#">Juna</a>
-                    <span>
-                      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.{' '}
-                      <span className="hashtag">#travel</span>
-                    </span>
-                  </p>
-                </div>
-                <span className="view-more">view all 120 comments</span>
-                <span className="post-time">8 hours ago</span>
-              </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
-}
+      </>
+    );
+  }
