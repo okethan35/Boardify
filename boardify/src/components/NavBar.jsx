@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useState } from "react";
 import "../styles/NavBar.css";
+const API_URL = process.env.REACT_APP_API_URL; 
 
 
 export default function NavBar() {
@@ -16,7 +17,8 @@ export default function NavBar() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5000/query/search?query=" + value);
+      console.log("VALUE:", value);
+      const response = await fetch(`${API_URL}/query/search?query=${value}`);
       const data = await response.json();
       setResults(data);
     } catch (error) {
