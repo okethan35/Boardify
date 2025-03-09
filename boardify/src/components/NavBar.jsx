@@ -38,7 +38,7 @@ export default function NavBar() {
   return (
     <div className="nav-bar">
       <div className="logo-box">
-        <Link className="logo" to="/">
+        <Link className="logo" to="/home">
           <img src={logo} alt="Logo" />
         </Link>
       </div>
@@ -68,7 +68,22 @@ export default function NavBar() {
       <ul className="nav-list">
         <li className="nav-items"><Link to="/home">HOME</Link></li>
         <li className="nav-items"><Link to="/profile">PROFILE</Link></li>
-        <li className="nav-items"><Link to="/">LOG IN</Link></li>
+        {localStorage.getItem("token") ? (
+          <li className="nav-items">
+            <Link 
+              to="/" 
+              onClick={() => { 
+                localStorage.removeItem("token"); 
+              }} 
+              className="nav-link"
+            >
+              LOG OUT
+            </Link>
+          </li>
+        ) : (
+          <li className="nav-items"><Link to="/">LOG IN</Link></li>
+  )}
+
       </ul>
     </div>
   );
