@@ -3,6 +3,7 @@ import logo from "../assets/logo.png";
 import "../styles/NavBar.css";
 
 export default function NavBar() {
+  const profileLink = `/profile/${localStorage.getItem("username")}`;
   return (
     <div className="nav-bar">
       <div className="logo-box">
@@ -12,7 +13,7 @@ export default function NavBar() {
       </div>
       <ul className="nav-list">
         <li className="nav-items"><Link to="/">HOME</Link></li>
-        <li className="nav-items"><Link to="/profile">PROFILE</Link></li>
+        <li className="nav-items"><Link to={profileLink}>PROFILE</Link></li>
         <li className="nav-items"><Link to="/login">LOG IN</Link></li>
       </ul>
     </div>

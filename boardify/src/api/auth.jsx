@@ -35,6 +35,7 @@ const loginUser = async (email, password) => {
     const data = await response.json();
     if (response.ok) {
       localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.username);
       console.log("Login Successful, Token:", data.token);
     } else {
       console.error("Login Error:", data.message);
