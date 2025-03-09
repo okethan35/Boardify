@@ -16,7 +16,7 @@ export default function NavBar() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5000/search?query=${value}");
+      const response = await fetch("http://localhost:5000/search?query=" + value);
       const data = await response.json();
       setResults(data);
     } catch (error) {
