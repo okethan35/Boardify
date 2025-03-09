@@ -105,7 +105,6 @@ export default function Body() {
                         <h3 className="profile-name">{post.username}</h3>
                       </div>
                     </div>
-                    <i className="bx bx-dots-vertical-rounded info-icon"></i>
                   </div>
                   <img
                     src={post.imageUrl || pass1}
