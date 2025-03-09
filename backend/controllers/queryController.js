@@ -11,7 +11,7 @@ exports.searchUsers = async (req, res) => {
     const users = await User.find({
       username: { $regex: query, $options: 'i' }
     }).select('username');
-  
+    res.json({ message: 'Query received' });
     res.json(users);
   } catch (error) {
     console.error(error);
