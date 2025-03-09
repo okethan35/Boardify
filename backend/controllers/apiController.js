@@ -59,7 +59,7 @@ async function handleSpotifyCallback(req, res){
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized, token missing' });
         }
-
+        console.log(token);
         if(!code) {
             return res.status(400).json({error: 'Authorization code not provided.'});
         }
