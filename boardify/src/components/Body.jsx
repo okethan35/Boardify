@@ -15,7 +15,7 @@ export default function Body() {
         profileImage: "img/profile1.jpg",
         imageUrl: pass1,
         likes: 8148,
-        liked: true,
+        liked: false,
         comments: [
           { user: "Bloopy", text: "i don't know why this is my top artist..." },
         ],
@@ -27,7 +27,7 @@ export default function Body() {
         profileImage: "img/profile2.jpg",
         imageUrl: pass2,
         likes: 5312,
-        liked: true,
+        liked: false,
         comments: [
           { user: "Juna", text: "Look at my Boardify for this month!" },
         ],
