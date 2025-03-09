@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import '../styles/Body.css';
 import pass1 from '../assets/boarding_pass_1.jpg';
 import pass2 from '../assets/boarding_pass_2.jpg';
-import heart_icon from '../assets/heart-regular.svg';
-import comment_icon from '../assets/comment-regular.svg';
+//import heart_icon from '../assets/heart-regular.svg';
+//import comment_icon from '../assets/comment-regular.svg';
 import AuthenticateButton from './AuthenticateButton';
+import 'boxicons/css/boxicons.min.css';
 
 export default function Body() {
   const [posts, setPosts] = useState([
@@ -14,7 +15,7 @@ export default function Body() {
         profileImage: "img/profile1.jpg",
         imageUrl: pass1,
         likes: 8148,
-        liked: false,
+        liked: true,
         comments: [
           { user: "Bloopy", text: "i don't know why this is my top artist..." },
         ],
@@ -26,7 +27,7 @@ export default function Body() {
         profileImage: "img/profile2.jpg",
         imageUrl: pass2,
         likes: 5312,
-        liked: false,
+        liked: true,
         comments: [
           { user: "Juna", text: "Look at my Boardify for this month!" },
         ],
@@ -47,16 +48,18 @@ export default function Body() {
     const handleLike = async (postId) => {
       setPosts((prevPosts)=>
       prevPosts.map((post) =>
-        post.id === postId ? { ...post, liked: !post.liked, likes: post.liked ? post.likes - 1 : post.likes + 1 } :post)
+        post.id === postId ? { ...post, 
+        liked: !post.liked, 
+        likes: post.liked ? post.likes - 1 : post.likes + 1 } :post)
       );
 
-      await fetch('backendAPI/${postId}/like', {
+      await fetch(`backendAPI/${postId}/like`, {
         method: "POST",
         headers: {"Content-Type": "application/json" },
       }).crach((err) => console.error("Error liking post:", err));
     };
 
-    //handle comments
+    //handle comment postings
     const handleComment = async (postId, commentText) => {
       if(!commentText.trim()) return;
 
@@ -72,7 +75,14 @@ export default function Body() {
       }).catch((err) => console.error("Error adding comment:", err));
     };
 
-    return (
+    //comment click
+    const handleCommentClick = (postId, commentIndex) => {
+      const clickedComment = posts.find((post) => post.id === postId).comments[commentIndex];
+      alert(`Comment by ${clickedComment.user}: "$clickedComment.text}"`);
+
+    };
+
+    return(
       <>
         <div className="body">
           <AuthenticateButton />
@@ -101,28 +111,41 @@ export default function Body() {
                   />
                   <div className="post-bottom">
                     <div className="actions-icons">
-                      <input
-                        type="image"
-                        src={heart_icon}
-                        alt="Like"
-                        onClick={() => handleLike(post.id)}
-                      />
-                      <input
-                        type="image"
-                        src={comment_icon}
-                        alt="Comment"
-                        onClick={() => handleComment(post.id, "Wow! What's your playlist?")}
-                      />
+                      <i 
+                      className={`bx bx-heart ${post.liked ? 'liked' : ''}`}
+                      onClick={() => handleLike(post.id)}
+                     />
+                     <i
+                        className="bx bx-comment"
+                      onClick={() => handleComment(post.id, "Wow! What's your playlist?")}
+                    ></i>
                     </div>
                     <h3 className="likes">{post.likes} likes</h3>
                     <div className="comment">
                       {post.comments.map((comment, index) => (
                         <p key={index}>
-                          <a href="#">{comment.user}</a>
+                          <button
+                          className= "comment-user-button"
+                          onclicl={() => handleCommentClick(post.id, index)}
+                          >
+                            {comment.user}
+                          </button>
                           <span>{comment.text}</span>
                         </p>
                       ))}
                     </div>
+                    <div className="input-comment">
+                      <input 
+                      type="text"
+                      placeholder= "Leave a comment!"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handleComment(post.id, e.target.value);
+                          e.target.value ="";
+                        }
+                      }}
+                      />
+                      </div>
                     <span className="view-more">
                       View all {post.comments.length} comments
                     </span>
