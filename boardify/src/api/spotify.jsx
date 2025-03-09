@@ -1,9 +1,7 @@
-import { jwtDecode } from "jwt-decode";
 const API_URL = process.env.REACT_APP_API_URL; 
 
 const connectSpotify = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
     try {
         const response = await fetch(`${API_URL}/api/auth`, {
             method: 'POST',
@@ -34,8 +32,6 @@ const getUserData = async () =>{
         });
 
         const data = await response.json();
-
-        console.log("USERDATA", data.userData);
     } catch (error) {
         console.error("Error retrieving data", error);
         throw error;

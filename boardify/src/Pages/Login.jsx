@@ -21,7 +21,6 @@ const Login = () => {
     try {
       const token = await loginUser(formData.email, formData.password);
       if (localStorage.getItem("token")) {
-        localStorage.setItem("token", token);
         alert("Login successful! Redirecting...");
         navigate("/profile");
       } else {
