@@ -28,7 +28,7 @@ app.options("*", cors());
 
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
-app.use('/', queryRoutes);
+app.use('/query', queryRoutes);
 
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB Connected"))
