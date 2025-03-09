@@ -38,6 +38,7 @@ const loginUser = async (email, password) => {
         console.log(data);
         console.log("Fetched Token:", data.token);
       localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.username);
       console.log("Login Successful, Token:", data.token);
     } else {
       console.error("Login Error:", data.message);

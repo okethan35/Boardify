@@ -29,8 +29,8 @@ exports.loginUser = async (req, res) => {
             console.log("comparePassword: " + await user.comparePassword(password));
             return res.status(400).json({ message: "Invalid Credentials" });
         }
-        console.log("USERID:", user._id);
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+
+        const token = jwt.sign({ userId: user._id, username: user.username }, process.env.JWT_SECRET);
         
         res.json({ token });
     } catch(error){

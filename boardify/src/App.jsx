@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import Home from './Pages/Home'
@@ -14,7 +13,7 @@ function App() {
           <Route path="/" element={<Home />}/>
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/login" element={<Login/>}/>
-          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/profile/:username" element={<Profile/>}/>
         </Routes>
       </BrowserRouter>
     </div>
