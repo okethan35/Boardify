@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
+const queryRoutes = require('./routes/queryRoutes');
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,7 @@ app.options("*", cors());
 
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
+app.use('/', queryRoutes);
 
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB Connected"))

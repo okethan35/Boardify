@@ -16,7 +16,7 @@ export default function NavBar() {
       return;
     }
     try {
-      const response = await fetch(`/api/search?query=${value}`);
+      const response = await fetch(`/search?query=${value}`);
       const data = await response.json();
       setResults(data);
     } catch (error) {
