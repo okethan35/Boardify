@@ -48,15 +48,18 @@ export default function Body() {
     const handleLike = async (postId) => {
       setPosts((prevPosts)=>
       prevPosts.map((post) =>
-        post.id === postId ? { ...post, 
-        liked: !post.liked, 
-        likes: post.liked ? post.likes - 1 : post.likes + 1 } :post)
-      );
+        post.id === postId ? { ...post, liked: !post.liked, likes: post.liked ? post.likes - 1 : post.likes + 1 } :post)
+      
+    );
 
+      try{
       await fetch(`backendAPI/${postId}/like`, {
         method: "POST",
         headers: {"Content-Type": "application/json" },
-      }).crach((err) => console.error("Error liking post:", err));
+      });
+    }catch(err){
+      console.error("Error liking post:", err);
+      }
     };
 
     //handle comment postings

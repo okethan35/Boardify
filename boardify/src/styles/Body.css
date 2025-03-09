@@ -45,7 +45,7 @@ header {
   left: 0;
   z-index: 100;
   width: 100%;
-  background: var(--white);
+  /*background: var(--white);*/
   /*border-bottom: 1px solid hsla(0, 0%, 0%, 0.1);*/
 }
 
@@ -207,13 +207,12 @@ section {
   height: 40px; 
   margin: 5px 10px; 
   filter: invert(97%) sepia(10%) saturate(1024%) hue-rotate(325deg) brightness(101%) contrast(90%);
-  transition: background-color 0.3s ease, filter 0.3s ease; /* Transition for background color and filter */
+  transition: background-color 0.3s ease, filter 0.3s ease; 
 }
 
 .actions-icons input:hover {
   cursor: pointer;
-  background-color: rgb(97, 197, 15); /* You can change this to a custom color or var(--blue) */
-  filter: invert(50%) sepia(100%) saturate(1000%) hue-rotate(100deg) brightness(120%) contrast(80%); /* Optional: Custom filter effect for the hover state */
+  background-color: rgb(229, 86, 184);
 }
 
 .likes {
@@ -222,6 +221,10 @@ section {
   font-weight: 500;
   padding-top: 10px;
 }
+
+
+
+
 
 .comment {
   display: block;
@@ -274,11 +277,7 @@ section {
     padding: 10px 0;
     width: 95%;
   }
-
-  .suggest-container {
-    display: none;
-  }
-
+  
   .post-container {
     margin: auto;
   }
