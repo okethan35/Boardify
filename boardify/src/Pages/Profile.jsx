@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Navbar from "./NavBar.jsx";
+import Navbar from "../components/NavBar.jsx";
 import "../styles/Profile.css";
 
 const Profile = () => {

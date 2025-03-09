@@ -1,13 +1,22 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/NavBar.css";
+
 const API_URL = process.env.REACT_APP_API_URL; 
 
 
 export default function NavBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const handleSearch = async (e) => {
     const value = e.target.value;
@@ -33,26 +42,29 @@ export default function NavBar() {
           <img src={logo} alt="Logo" />
         </Link>
       </div>
-      <div className="search-container">
-    <input
-      type="text"
-      placeholder="Search profiles..."
-      value={query}
-      onChange={handleSearch}
-      className="search-input"
-    />
-    {results.length > 0 && (
-      <ul className="search-results">
-        {results.map(user => (
-          <li key={user._id} className="search-item">
-            <Link to={`/profile/${user.username}`}>
-              {user.username}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    )}
-  </div>
+            {/* Conditionally render search bar based on login status */}
+            {isLoggedIn && (
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search profiles..."
+            value={query}
+            onChange={handleSearch}
+            className="search-input"
+          />
+          {results.length > 0 && (
+            <ul className="search-results">
+              {results.map(user => (
+                <li key={user._id} className="search-item">
+                  <Link to={`/profile/${user.username}`}>
+                    {user.username}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
       <ul className="nav-list">
         <li className="nav-items"><Link to="/home">HOME</Link></li>
         <li className="nav-items"><Link to="/profile">PROFILE</Link></li>
