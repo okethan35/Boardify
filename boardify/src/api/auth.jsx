@@ -53,15 +53,15 @@ const getUserId = async (username) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username }),
+        'Authorization': `Bearer ${username}`
+      }
     });
     console.log(response);
 
     const data = await response.json();
     if (response.ok) {
         console.log(data);
-      console.log("Login Successful, UserID Token:", token);
+      console.log("Login Successful, UserID Token:", data.token);
       return data.token;
     } else {
       console.error("Request Error:", data.message);

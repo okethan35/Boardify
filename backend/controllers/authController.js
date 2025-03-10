@@ -43,7 +43,7 @@ exports.loginUser = async (req, res) => {
 
 exports.getUserId = async (res, req) => {
     try {
-        const {username} = req.body;
+        const username = req.headers['authorization']?.split(' ')[1];
         
         const user = await User.findOne({ username });
         console.log(user);
