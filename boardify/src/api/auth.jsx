@@ -47,6 +47,30 @@ const loginUser = async (email, password) => {
   }
 };
 
+const getUserId = async (username) => {
+  try {
+    const response = await fetch(`${API_URL}/auth/userid`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    });
+    console.log(response);
+
+    const data = await response.json();
+    if (response.ok) {
+        console.log(data);
+      console.log("Login Successful, UserID:", data.userId);
+      return data.userId;
+    } else {
+      console.error("Request Error:", data.message);
+    }
+  } catch (error) {
+    console.error("Error Finding User:", error);
+  }
+};
+
 /*const accessProtectedRoute = async () => {
   const token = localStorage.getItem("token");
 
@@ -70,4 +94,4 @@ const loginUser = async (email, password) => {
   }
 };
 */
-export { registerUser, loginUser/*, accessProtectedRoute*/ };
+export { registerUser, loginUser, getUserId/*, accessProtectedRoute*/ };

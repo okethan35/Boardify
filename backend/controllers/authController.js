@@ -41,6 +41,25 @@ exports.loginUser = async (req, res) => {
     }
 }
 
+exports.getUserId = async (res, req) => {
+    try {
+        const {username} = req.body;
+        
+        const user = await User.findOne({ username });
+        console.log(user);
+        if(!user){
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        console.log(user._id);
+        res.json({ 
+            userId: user._id
+         });
+    } catch(error){
+        res.status(500).json({ message: "Error retrieving user" });
+    }
+}
+
 exports.protectedRoute = (req, res) => {
     res.json({ message: "Access Granted", userID: req.user.userID });
 }

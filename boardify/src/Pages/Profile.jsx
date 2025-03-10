@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/NavBar.jsx";
+import { getUserId } from "../api/auth.jsx";
+import { useParams } from "react-router-dom";
 import "../styles/Profile.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -8,6 +10,9 @@ const Profile = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const username = useParams();
+  const userId = getUserId(username);
+  console.log(userId);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
