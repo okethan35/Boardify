@@ -42,7 +42,6 @@ export default function NavBar() {
           <img src={logo} alt="Logo" />
         </Link>
       </div>
-            {/* Conditionally render search bar based on login status */}
             {isLoggedIn && (
         <div className="search-container">
           <input
