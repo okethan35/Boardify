@@ -84,15 +84,27 @@ const Profile = () => {
         <div className="spotify-info">
           <p><strong>Followers:</strong> {userData.profile.followers?.toLocaleString()}</p>
           <p>
-            <strong>Profile:</strong>{" "}
             <a 
               href={userData.profile.profileURL} 
               target="_blank" 
               rel="noopener noreferrer"
             >
-              Visit Spotify Profile
-            </a>
+              Link 
+            </a>{" "}
+             to Spotify profile page
           </p>
+            <p><strong>Top Artists:</strong></p>
+            <ul>
+              {userData.topArtists.map((artist, index) => (
+                <li key={index}>{artist}</li>
+              ))}
+            </ul>
+            <p><strong>Top Tracks:</strong></p>
+            <ul>
+              {userData.topTracks.map((track, index) => (
+                <li key={index}>{track.name} by {track.artist}</li>
+              ))}
+            </ul>
         </div>
       </>
     );
