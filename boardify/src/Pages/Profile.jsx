@@ -11,8 +11,8 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const username = useParams();
-  const userId = getUserId(username);
-  console.log(userId);
+  const userToken = getUserId(username);
+  console.log(userToken);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

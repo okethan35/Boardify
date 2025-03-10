@@ -61,8 +61,8 @@ const getUserId = async (username) => {
     const data = await response.json();
     if (response.ok) {
         console.log(data);
-      console.log("Login Successful, UserID:", data.userId);
-      return data.userId;
+      console.log("Login Successful, UserID Token:", token);
+      return data.token;
     } else {
       console.error("Request Error:", data.message);
     }

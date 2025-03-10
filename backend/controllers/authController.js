@@ -50,11 +50,8 @@ exports.getUserId = async (res, req) => {
         if(!user){
             return res.status(400).json({ message: "User not found" });
         }
-
-        console.log(user._id);
-        res.json({ 
-            userId: user._id
-         });
+        const token = jwt.sign({ userId: user._id}, process.env.JWT_SECRET);
+        res.json({ token });
     } catch(error){
         res.status(500).json({ message: "Error retrieving user" });
     }
