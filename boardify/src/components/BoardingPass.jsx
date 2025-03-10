@@ -49,6 +49,19 @@ export default function BoardingPass({ user }) {
             return [];
         }
     }
+    //fetch user's profile name for passenger
+    async function fetchSpotifyUserProfile(token) {
+        try {
+            const profileResponse = await fetch('https://api.spotify.com/v1/me', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const profileData = await profileResponse.json();
+            return profileData.display_name; // Spotify user's display name
+        } catch (error) {
+            console.error('Error retrieving Spotify user profile:', error);
+            return '';
+        }
+    }
 
     // update top tracks on boarding pass
     const updateTopTracksBoardingPass = (topTracks) => {
@@ -65,6 +78,11 @@ export default function BoardingPass({ user }) {
             console.error('Access token is not found');
             return;
         }
+        //fetch user's name
+        const username = await fetchSpotifyUserProfile(token);
+        seetSpotifyUsername(username);
+
+        //fetch top tracks
         const topTracks = await fetchUserTopTracks(token);
         updateTopTracksBoardingPass(topTracks);
 
@@ -123,7 +141,7 @@ export default function BoardingPass({ user }) {
                         <div className="details">
                             <div className="details-container">
                                 <div>
-                                    <strong>Passenger:</strong> <span>{user.name}</span>
+                                    <strong>Passenger:</strong> <span>{spotifyUsername}</span>
                                 </div>
                                 <div>
                                     <strong>Flight:</strong> <span>{user.flight}</span>
