@@ -59,7 +59,7 @@ async function handleSpotifyCallback(req, res){
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized, token missing' });
         }
-
+        console.log(token);
         if(!code) {
             return res.status(400).json({error: 'Authorization code not provided.'});
         }
@@ -100,7 +100,6 @@ async function handleSpotifyCallback(req, res){
                 artist: track.artists[0].name
             })),
             topArtists: artistsResponse.data.items.map(artist => artist.name),
-            topGenre: artists.Reponse.data.items[0].genres[0],
             profile: {
                 displayName: userProfileResponse.data.display_name,
                 profileID: userProfileResponse.data.id,
@@ -123,6 +122,8 @@ async function handleSpotifyCallback(req, res){
         console.log(userProfileResponse.data.id);
         console.log(userProfileResponse.data.followers.total);
         console.log(userProfileResponse.data.external_urls.spotify);
+        console.log(userProfileResponse.data.images[0]);
+        console.log(userProfileResponse.data.images);
 
         await userSpotifyData.save();
         
@@ -135,7 +136,9 @@ async function handleSpotifyCallback(req, res){
 
 async function getUserData(req, res) {
     try {
-        const userId = req.body;
+        const token = req.headers['authorization']?.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const { userId } = decoded;
 
         const userDataList = await UserListeningData.find({userID: userId}).sort({timeCreated: -1});
         if(!userDataList){
@@ -143,9 +146,7 @@ async function getUserData(req, res) {
         }
         
         const userData = userDataList[0];
-        const token = jwt.sign({ userData: userData }, process.env.JWT_SECRET);
-
-        res.json({ token });
+        res.json({ userData });
     } catch(error){
         res.status(500).json({message: "Error fetching user data."});
     }

@@ -22,7 +22,7 @@ const Signup = () => {
     try {
       await registerUser(formData.username, formData.email, formData.password);
       alert("Signup successful! Redirecting to login...");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Signup Error:", error);
       alert("Signup failed. Please try again.");

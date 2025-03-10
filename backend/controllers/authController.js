@@ -30,13 +30,32 @@ exports.loginUser = async (req, res) => {
             return res.status(400).json({ message: "Invalid Credentials" });
         }
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-        
-        res.json({ token });
+        const token = jwt.sign({ userId: user._id}, process.env.JWT_SECRET);
+        console.log(user.username);
+        res.json({ 
+            token,
+            username: user.username
+         });
     } catch(error){
         res.status(500).json({ message: "Error logging user in" });
     }
 }
+
+exports.getUserId = async (req, res) => {
+    try {
+        const username = req.headers['authorization']?.split(' ')[1];
+        
+        const user = await User.findOne({ username });
+        console.log(user);
+        if(!user){
+            return res.status(400).json({ message: "User not found" });
+        }
+        const token = jwt.sign({ userId: user._id}, process.env.JWT_SECRET);
+        res.json({ token });
+    } catch(error){
+        res.status(500).json({ message: "Error retrieving user" });
+    }
+};
 
 exports.protectedRoute = (req, res) => {
     res.json({ message: "Access Granted", userID: req.user.userID });
