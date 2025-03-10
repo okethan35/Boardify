@@ -14,7 +14,7 @@ const Home = () => {
           <div className = "login-container">
             <h1>Welcome to Boardify!</h1>
             <p>Join us today! Sign in or create an account to get started.</p>
-            <Link to="/">
+            <Link to="/login">
               <button className="login-button">
                 Login
                 </button>
