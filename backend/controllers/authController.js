@@ -41,7 +41,7 @@ exports.loginUser = async (req, res) => {
     }
 }
 
-exports.getUserId = async (res, req) => {
+exports.getUserId = async (req, res) => {
     try {
         const username = req.headers['authorization']?.split(' ')[1];
         
@@ -55,7 +55,7 @@ exports.getUserId = async (res, req) => {
     } catch(error){
         res.status(500).json({ message: "Error retrieving user" });
     }
-}
+};
 
 exports.protectedRoute = (req, res) => {
     res.json({ message: "Access Granted", userID: req.user.userID });

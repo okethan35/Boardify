@@ -10,37 +10,38 @@ const Profile = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const username = useParams();
-  const userToken = getUserId(username);
-  console.log(userToken);
+  const { username } = useParams();
+  console.log(username);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-      const fetchUserData = async () => {
-        try {
+    const fetchUserIdAndData = async () => {
+      try {
+        console.log('Here1');
+        const userToken = await getUserId(username);
+        console.log("Here2");
+        if (userToken) {
+          setIsLoggedIn(true);
+
           const response = await fetch(`${API_URL}/api/getUserData`, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${userToken}`,
             },
           });
-          
+  
           if (response.ok) {
             const data = await response.json();
-            setUserData(data.userData); // Note the .userData access here
+            setUserData(data.userData); 
           }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        } finally {
-          setLoading(false);
         }
-      };
-      fetchUserData();
-    } else {
-      setLoading(false);
-    }
-  }, []);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchUserIdAndData();
+  }, [username]);
 
   const renderContent = () => {
     if (!isLoggedIn) {
