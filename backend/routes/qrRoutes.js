@@ -3,6 +3,6 @@ const { searchUsers } = require('../controllers/qrController');  // Import the c
 
 const router = express.Router();
 
-router.get('/qr/${username}', generateQRCode);
+router.get('/generate/${username}', generateQRCode);
 
 module.exports = router;
