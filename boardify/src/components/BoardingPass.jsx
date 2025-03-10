@@ -8,6 +8,12 @@ export default function BoardingPass({ user }) {
     const [showPass, setShowPass] = useState(false);
     const [topTracks, setTopTracks] = useState('');
     const [spotifyBarcode, setSpotifyBarcode] = useState('');
+    const [spotifyUsername, setSpotifyUsername] = useState('');
+    const [fromArtist, setFromArtist] = useState('');
+    const [toArtist, setToArtist] = useState('');
+    const [curDate, setCurDate] = useState('');
+    const [flightNumber, setFlightNumber] = useState(0); 
+    const [flightCode, setFlightCode] = useState('');
 
     //function to append the last part of the Spotify URL
     const appendLastPartOfUrl = (url) => {
@@ -30,7 +36,7 @@ export default function BoardingPass({ user }) {
         if (showPass) initializeBoardingPass();
     }, [showPass]);
 
-    // Function fetch tracks
+    //function fetch tracks
     async function fetchUserTopTracks(token) {
         try {
             const trackResponse = await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5', {
@@ -49,6 +55,7 @@ export default function BoardingPass({ user }) {
             return [];
         }
     }
+
     //fetch user's profile name for passenger
     async function fetchSpotifyUserProfile(token) {
         try {
@@ -71,6 +78,15 @@ export default function BoardingPass({ user }) {
         );
     };
 
+    // Function to format the current date
+    const getFormattedDate = () => {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
+    };
+
     // Function to initialize boarding pass data
     async function initializeBoardingPass() {
         const token = localStorage.getItem('spotify_token');
@@ -78,13 +94,29 @@ export default function BoardingPass({ user }) {
             console.error('Access token is not found');
             return;
         }
+
         //fetch user's name
         const username = await fetchSpotifyUserProfile(token);
-        seetSpotifyUsername(username);
+        setSpotifyUsername(username);
 
         //fetch top tracks
         const topTracks = await fetchUserTopTracks(token);
         updateTopTracksBoardingPass(topTracks);
+        
+        //set "From" and "To" artists
+        if (topTracks.length > 0) {
+            //first top track's artist for "From"
+            const firstTrackArtist = topTracks[0].artists;
+            setFromArtist(firstTrackArtist);
+
+            // 5th top track's artist for "To"
+            if (topTracks.length >= 5) {
+                const fifthTrackArtist = topTracks[4].artists;
+                setToArtist(fifthTrackArtist);
+            } else {
+                setToArtist('No 5th track available');
+            }
+        }
 
         //generate spotify barcode
         if (topTracks.length > 0) {
@@ -92,7 +124,27 @@ export default function BoardingPass({ user }) {
             const barcodeUrl = appendLastPartOfUrl(spotifyUrl);
             setSpotifyBarcode(barcodeUrl); //setting spotify barcode url
         }
+
+        //set current date for pass
+        const formattedDate = getFormattedDate();
+        setCurDate(formattedDate);
+
+        // Increment flight number and generate flight code
+        const newFlightNumber = flightNumber + 1;
+        setFlightNumber(newFlightNumber);
+        localStorage.setItem('flightNumber', newFlightNumber.toString());
+
+        // Generate flight code (e.g., A1, B2)
+        const randomLetter = generateRandomLetter();
+        const newFlightCode = `${randomLetter}${newFlightNumber}`;
+        setFlightCode(newFlightCode);
     }
+
+    //to generate a random uppercase letter (A-Z)
+    const generateRandomLetter = () => {
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        return letters[Math.floor(Math.random() * letters.length)];
+    };
 
     //handle download
     const handleDownload = () => {
@@ -144,22 +196,22 @@ export default function BoardingPass({ user }) {
                                     <strong>Passenger:</strong> <span>{spotifyUsername}</span>
                                 </div>
                                 <div>
-                                    <strong>Flight:</strong> <span>{user.flight}</span>
+                                    <strong>Flight:</strong> <span>{flightCode}</span>
                                 </div>
                                 <div>
-                                    <strong>From:</strong> <span>{user.from}</span>
+                                    <strong>From:</strong> <span>{fromArtist}</span>
                                 </div>
                             </div>
 
                             <div className="details-container">
                                 <div>
-                                    <strong>To:</strong> <span>{user.to}</span>
+                                    <strong>To:</strong> <span>{toArtist}</span>
                                 </div>
                                 <div>
-                                    <strong>Carrier:</strong> <span>{user.carrier}</span>
+                                    <strong>Carrier:</strong> <span>Boardify</span> 
                                 </div>
                                 <div>
-                                    <strong>Date:</strong> <span>{user.date}</span>
+                                    <strong>Date:</strong> <span>{curDate}</span>
                                 </div>
                             </div>
 
