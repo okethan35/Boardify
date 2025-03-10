@@ -60,7 +60,7 @@ const Profile = () => {
     if (!isSpotifyConnected) {
       return (
         <>
-          <h2>Welcome, {localStorage.getItem("email")}</h2>
+          <h2>Welcome, {localStorage.getItem("username")}</h2>
           <p>You're logged in but not connected to Spotify.</p>
           <p>
             <a href={`${API_URL}/api/auth/spotify`} className="spotify-connect">
