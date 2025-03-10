@@ -10,6 +10,7 @@ export default function NavBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const profileLink = `/profile/${localStorage.getItem("username")}`;
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -66,7 +67,7 @@ export default function NavBar() {
       )}
       <ul className="nav-list">
         <li className="nav-items"><Link to="/home">HOME</Link></li>
-        <li className="nav-items"><Link to="/profile">PROFILE</Link></li>
+        <li className="nav-items"><Link to={ profileLink }>PROFILE</Link></li>
         {localStorage.getItem("token") ? (
           <li className="nav-items">
             <Link 
