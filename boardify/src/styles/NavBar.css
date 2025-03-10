@@ -42,8 +42,8 @@
     position: relative;
     align-items: center;
     margin-left: auto;
-    margin-right: 200px;
-    margin-top: 35px;
+    margin-right: 0px;
+    margin-top: 32px;
   }
   
   .search-input {
