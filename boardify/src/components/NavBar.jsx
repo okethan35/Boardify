@@ -43,7 +43,7 @@ export default function NavBar() {
   return (
     <div className="nav-bar">
       <div className="logo-box">
-        <Link className="logo" to="/home">
+        <Link className="logo" to="/">
           <img src={logo} alt="Logo" />
         </Link>
       </div>
@@ -73,7 +73,7 @@ export default function NavBar() {
         </div>
       )}
       <ul className="nav-list">
-        <li className="nav-items"><Link to="/home">HOME</Link></li>
+        <li className="nav-items"><Link to="/">HOME</Link></li>
         <li className="nav-items"><Link to={ profileLink }>PROFILE</Link></li>
         {localStorage.getItem("token") ? (
           <li className="nav-items">
