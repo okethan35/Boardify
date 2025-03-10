@@ -6,6 +6,7 @@ const cors = require("cors");
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
 const queryRoutes = require('./routes/queryRoutes');
+const qrRoutes = require('./routes/qrRoutes');
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ app.options("*", cors());
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 app.use('/query', queryRoutes);
+app.use('/qr', generateQRCode);
 
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB Connected"))
