@@ -1,6 +1,26 @@
 const API_URL = process.env.REACT_APP_API_URL; 
 
 //TODO: add makePost route here
+const makePost = async (userId, username, profileImg) => {
+    try {
+      const response = await fetch(`${API_URL}/post/makePost`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, username, profileImg }),
+      });
+      console.log(response)
+  
+      if (response.ok) {
+        console.log("Post Creation Successful:", data.message);
+      } else {
+        console.error("Post Creation Error:", data.message);
+      }
+      } catch (error) {
+          console.error("Error Creating Post:", error);
+      }
+  };
 
 const getPosts = async () => {
   try {
@@ -44,7 +64,7 @@ const like = async (postId, username) => {
     } catch (error) {
         console.error("Error handling like:", error);
     }
-    };
+};
 
 const makeComment = async (postId, username, comment) => {
     try {
@@ -67,4 +87,4 @@ const makeComment = async (postId, username, comment) => {
     } catch (error) {
       console.error("Error handling comment:", error);
     }
-  };
+};
