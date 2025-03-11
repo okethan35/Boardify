@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 const { makePost, getPosts, like, makeComment } = require('../controllers/postController.js');  // Import the controller
 
 const router = express.Router();
