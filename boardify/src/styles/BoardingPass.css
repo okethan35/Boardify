@@ -5,13 +5,14 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #535e73;
+  background-color: #3c4b52;
+    color:rgb(16, 26, 26);
 }
 
 .boarding-pass {
     position: relative;
-    width: 669px;
-    height: 260px;
+    width: 741px;
+    height: 289px;
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(210, 10, 110, 0.2);
@@ -20,12 +21,14 @@
     padding: 0px;
     display: flex;
     flex-direction: row;
-    display: none;
+    align-content: flex-start;
+    justify-content: flex-end;
+    /*display: none;*/
 }
-
+/*
 .boarding-pass.visible {
     display: flex;
-}
+}*/
 
 .header {
     background: #995f24;
@@ -66,15 +69,16 @@
     width: 100px;
     height: auto;
 }
-
+/*
 .horizontal-line {
     position: absolute;
     bottom: 40px;
     left: 10.4%;
     width: 59.3%;
     height: 2px;
-/*background-color: burlywood;*/
-}
+ackground-color: burlywood;*/
+
+
 
 .dotted-line {
     width: 2px;
@@ -84,8 +88,8 @@
     top: 0;
     background: repeating-linear-gradient(
         to bottom,
-        black 0px,
-        black 5px,
+        burlywood 2px,
+        burlywood 5px,
         transparent 5px,
         transparent 10px
     );
@@ -114,6 +118,7 @@
     justify-content: flex-end;
 }
 
+
 .top-tracks-container {
     font-size: medium;
     display: flex;
@@ -123,7 +128,7 @@
     right: 10px;
     top: 30px;
     width: 25%;
-    height: 200px;
+    height: 153px;
     overflow-y: auto;
     padding: 10px;
 }
