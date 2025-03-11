@@ -1,6 +1,5 @@
 const API_URL = process.env.REACT_APP_API_URL; 
 
-//TODO: add makePost route here
 const makePost = async (userId, username, profileImg) => {
     try {
       const response = await fetch(`${API_URL}/post/makePost`, {
