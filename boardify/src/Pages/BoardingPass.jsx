@@ -265,12 +265,11 @@ const BoardingPass = () => {
           const data = await getUserData(userToken);
           console.log("DATA1:", data.userData);
           setUserData(data.userData);
-          console.log("Profile:", userData.profile);
 
-          // Generate the Spotify barcode URL
-          const barcodeUrl = appendLastPartOfUrl(userData.profile.profileURL);
-            setSpotifyBarcode(barcodeUrl);
-            console.log("SPOTIFY BARCODE:", spotifyBarcode);
+          // Directly generate the barcode URL from the fetched data
+          const barcodeUrl = appendLastPartOfUrl(data.userData.profile.profileURL);
+          setSpotifyBarcode(barcodeUrl);
+          console.log("SPOTIFY BARCODE:", barcodeUrl);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -317,7 +316,12 @@ const BoardingPass = () => {
                   <strong>Passenger:</strong> <span>{userData.profile.displayName}</span>
                 </div>
                 <div>
-                  <strong>Flight:</strong> <span>{`${'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.length)]}${Math.floor(Math.random() * 10)}`}</span>
+                  <strong>Flight:</strong>{" "}
+                  <span>
+                    {`${"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * "ABCDEFGHIJKLMNOPQRSTUVWXYZ".length)]}${Math.floor(
+                      Math.random() * 10
+                    )}`}
+                  </span>
                 </div>
                 <div>
                   <strong>From:</strong> <span>{userData.topArtists[0] || ""}</span>
@@ -326,32 +330,44 @@ const BoardingPass = () => {
 
               <div className="details-container">
                 <div>
-                  <strong>To: </strong> <span>{userData.topArtists[4] || userData.topArtists[3] || userData.topArtists[2] || userData.topArtists[1] || ""}</span>
+                  <strong>To:</strong>{" "}
+                  <span>
+                    {userData.topArtists[4] ||
+                      userData.topArtists[3] ||
+                      userData.topArtists[2] ||
+                      userData.topArtists[1] ||
+                      ""}
+                  </span>
                 </div>
                 <div>
                   <strong>Carrier:</strong> <span>Boardify</span>
                 </div>
                 <div>
-                  <strong>Date:</strong> <span>{`${String((new Date()).getMonth() + 1).padStart(2, '0')}/${String((new Date()).getDate()).padStart(2, '0')}/${(new Date()).getFullYear()}`}</span>
+                  <strong>Date:</strong>{" "}
+                  <span>
+                    {`${String(new Date().getMonth() + 1).padStart(2, "0")}/${String(
+                      new Date().getDate()
+                    ).padStart(2, "0")}/${new Date().getFullYear()}`}
+                  </span>
                 </div>
               </div>
 
               <div className="top-tracks-container">
                 <div>
                   <strong>Top Tracks:</strong>
-                  <div>{userData.topTracks.map((track, index) => (
-                    <li key={index}>{track.name} by {track.artist}</li>
-                  ))}</div>
+                  <div>
+                    {userData.topTracks.map((track, index) => (
+                      <li key={index}>
+                        {track.name} by {track.artist}
+                      </li>
+                    ))}
+                  </div>
                 </div>
               </div>
 
               <div className="bar-code">
                 {spotifyBarcode && (
-                  <img
-                    id="barcode"
-                    src={spotifyBarcode}
-                    alt="Spotify Barcode"
-                  />
+                  <img id="barcode" src={spotifyBarcode} alt="Spotify Barcode" />
                 )}
               </div>
             </div>
@@ -373,9 +389,7 @@ const BoardingPass = () => {
       <Navbar />
       <div className="boarding-pass-container">
         <div className="boarding-pass-box">
-          <div className="boarding-pass-info">
-            {renderContent()}
-          </div>
+          <div className="boarding-pass-info">{renderContent()}</div>
         </div>
       </div>
     </div>
