@@ -302,13 +302,13 @@ const BoardingPass = () => {
                     <strong>Flight:</strong> <span>{`${'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.length)]}${Math.floor(Math.random() * 10)}`}</span>
                   </div>
                   <div>
-                    <strong>From:</strong> <span>{userData.topTracks[0]}</span>
+                    <strong>From:</strong> <span>{userData.topTracks}</span>
                   </div>
                 </div>
     
                 <div className="details-container">
                   <div>
-                    <strong>To: </strong> <span>{userData.topTracks[5]}</span>
+                    <strong>To: </strong> <span>{userData.topTracks}</span>
                   </div>
                   <div>
                     <strong>Carrier:</strong> <span>Boardify</span>
@@ -321,9 +321,7 @@ const BoardingPass = () => {
                 <div className="top-tracks-container">
                   <div>
                     <strong>Top Tracks:</strong>
-                    <div>{userData.topTracks.map((track, index) => (
-              <li key={index}>{track.name} by {track.artist}</li>
-            ))}</div>
+                    <div>{userData.topTracks}</div>
                   </div>
                 </div>
     
@@ -331,7 +329,7 @@ const BoardingPass = () => {
                   <div className="top-artists-container">
                     <div>
                       <strong>Top Artists:</strong>
-                      <div>{userData.topArtists.join(', ')}</div>
+                      <div>{userData.topArtists}</div>
                     </div>
                   </div>
                 )}
