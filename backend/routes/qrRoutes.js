@@ -1,5 +1,5 @@
 const express = require('express');
-const { searchUsers } = require('../controllers/qrController');  // Import the controller
+const { generateQRCode } = require('../controllers/qrController');  // Import the controller
 
 const router = express.Router();
 

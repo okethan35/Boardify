@@ -19,7 +19,7 @@ app.options("*", cors());
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 app.use('/query', queryRoutes);
-app.use('/qr', generateQRCode);
+app.use('/qr', qrRoutes);
 
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB Connected"))
