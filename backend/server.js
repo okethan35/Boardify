@@ -6,6 +6,7 @@ const cors = require("cors");
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
 const queryRoutes = require('./routes/queryRoutes');
+const postRoutes = require('./routes/postRoutes');
 
 dotenv.config();
 const app = express();
