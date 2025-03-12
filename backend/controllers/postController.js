@@ -1,5 +1,6 @@
 const Post = require("../models/Post.js");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 exports.makePost = async (req, res) => {
     console.log("makePost route hit!");
