@@ -222,9 +222,19 @@ section {
   padding-top: 10px;
 }
 
+/* Filled heart icon (liked state) */
+.bxs-heart {
+  font-size: 2.1rem;
+  color: red; /* Change to your desired liked color */
+  cursor: pointer;
+  transition: color 0.3s ease; /* Smooth transition */
+}
 
-
-
+/* Optional: Add a hover effect */
+.bx-heart:hover,
+.bxs-heart:hover {
+  color: red; /* Change to your desired hover color */
+}
 
 .comment {
   display: block;

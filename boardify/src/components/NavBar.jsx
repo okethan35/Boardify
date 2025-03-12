@@ -74,7 +74,8 @@ export default function NavBar() {
             <Link 
               to="/" 
               onClick={() => { 
-                localStorage.removeItem("token"); 
+                localStorage.removeItem("token");
+                localStorage.removeItem("username"); 
               }} 
               className="nav-link"
             >

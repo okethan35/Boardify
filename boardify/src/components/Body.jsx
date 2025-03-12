@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { like, makeComment } from "../api/post";
+import def_prof_pic from '../assets/default_profile.png';
 import '../styles/Body.css';
 import pass1 from '../assets/boarding_pass_1.jpg';
 import AuthenticateButton from './AuthenticateButton';
@@ -17,6 +18,7 @@ const arrayBufferToBase64 = (buffer) => {
 };
 
 export default function Body() {
+  const username = localStorage.getItem("username");
   const [posts, setPosts] = useState([]);
 
   // Fetch posts from backend
@@ -29,19 +31,20 @@ export default function Body() {
 
   // Handle likes
   const handleLike = async (postId) => {
-    setPosts((prevPosts) =>
-      prevPosts.map((post) =>
-        post._id === postId
-          ? { ...post, liked: !post.liked, likes: post.liked ? post.likes - 1 : post.likes + 1 }
-          : post
-      )
-    );
-
+      
     try {
-      const username = localStorage.getItem("username");
-      const likes = await like(postId, username);
+        const likes = await like(postId, username);
+        console.log("COUNT:",likes.count);
+        setPosts((prevPosts) =>
+            prevPosts.map((post) =>
+            post._id === postId
+                ? { ...post, liked: !post.liked, likes: likes }
+                : post
+            )
+        );
+        console.log(posts);
     } catch (err) {
-      console.error("Error liking post:", err);
+        console.error("Error liking post:", err);
     }
 
     
@@ -52,6 +55,7 @@ export default function Body() {
     if (!commentText.trim()) return;
 
     const newComment = { author: "You", comment: commentText };
+    const comments = await makeComment(postId, username, commentText);
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post._id === postId
@@ -59,8 +63,6 @@ export default function Body() {
           : post
       )
     );
-    const username = localStorage.getItem("username");
-    const comments = await makeComment(postId, username, commentText);
   };
 
   // Handle comment click
@@ -84,7 +86,7 @@ export default function Body() {
               <div className="post-top">
                 <div className="post-profile">
                   <img
-                    src={post.profileImg?.url || "img/default-profile.jpg"}
+                    src={post.profileImg?.url || def_prof_pic}
                     alt="Profile"
                   />
                   <div className="name-username">
@@ -104,7 +106,7 @@ export default function Body() {
               <div className="post-bottom">
                 <div className="actions-icons">
                   <i
-                    className={`bx bx-heart ${post.liked ? 'liked' : ''}`}
+                    className={`bx ${post.likes.likedBy.includes(username) ? ' bxs-heart' : 'bx-heart'}`}
                     onClick={() => handleLike(post._id)}
                   />
                   <i
@@ -112,7 +114,7 @@ export default function Body() {
                     onClick={() => handleComment(post._id, "Wow! What's your playlist?")}
                   ></i>
                 </div>
-                <h3 className="likes">{post.likes?.count || 0} likes</h3>
+                <h3 className="likes">{post.likes.count || 0} likes</h3>
                 <div className="comment">
                   {post.comments?.map((comment, index) => (
                     <p key={index}>
