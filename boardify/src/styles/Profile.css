@@ -44,3 +44,13 @@ body {
   font-size: 1rem;
   margin: 0.5rem 0;
 }
+
+a {
+  color: #f2e5c1ff;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #d4b483;
+  text-decoration: underline;
+}
