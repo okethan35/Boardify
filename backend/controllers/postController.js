@@ -26,7 +26,7 @@ exports.makePost = async (req, res) => {
 exports.getPosts = async(req, res) => {
     try {
         const postList = await Post.find().sort({timeCreated: -1}).limit(20);
-        if(!userDataList){
+        if(!postList){
             return res.status(400).json({ message: "No posts or error getting posts" });
         }
         res.json({ postList });
