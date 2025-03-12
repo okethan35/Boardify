@@ -1,218 +1,3 @@
-// export default function BoardingPass({ user }) {
-//   const [data, setData] = useState(null);
-//   // Set to true by default so the pass is shown immediately
-//   const [showPass, setShowPass] = useState(true);
-//   const [topTracks, setTopTracks] = useState('');
-//   const [spotifyBarcode, setSpotifyBarcode] = useState('');
-//   const [spotifyUsername, setSpotifyUsername] = useState('');
-//   const [fromArtist, setFromArtist] = useState('');
-//   const [toArtist, setToArtist] = useState('');
-//   const [curDate, setCurDate] = useState('');
-//   const [flightNumber, setFlightNumber] = useState(0);
-//   const [flightCode, setFlightCode] = useState('');
-
-//   // Append the last part of the Spotify URL to generate a barcode URL
-//   const appendLastPartOfUrl = (url) => {
-//     const baseUrl = "https://scannables.scdn.co/uri/plain/jpeg/000000/white/640/spotify:track:";
-//     const lastPart = url.split('/').pop();
-//     return `${baseUrl}${lastPart}`;
-//   };
-
-//   // Fetch user data when the component mounts using API_URL
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const userToken = localStorage.getItem('spotify_token');
-//       if (!userToken) {
-//         console.error('User token not found');
-//         return;
-//       }
-//       try {
-//         const response = await fetch(`${API_URL}/api/getUserData`, {
-//           headers: {
-//             Authorization: `Bearer ${userToken}`,
-//           },
-//         });
-//         if (!response.ok) {
-//           throw new Error('Failed to fetch user data');
-//         }
-//         const userData = await response.json();
-//         setData(userData);
-//         console.log("DATA:", userData);
-//       } catch (error) {
-//         console.error('Error fetching user data:', error);
-//       }
-//     };
-//     fetchData();
-//   }, []);
-
-//   // Initialize boarding pass details when data and showPass are available
-//   useEffect(() => {
-//     if (data && showPass) initializeBoardingPass();
-//   }, [data, showPass]);
-
-//   // Update top tracks for the boarding pass using user data
-//   const updateTopTracksBoardingPass = (tracks) => {
-//     setTopTracks(tracks.length > 0
-//       ? tracks.map(track => `${track.name} by ${track.artist}`).join(', ')
-//       : 'Top tracks not found.'
-//     );
-//   };
-
-//   // Format the current date as MM/DD/YYYY
-//   const getFormattedDate = () => {
-//     const date = new Date();
-//     const day = String(date.getDate()).padStart(2, '0');
-//     const month = String(date.getMonth() + 1).padStart(2, '0');
-//     const year = date.getFullYear();
-//     return `${month}/${day}/${year}`;
-//   };
-
-//   // Initialize boarding pass details using the already-collected user data
-//   function initializeBoardingPass() {
-//     if (!data) return;
-
-//     // Set Spotify username from user data
-//     setSpotifyUsername(data.profile.displayName);
-
-//     // Update top tracks using data.topTracks
-//     const tracks = data.topTracks || [];
-//     updateTopTracksBoardingPass(tracks);
-
-//     if (tracks.length > 0) {
-//       // Use first track's artist for 'From'
-//       setFromArtist(tracks[0].artist);
-
-//       // Use 5th track's artist for 'To' if available
-//       if (tracks.length >= 5) {
-//         setToArtist(tracks[4].artist);
-//       } else {
-//         setToArtist('No 5th track available');
-//       }
-
-//       // If the first track has a URL, generate a barcode URL
-//       if (tracks[0].url) {
-//         const barcodeUrl = appendLastPartOfUrl(tracks[0].url);
-//         setSpotifyBarcode(barcodeUrl);
-//       }
-//     }
-
-//     // Set the current date
-//     setCurDate(getFormattedDate());
-
-//     // Handle flight number and flight code
-//     const storedFlightNumber = parseInt(localStorage.getItem('flightNumber') || "0", 10);
-//     const newFlightNumber = storedFlightNumber + 1;
-//     setFlightNumber(newFlightNumber);
-//     localStorage.setItem('flightNumber', newFlightNumber.toString());
-
-//     const randomLetter = generateRandomLetter();
-//     setFlightCode(`${randomLetter}${newFlightNumber}`);
-//   }
-
-//   // Generate a random uppercase letter (A-Z)
-//   const generateRandomLetter = () => {
-//     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-//     return letters[Math.floor(Math.random() * letters.length)];
-//   };
-
-//   // Handle download of the boarding pass as an image
-//   const handleDownload = () => {
-//     const boardingPassElement = document.querySelector('.boarding-pass');
-//     if (!boardingPassElement) {
-//       console.error("Boarding pass content not found");
-//       return;
-//     }
-//     html2canvas(boardingPassElement).then(canvas => {
-//       const image = canvas.toDataURL('image/png');
-//       const link = document.createElement('a');
-//       link.href = image;
-//       link.download = 'boardify.png';
-//       link.click();
-//     });
-//   };
-
-//   return (
-//     <div className="boarding-pass-container">
-//       <div className={`boarding-pass ${showPass ? 'visible' : ''}`}>
-//         <div className="dotted-line"></div>
-//         <div className="horizontal-line"></div>
-//         <div className="header">
-//           {data?.profile?.profileImg?.url && (
-//             <img
-//               src={data.profile.profileImg.url}
-//               alt="Profile"
-//               className="profile-picture"
-//             />
-//           )}
-//         </div>
-
-//         <div className="Board">
-//           <div className="Board-container">
-//             <div>
-//               <strong>BOARDIFY</strong>
-//             </div>
-//           </div>
-
-//           <div className="details">
-//             <div className="details-container">
-//               <div>
-//                 <strong>Passenger:</strong> <span>{spotifyUsername}</span>
-//               </div>
-//               <div>
-//                 <strong>Flight:</strong> <span>{flightCode}</span>
-//               </div>
-//               <div>
-//                 <strong>From:</strong> <span>{fromArtist}</span>
-//               </div>
-//             </div>
-
-//             <div className="details-container">
-//               <div>
-//                 <strong>To: </strong> <span>{toArtist}</span>
-//               </div>
-//               <div>
-//                 <strong>Carrier:</strong> <span>Boardify</span>
-//               </div>
-//               <div>
-//                 <strong>Date:</strong> <span>{curDate}</span>
-//               </div>
-//             </div>
-
-//             <div className="top-tracks-container">
-//               <div>
-//                 <strong>Top Tracks:</strong>
-//                 <div>{topTracks}</div>
-//               </div>
-//             </div>
-
-//             {data?.topArtists && data.topArtists.length > 0 && (
-//               <div className="top-artists-container">
-//                 <div>
-//                   <strong>Top Artists:</strong>
-//                   <div>{data.topArtists.join(', ')}</div>
-//                 </div>
-//               </div>
-//             )}
-
-//             <div className="bar-code">
-//               {spotifyBarcode && (
-//                 <img
-//                   id="barcode"
-//                   src={spotifyBarcode}
-//                   alt="Spotify Barcode"
-//                 />
-//               )}
-//             </div>
-//           </div>
-//         </div>
-//         <button id="download-button" onClick={handleDownload}>
-//           Save Ticket
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
 import React, { useEffect, useState, useRef } from "react";
 import Navbar from "../components/NavBar.jsx";
 import { getUserId } from "../api/auth.jsx";
@@ -228,41 +13,104 @@ const BoardingPass = () => {
   const [loading, setLoading] = useState(true);
   const [spotifyBarcode, setSpotifyBarcode] = useState('');
   const [barcodeLoaded, setBarcodeLoaded] = useState(false);
-  const [showBoardingPass, setShowBoardingPass] = useState(false); // State for visibility
+  const [showBoardingPass, setShowBoardingPass] = useState(false);
+  const [uploadTriggered, setUploadTriggered] = useState(false);
   const componentRef = useRef(null);
   const username = localStorage.getItem("username");
 
+  // Helper to build the barcode URL.
   const appendLastPartOfUrl = (url) => {
     const baseUrl = "https://scannables.scdn.co/uri/plain/jpeg/995f24/white/640/spotify:user:";
     const lastPart = url.split('/').pop();
     return `${baseUrl}${lastPart}`;
   };
 
-  const handleDownload = async () => {
-    if (!componentRef.current) return;
+  // Capture the boarding pass element and upload it to the backend.
+  const uploadBoardingPass = () => {
+    console.log("uploadBoardingPass called");
+    if (!componentRef.current) {
+      console.error("Error: componentRef is not set.");
+      return;
+    }
+    console.log("componentRef exists. Starting html2canvas capture.");
+    html2canvas(componentRef.current, {
+      useCORS: true,
+      scale: 2,
+      logging: true,
+      allowTaint: false,
+      backgroundColor: null
+    })
+      .then(canvas => {
+        console.log("Canvas captured.");
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            console.error("Error: toBlob returned a null blob.");
+            return;
+          }
+          console.log("Blob created:", blob);
+          const file = new File([blob], "boardingPass.png", { type: "image/png" });
+          console.log("File created:", file);
+          const formData = new FormData();
+          formData.append("image", file);
+          formData.append("userId", localStorage.getItem("userId") || "");
+          formData.append("username", username || "Guest");
+          formData.append("profileImg", localStorage.getItem("profileImg") || "");
+          console.log("FormData prepared:", formData);
 
-    const boardingPass = componentRef.current;
-    boardingPass.style.display = 'none';
-    const reflow = boardingPass.offsetHeight;
-    boardingPass.style.display = 'flex';
-
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    const images = boardingPass.querySelectorAll('img');
-    await Promise.all(
-      Array.from(images).map(img => {
-        if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
-        return new Promise((resolve, reject) => {
-          img.addEventListener('load', resolve);
-          img.addEventListener('error', () => {
-            console.warn('Image failed to load:', img.src);
-            resolve();
-          });
-        });
+          fetch(`${API_URL}/makePost`, {
+            method: "POST",
+            body: formData,
+          })
+            .then(response => {
+              console.log("Fetch response received:", response);
+              if (!response.ok) {
+                console.error("Fetch response not OK. Status:", response.status);
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log("Boarding pass uploaded:", data);
+            })
+            .catch(error => {
+              console.error("Error during fetch/upload:", error);
+            });
+        }, "image/png");
       })
-    );
+      .catch(err => {
+        console.error("html2canvas error:", err);
+      });
+  };
 
-    html2canvas(boardingPass, {
+  // When the user clicks the button, show the boarding pass.
+  const handleCreateBoardingPass = () => {
+    console.log("Create Boarding Pass button clicked");
+    setShowBoardingPass(true);
+  };
+
+  // Wait until the boarding pass is visible and the barcode is loaded before triggering upload.
+  useEffect(() => {
+    console.log(
+      "Upload effect: showBoardingPass =", showBoardingPass,
+      "barcodeLoaded =", barcodeLoaded,
+      "uploadTriggered =", uploadTriggered
+    );
+    if (showBoardingPass && barcodeLoaded && !uploadTriggered) {
+      console.log("Conditions met. Triggering uploadBoardingPass.");
+      uploadBoardingPass();
+      setUploadTriggered(true);
+    }
+  }, [showBoardingPass, barcodeLoaded, uploadTriggered]);
+
+  // Download functionality to allow saving the ticket locally.
+  const handleDownload = async () => {
+    console.log("Download button clicked");
+    if (!componentRef.current) {
+      console.error("Error: componentRef is not set for download.");
+      return;
+    }
+    const boardingPassEl = componentRef.current;
+    await new Promise(resolve => setTimeout(resolve, 500));
+    html2canvas(boardingPassEl, {
       useCORS: true,
       scale: 2,
       logging: true,
@@ -272,6 +120,7 @@ const BoardingPass = () => {
         clonedDoc.querySelector('.boarding-pass').style.boxShadow = 'none';
       }
     }).then(canvas => {
+      console.log("Canvas captured for download.");
       const image = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.href = image;
@@ -279,34 +128,42 @@ const BoardingPass = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    }).catch(err => {
+      console.error("Error during download canvas capture:", err);
     });
-  };
-
-  const handleCreateBoardingPass = () => {
-    setShowBoardingPass(true);
   };
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        console.log("Fetching user data for username:", username);
         if (!username) {
+          console.warn("Username not found in localStorage.");
           setLoading(false);
           return;
         }
         const userToken = await getUserId(username);
+        console.log("User token received:", userToken);
         if (userToken) {
           setIsLoggedIn(true);
           const data = await getUserData(userToken);
+          console.log("User data received:", data);
           setUserData(data.userData);
 
           const barcodeUrl = appendLastPartOfUrl(data.userData.profile.profileURL);
           setSpotifyBarcode(barcodeUrl);
+          console.log("Barcode URL set:", barcodeUrl);
 
           const img = new Image();
           img.crossOrigin = "anonymous";
           img.src = barcodeUrl;
-          img.onload = () => setBarcodeLoaded(true);
-          img.onerror = () => console.error('Failed to load barcode');
+          img.onload = () => {
+            console.log("Barcode image loaded (from img onload).");
+            setBarcodeLoaded(true);
+          };
+          img.onerror = (e) => {
+            console.error("Failed to load barcode image (from img onerror):", e);
+          };
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -335,108 +192,113 @@ const BoardingPass = () => {
 
     return (
       <div className="boarding-pass-container">
-        {/* Conditionally render the "Create Boarding Pass" button */}
+        {/* Button to create a boarding pass and trigger backend upload */}
         {!showBoardingPass && (
           <button id="create-ticket-button" onClick={handleCreateBoardingPass}>
             Create Boarding Pass
           </button>
         )}
 
-     
         {showBoardingPass && (
-          <div className="boarding-pass" ref={componentRef}>
-            <div className="dotted-line"></div>
-            <div className="horizontal-line"></div>
-            <div className="header">
-              <div className="bar-code">
-                {spotifyBarcode && (
-                  <img
-                    id="barcode"
-                    src={spotifyBarcode}
-                    alt="Spotify Barcode"
-                    crossOrigin="anonymous"
-                    style={{ opacity: barcodeLoaded ? 1 : 0 }}
-                    onLoad={() => setBarcodeLoaded(true)}
-                  />
-                )}
-              </div>
-            </div>
-
-            <div className="Board">
-              <div className="Board-container">
-                <div>
-                  <strong>BOARDIFY</strong>
+          <>
+            <div className="boarding-pass" ref={componentRef}>
+              <div className="dotted-line"></div>
+              <div className="horizontal-line"></div>
+              <div className="header">
+                <div className="bar-code">
+                  {spotifyBarcode && (
+                    <img
+                      id="barcode"
+                      src={spotifyBarcode}
+                      alt="Spotify Barcode"
+                      crossOrigin="anonymous"
+                      style={{ opacity: barcodeLoaded ? 1 : 0 }}
+                      onLoad={() => {
+                        console.log("Barcode image onLoad triggered in render.");
+                        setBarcodeLoaded(true);
+                      }}
+                      onError={(e) => {
+                        console.error("Barcode image failed to load in render:", e);
+                      }}
+                    />
+                  )}
                 </div>
               </div>
 
-              <div className="details">
-                <div className="details-container">
+              <div className="Board">
+                <div className="Board-container">
                   <div>
-                    <strong>Passenger:</strong> <span>{userData.profile.displayName}</span>
-                  </div>
-                  <div>
-                    <strong>Flight:</strong>{" "}
-                    <span>
-                      {`${"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)]}${Math.floor(
-                        Math.random() * 10
-                      )}`}
-                    </span>
-                  </div>
-                  <div>
-                    <strong>From:</strong> <span>{userData.topArtists[0] || ""}</span>
+                    <strong>BOARDIFY</strong>
                   </div>
                 </div>
 
-                <div className="details-container">
-                  <div>
-                    <strong>To:</strong>{" "}
-                    <span>
-                      {userData.topArtists[4] ||
-                        userData.topArtists[3] ||
-                        userData.topArtists[2] ||
-                        userData.topArtists[1] ||
-                        ""}
-                    </span>
-                  </div>
-                  <div>
-                    <strong>Carrier:</strong> <span>Boardify</span>
-                  </div>
-                  <div>
-                    <strong>Date:</strong>{" "}
-                    <span>
-                      {`${String(new Date().getMonth() + 1).padStart(2, "0")}/${String(
-                        new Date().getDate()
-                      ).padStart(2, "0")}/${new Date().getFullYear()}`}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="top-tracks-container">
-                  <div>
-                    <strong>Top Tracks:</strong>
+                <div className="details">
+                  <div className="details-container">
                     <div>
-                      {userData.topTracks.map((track, index) => (
-                        <li key={index}>
-                          {track.name} by {track.artist}
-                        </li>
-                      ))}
+                      <strong>Passenger:</strong> <span>{userData.profile.displayName}</span>
+                    </div>
+                    <div>
+                      <strong>Flight:</strong>{" "}
+                      <span>
+                        {`${"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)]}${Math.floor(
+                          Math.random() * 10
+                        )}`}
+                      </span>
+                    </div>
+                    <div>
+                      <strong>From:</strong> <span>{userData.topArtists[0] || ""}</span>
+                    </div>
+                  </div>
+
+                  <div className="details-container">
+                    <div>
+                      <strong>To:</strong>{" "}
+                      <span>
+                        {userData.topArtists[4] ||
+                          userData.topArtists[3] ||
+                          userData.topArtists[2] ||
+                          userData.topArtists[1] ||
+                          ""}
+                      </span>
+                    </div>
+                    <div>
+                      <strong>Carrier:</strong> <span>Boardify</span>
+                    </div>
+                    <div>
+                      <strong>Date:</strong>{" "}
+                      <span>
+                        {`${String(new Date().getMonth() + 1).padStart(2, "0")}/${String(
+                          new Date().getDate()
+                        ).padStart(2, "0")}/${new Date().getFullYear()}`}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="top-tracks-container">
+                    <div>
+                      <strong>Top Tracks:</strong>
+                      <div>
+                        {userData.topTracks.map((track, index) => (
+                          <li key={index}>
+                            {track.name} by {track.artist}
+                          </li>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
 
-        {/* Save Ticket Button */}
-        {showBoardingPass && (
-          <button
-            id="download-button"
-            onClick={handleDownload}
-            disabled={!barcodeLoaded}
-          >
-            {barcodeLoaded ? "Save Ticket" : "Generating Ticket..."}
-          </button>
+            {/* Optionally, allow the user to download the ticket locally */}
+            <button
+              id="download-button"
+              onClick={handleDownload}
+              disabled={!barcodeLoaded}
+            >
+              {barcodeLoaded ? "Save Ticket" : "Generating Ticket..."}
+            </button>
+          </>
         )}
       </div>
     );
