@@ -1,4 +1,5 @@
 const Post = require("../models/Post.js");
+const mongoose = require("mongoose");
 
 exports.makePost = async (req, res) => {
     try {
@@ -11,11 +12,11 @@ exports.makePost = async (req, res) => {
             profileImg: profileImg,
             boardingPass: {
                 name: name,
-                buffer: buffer,
+                image: buffer,
                 contentType: contentType
             }
         })
-        await newUser.save();
+        await newPost.save();
 
         res.status(201).json({ message: "Post created successfully" });
     } catch (error) {
@@ -26,7 +27,7 @@ exports.makePost = async (req, res) => {
 exports.getPosts = async(req, res) => {
     try {
         const postList = await Post.find().sort({timeCreated: -1}).limit(20);
-        if(!userDataList){
+        if(!postList){
             return res.status(400).json({ message: "No posts or error getting posts" });
         }
         res.json({ postList });
@@ -40,16 +41,16 @@ exports.getPosts = async(req, res) => {
 exports.like = async(req, res) => {
     try {
         const { postId, username } = req.body;
-        const post = await Post.findOne({ _id: mongoose.Types.ObjectId(postId) }).sort({ timeCreated: -1 });
+        const post = await Post.findOne({ _id: mongoose.Types.ObjectId(postId) });
         if(!post){
             return res.status(400).json({ message: "Post not found" });
         }
-        if (post.likes.likedBy.includes({ username })){
+        if (post.likes.likedBy.includes(username)){
             post.likes.count = post.likes.count - 1;
-            post.likes.likedBy.filter(user => user !== username);
+            post.likes.likedBy = post.likes.likedBy.filter(user => user !== username);
         } else {
             post.likes.count = post.likes.count + 1;
-            post.likes.likedBy.push({ username });
+            post.likes.likedBy.push(username);
         }
         await post.save();
         res.json( post.likes );
@@ -62,7 +63,7 @@ exports.like = async(req, res) => {
 exports.makeComment = async(req, res) => {
     try {
         const { postId, username, comment } = req.body;
-        const post = await Post.findOne({ _id: mongoose.Types.ObjectId(postId) }).sort({ timeCreated: -1 });
+        const post = await Post.findOne({ _id: mongoose.Types.ObjectId(postId) });
         if(!post){
             return res.status(400).json({ message: "Post not found" });
         }
