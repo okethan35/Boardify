@@ -394,19 +394,6 @@ const BoardingPass = () => {
                   ))}</div>
                 </div>
               </div>
-
-              <div className="bar-code">
-                {spotifyBarcode && (
-                  <img 
-                    id="barcode" 
-                    src={spotifyBarcode} 
-                    alt="Spotify Barcode" 
-                    crossOrigin="anonymous"
-                    style={{ opacity: barcodeLoaded ? 1 : 0 }}
-                    onLoad={() => setBarcodeLoaded(true)}
-                  />
-                )}
-              </div>
            
             </div>
           </div>
