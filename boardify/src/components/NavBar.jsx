@@ -78,7 +78,7 @@ export default function NavBar() {
         {localStorage.getItem("token") ? (
           <li className="nav-items">
             <Link 
-              to="/home" 
+              to="/" 
               onClick={() => { 
                 localStorage.removeItem("token"); 
                 localStorage.removeItem("username"); 
