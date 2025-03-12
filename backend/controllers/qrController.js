@@ -1,10 +1,9 @@
 const qrcode = require('qrcode'); // Import the QR code library
 
 
-// Controller function to generate a QR code for a user's unique link
 exports.generateQRCode = async (req, res) => {
   try {
-    const { username } = req.params; // Get username from URL parameter
+    const { username } = req.params;
 
     if (!username) {
       return res.status(400).json({ message: 'Username is required' });
@@ -12,11 +11,7 @@ exports.generateQRCode = async (req, res) => {
     const FRONTEND_URL = req.headers.origin
     // Construct the URL where the QR code should redirect to
     const url = `${FRONTEND_URL}/qr/${username}`;
-
-    // Generate QR code for the constructed URL
-    const qrCode = await qrcode.toDataURL(url); // This will generate the QR code as a base64 PNG image
-
-    // Return the generated QR code as base64
+    const qrCode = await qrcode.toDataURL(url);
     res.json({ qrCode });
   } catch (error) {
     console.error(error);
