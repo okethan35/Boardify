@@ -9,12 +9,12 @@ exports.makePost = async (req, res) => {
       if (!token) {
         return res.status(401).json({ message: "Token is required" });
       }
-  
+      
       // Verify the token
       let userId;
       try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        userId = decoded.userId;
+        userId = decoded;
       } catch (error) {
         return res.status(401).json({ message: "Invalid or expired token" });
       }

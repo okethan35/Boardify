@@ -66,9 +66,9 @@ const BoardingPass = () => {
       const file = new File([blob], "boardingPass.png", { type: "image/png" });
       console.log("File created:", file);
   
-      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
       // Call makePost using fetch
-      const response = await makePost(userId, username, file);
+      const response = await makePost(token, username, file);
   
       console.log("Fetch response received:", response);
   

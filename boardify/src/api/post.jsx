@@ -1,13 +1,13 @@
 const API_URL = process.env.REACT_APP_API_URL; 
 
-const makePost = async (userId, username, profileImg) => {
+const makePost = async (token, username, profileImg) => {
     try {
       const response = await fetch(`${API_URL}/post/makePost`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId, username, profileImg }),
+        body: JSON.stringify({ token, username, profileImg }),
       });
       console.log(response)
   
