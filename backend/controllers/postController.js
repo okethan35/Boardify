@@ -9,21 +9,21 @@ exports.makePost = async (req, res) => {
       if (!token) {
         return res.status(401).json({ message: "Token is required" });
       }
-      
       // Verify the token
       let userId;
       try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        userId = decoded;
+        userId = decoded.userId;
+        console.log(decoded);
       } catch (error) {
         return res.status(401).json({ message: "Invalid or expired token" });
       }
-  
+      console.log(req.file);
       // Check if file is provided
       if (!req.file) {
         return res.status(400).json({ message: "File is required" });
       }
-  
+
       const { originalname, buffer, mimetype } = req.file;
   
       // Create a new post

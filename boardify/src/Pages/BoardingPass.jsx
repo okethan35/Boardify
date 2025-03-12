@@ -27,62 +27,64 @@ const BoardingPass = () => {
   };
 
   // Capture the boarding pass element and upload it to the backend.
-  const uploadBoardingPass = async () => {
-    console.log("uploadBoardingPass called");
-  
-    if (!componentRef.current) {
-      console.error("Error: componentRef is not set.");
-      return;
+const uploadBoardingPass = async () => {
+  console.log("uploadBoardingPass called");
+
+  if (!componentRef.current) {
+    console.error("Error: componentRef is not set.");
+    return;
+  }
+
+  console.log("componentRef exists. Starting html2canvas capture.");
+
+  try {
+    // Capture the canvas using html2canvas
+    const canvas = await html2canvas(componentRef.current, {
+      useCORS: true,
+      scale: 2,
+      logging: true,
+      allowTaint: false,
+      backgroundColor: null,
+    });
+
+    console.log("Canvas captured.");
+
+    // Convert the canvas to a Blob
+    const blob = await new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          reject(new Error("toBlob returned a null blob."));
+          return;
+        }
+        resolve(blob);
+      }, "image/png");
+    });
+
+    console.log("Blob created:", blob);
+
+    // Create a File object from the Blob
+    const file = new File([blob], "boardingPass.png", { type: "image/png" });
+    console.log("File created:", file);
+
+    const token = localStorage.getItem("token");
+    console.log("TOKEN:", token);
+    const profileImg = userData.profile.profileImg;
+    // Call makePost using fetch
+    const response = await makePost(token, username, profileImg, file);
+
+    console.log("Fetch response received:", response);
+
+    if (!response.ok) {
+      console.error("Fetch response not OK. Status:", response.status);
+      throw new Error("Failed to upload boarding pass");
     }
-  
-    console.log("componentRef exists. Starting html2canvas capture.");
-  
-    try {
-      // Capture the canvas using html2canvas
-      const canvas = await html2canvas(componentRef.current, {
-        useCORS: true,
-        scale: 2,
-        logging: true,
-        allowTaint: false,
-        backgroundColor: null,
-      });
-  
-      console.log("Canvas captured.");
-  
-      // Convert the canvas to a Blob
-      const blob = await new Promise((resolve, reject) => {
-        canvas.toBlob((blob) => {
-          if (!blob) {
-            reject(new Error("toBlob returned a null blob."));
-            return;
-          }
-          resolve(blob);
-        }, "image/png");
-      });
-  
-      console.log("Blob created:", blob);
-  
-      // Create a File object from the Blob
-      const file = new File([blob], "boardingPass.png", { type: "image/png" });
-      console.log("File created:", file);
-  
-      const token = localStorage.getItem("token");
-      // Call makePost using fetch
-      const response = await makePost(token, username, file);
-  
-      console.log("Fetch response received:", response);
-  
-      if (!response.ok) {
-        console.error("Fetch response not OK. Status:", response.status);
-        throw new Error("Failed to upload boarding pass");
-      }
-  
-      const data = await response.json();
-      console.log("Boarding pass uploaded:", data);
-    } catch (error) {
-      console.error("Error during uploadBoardingPass:", error);
-    }
-  };
+
+    const data = await response.json();
+    console.log("Boarding pass uploaded:", data);
+  } catch (error) {
+    console.error("Error during uploadBoardingPass:", error);
+  }
+};
 
   // When the user clicks the button, show the boarding pass.
   const handleCreateBoardingPass = () => {

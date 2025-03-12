@@ -1,24 +1,29 @@
 const API_URL = process.env.REACT_APP_API_URL; 
 
-const makePost = async (token, username, profileImg) => {
+const makePost = async (token, username, profileImg, file) => {
     try {
-      const response = await fetch(`${API_URL}/post/makePost`, {
+        const formData = new FormData();
+        formData.append("token", token);
+        formData.append("username", username);
+        formData.append("profileImg", profileImg);
+        formData.append("boardingPass", file);
+        const response = await fetch(`${API_URL}/post/makePost`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({ token, username, profileImg }),
-      });
-      console.log(response)
-  
-      if (response.ok) {
-        console.log("Post Creation Successful:", response.message);
-      } else {
-        console.error("Post Creation Error:", response.message);
-      }
-      } catch (error) {
-          console.error("Error Creating Post:", error);
-      }
+        body: formData,
+        });
+        console.log(response);
+
+        if (response.ok) {
+            console.log("Post Creation Successful:", response.message);
+        } else {
+            console.error("Post Creation Error:", response.message);
+        }   
+    } catch (error) {
+        console.error("Error Creating Post:", error);
+    }
   };
 
 const getPosts = async () => {
