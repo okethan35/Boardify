@@ -6,6 +6,9 @@ exports.makePost = async (req, res) => {
     try {
       // Check if token is provided
       const { token, username, profileImg } = req.body;
+      console.log("TOKEN:", token);
+      console.log("USERNAME:", username);
+      console.log("PROFILEIMG:", profileImg);
       if (!token) {
         return res.status(401).json({ message: "Token is required" });
       }
