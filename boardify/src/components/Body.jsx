@@ -1,16 +1,26 @@
 import { useState, useEffect } from "react";
 import '../styles/Body.css';
 import pass1 from '../assets/boarding_pass_1.jpg';
-import pass2 from '../assets/boarding_pass_2.jpg';
 import AuthenticateButton from './AuthenticateButton';
 import 'boxicons/css/boxicons.min.css';
+
+const API_URL = process.env.REACT_APP_API_URL;
+
+// Helper function to convert buffer array to Base64
+const arrayBufferToBase64 = (buffer) => {
+  if (!buffer) return '';
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  bytes.forEach(byte => binary += String.fromCharCode(byte));
+  return window.btoa(binary);
+};
 
 export default function Body() {
   const [posts, setPosts] = useState([]);
 
   // Fetch posts from backend
   useEffect(() => {
-    fetch("/api/posts/getPosts")
+    fetch(`${API_URL}/getPosts`)
       .then((res) => res.json())
       .then((data) => setPosts(data.postList))
       .catch((err) => console.error("Error fetching posts:", err));
@@ -27,10 +37,13 @@ export default function Body() {
     );
 
     try {
-      await fetch(`/api/posts/like`, {
+      await fetch(`${API_URL}/like`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ postId }),
+        body: JSON.stringify({ 
+          postId, 
+          username: "currentUser" // Replace with actual username from your auth system
+        }),
       });
     } catch (err) {
       console.error("Error liking post:", err);
@@ -41,7 +54,7 @@ export default function Body() {
   const handleComment = async (postId, commentText) => {
     if (!commentText.trim()) return;
 
-    const newComment = { user: "You", text: commentText };
+    const newComment = { author: "You", comment: commentText };
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post._id === postId
@@ -50,11 +63,19 @@ export default function Body() {
       )
     );
 
-    await fetch(`/api/posts/comment`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ postId, username: "You", comment: commentText }),
-    }).catch((err) => console.error("Error adding comment:", err));
+    try {
+      await fetch(`${API_URL}/comment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          postId, 
+          username: "You", // Replace with actual username from your auth system
+          comment: commentText 
+        }),
+      });
+    } catch (err) {
+      console.error("Error adding comment:", err);
+    }
   };
 
   // Handle comment click
@@ -62,7 +83,7 @@ export default function Body() {
     const clickedPost = posts.find((post) => post._id === postId);
     const clickedComment = clickedPost?.comments[commentIndex];
     if (clickedComment) {
-      alert(`Comment by ${clickedComment.user}: "${clickedComment.text}"`);
+      alert(`Comment by ${clickedComment.author}: "${clickedComment.comment}"`);
     }
   };
 
@@ -78,7 +99,7 @@ export default function Body() {
               <div className="post-top">
                 <div className="post-profile">
                   <img
-                    src={post.profileImage || "img/default-profile.jpg"}
+                    src={post.profileImg?.url || "img/default-profile.jpg"}
                     alt="Profile"
                   />
                   <div className="name-username">
@@ -87,7 +108,11 @@ export default function Body() {
                 </div>
               </div>
               <img
-                src={post.imageUrl || pass1}
+                src={
+                  post.boardingPass 
+                    ? `data:${post.boardingPass.contentType};base64,${arrayBufferToBase64(post.boardingPass.image?.data)}`
+                    : pass1
+                }
                 alt="User Post"
                 className="post-image"
               />
@@ -102,17 +127,17 @@ export default function Body() {
                     onClick={() => handleComment(post._id, "Wow! What's your playlist?")}
                   ></i>
                 </div>
-                <h3 className="likes">{post.likes} likes</h3>
+                <h3 className="likes">{post.likes?.count || 0} likes</h3>
                 <div className="comment">
-                  {post.comments.map((comment, index) => (
+                  {post.comments?.map((comment, index) => (
                     <p key={index}>
                       <button
                         className="comment-user-button"
                         onClick={() => handleCommentClick(post._id, index)}
                       >
-                        {comment.user}
+                        {comment.author}
                       </button>
-                      <span>{comment.text}</span>
+                      <span>{comment.comment}</span>
                     </p>
                   ))}
                 </div>
@@ -129,9 +154,9 @@ export default function Body() {
                   />
                 </div>
                 <span className="view-more">
-                  View all {post.comments.length} comments
+                  View all {post.comments?.length || 0} comments
                 </span>
-                <span className="post-time">{post.timestamp}</span>
+                <span className="post-time">{post.timeCreated}</span>
               </div>
             </div>
           ))}
