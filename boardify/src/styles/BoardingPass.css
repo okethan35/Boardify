@@ -34,7 +34,7 @@
     background: #995f24;
     color: rgb(15, 6, 49);
     text-align: center;
-    padding: 5px;
+    padding: 5px;    
     font-size: 18px;
     font-variant: bold;
     width: 10%;
@@ -47,18 +47,33 @@
     writing-mode: vertical-rl; 
 }
 
-
+#create-ticket-button {
+    padding: 10px 20px;
+    background-color: #b91da1; /* Spotify green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: large;
+    margin-bottom: 20px; /* Add spacing */
+  }
+  
+  #create-ticket-button:hover {
+    background-color: #482bd6; /* Lighter green on hover */
+  }
 
 .details {
+    display: grid;
     padding: 30px;
     display: grid;
-    grid-template-columns: 1.1fr 2fr;
+    grid-template-columns: 1.1fr 2.3fr;
     font-size: 14px;
-    margin-left: -5%;
     flex: 2;   
 }
+
 .details div {
     padding: 8px;
+    text-align: left;
 }
 
 .bar-code {
@@ -69,7 +84,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 150px;
+    width: 240px;
     height: auto;
 }
 .bar-code img {
@@ -97,27 +112,29 @@ ackground-color: burlywood;*/
     position: absolute;
     left: 70%;
     top: 0;
-    background: repeating-linear-gradient(
-        to bottom,
-        burlywood 2px,
-        burlywood 5px,
-        transparent 5px,
-        transparent 10px
-    );
+    background: repeating-linear-gradient(to bottom,
+     burlywood 17px,
+      burlywood 20px,
+       transparent 2px, 
+       transparent 30px);
 }
 
 .Board {
     align-items: center;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .Board-container {
     font-size: larger;
     display: flex;
-    color: rgb(94, 4, 73);
+    color: rgb(81, 94, 15);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 22px;
+    font-size: 26px;
     right: 10px;
+    padding-left: 11px;
 }
+
+
 
 .details-container { 
     display: flex;
