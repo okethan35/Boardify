@@ -7,6 +7,7 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
   scroll-padding-top: 2rem;
+  text-align: center; /* Center text and inline elements globally */
 }
 
 /* variables */
@@ -36,6 +37,8 @@ li {
 }
 
 img {
+  display: block;
+  margin: auto;
   width: 100%;
 }
 
@@ -53,12 +56,14 @@ header {
   max-width: 860px;
   margin: auto;
   width: 100%;
+  text-align: center; /* Ensure container content is centered */
 }
 
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* Center nav items */
+  gap: 2rem; /* Add some space between items */
   padding: 15px 0;
 }
 
@@ -118,13 +123,14 @@ section {
 
 .main {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Center main content */
   gap: 2rem;
 }
 
 .post-container {
   max-width: 550px;
   width: 100%;
+  margin: auto;
 }
 
 .post-box {
@@ -249,7 +255,6 @@ section {
   background: transparent;
   margin-right: 0.5rem;
   padding: 0;
-  
 }
 .comment-user-button {
   background: transparent;
