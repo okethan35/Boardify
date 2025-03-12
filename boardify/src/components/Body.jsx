@@ -20,7 +20,7 @@ export default function Body() {
 
   // Fetch posts from backend
   useEffect(() => {
-    fetch(`${API_URL}/getPosts`)
+    fetch(`${API_URL}/post/getPosts`)
       .then((res) => res.json())
       .then((data) => setPosts(data.postList))
       .catch((err) => console.error("Error fetching posts:", err));

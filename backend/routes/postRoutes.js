@@ -3,7 +3,7 @@ const multer = require('multer');
 const { makePost, getPosts, like, makeComment } = require('../controllers/postController.js');  // Import the controller
 
 const router = express.Router();
-const upload = multer(); 
+const upload = multer({ storage: multer.memoryStorage() });
 
 router.post('/makePost', upload.single("image"), makePost);
 router.get('/getPosts', getPosts);

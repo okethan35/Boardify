@@ -56,8 +56,16 @@ const BoardingPass = () => {
           formData.append("username", username || "Guest");
           formData.append("profileImg", localStorage.getItem("profileImg") || "");
           console.log("FormData prepared:", formData);
-
-          fetch(`${API_URL}/makePost`, {
+  
+          // Log the data being passed to makePost
+          console.log("Data being passed to makePost:", {
+            image: file,
+            userId: localStorage.getItem("userId") || "",
+            username: username || "Guest",
+            profileImg: localStorage.getItem("profileImg") || "",
+          });
+  
+          fetch(`${API_URL}/post/makePost`, {
             method: "POST",
             body: formData,
           })
@@ -80,6 +88,7 @@ const BoardingPass = () => {
         console.error("html2canvas error:", err);
       });
   };
+  
 
   // When the user clicks the button, show the boarding pass.
   const handleCreateBoardingPass = () => {

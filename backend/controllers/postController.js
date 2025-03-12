@@ -6,17 +6,22 @@ exports.makePost = async (req, res) => {
         const { userId, username, profileImg } = req.body;
         const { name, buffer, contentType } = req.file;
 
-        const newPost = new Post({
-            userId: userId,
-            username: username,
-            profileImg: profileImg,
-            boardingPass: {
-                name: name,
-                image: buffer,
-                contentType: contentType
-            }
-        })
-        await newPost.save();
+        try {
+            const newPost = new Post({
+                userId: userId,
+                username: username,
+                profileImg: profileImg,
+                boardingPass: {
+                    name: name,
+                    image: buffer,
+                    contentType: contentType
+                }
+            })
+            await newPost.save();
+        } catch (error) {
+            console.error("Error creating post:", error);
+            return res.status(500).json({ message: "Error creating post" });
+        }
 
         res.status(201).json({ message: "Post created successfully" });
     } catch (error) {
