@@ -4,33 +4,52 @@ const mongoose = require("mongoose");
 exports.makePost = async (req, res) => {
     console.log("makePost route hit!");
     try {
-        const { token, username, profileImg } = req.body;
+      // Check if token is provided
+      const { token, username, profileImg } = req.body;
+      if (!token) {
+        return res.status(401).json({ message: "Token is required" });
+      }
+  
+      // Verify the token
+      let userId;
+      try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const { userId } = decoded;
-        const { name, buffer, contentType } = req.file;
-
-        try {
-            const newPost = new Post({
-                userId: userId,
-                username: username,
-                profileImg: profileImg,
-                boardingPass: {
-                    name: name,
-                    image: buffer,
-                    contentType: contentType
-                }
-            })
-            await newPost.save();
-        } catch (error) {
-            console.error("Error creating post:", error);
-            return res.status(500).json({ message: "Error creating post" });
-        }
-
+        userId = decoded.userId;
+      } catch (error) {
+        return res.status(401).json({ message: "Invalid or expired token" });
+      }
+  
+      // Check if file is provided
+      if (!req.file) {
+        return res.status(400).json({ message: "File is required" });
+      }
+  
+      const { originalname, buffer, mimetype } = req.file;
+  
+      // Create a new post
+      try {
+        const newPost = new Post({
+          userId: userId,
+          username: username,
+          profileImg: profileImg,
+          boardingPass: {
+            name: originalname, // Use originalname instead of name
+            image: buffer,
+            contentType: mimetype, // Use mimetype instead of contentType
+          },
+        });
+  
+        await newPost.save();
         res.status(201).json({ message: "Post created successfully" });
-    } catch (error) {
+      } catch (error) {
+        console.error("Error creating post:", error);
         res.status(500).json({ message: "Error creating post" });
+      }
+    } catch (error) {
+      console.error("Unexpected error in makePost:", error);
+      res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 exports.getPosts = async(req, res) => {
     try {
