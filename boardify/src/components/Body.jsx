@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { like, makeComment } from "../api/post";
 import '../styles/Body.css';
 import pass1 from '../assets/boarding_pass_1.jpg';
 import AuthenticateButton from './AuthenticateButton';
@@ -37,17 +38,13 @@ export default function Body() {
     );
 
     try {
-      await fetch(`${API_URL}/like`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          postId, 
-          username: "currentUser" // Replace with actual username from your auth system
-        }),
-      });
+      const username = localStorage.getItem("username");
+      const likes = await like(postId, username);
     } catch (err) {
       console.error("Error liking post:", err);
     }
+
+    
   };
 
   // Handle comment posting
@@ -62,20 +59,8 @@ export default function Body() {
           : post
       )
     );
-
-    try {
-      await fetch(`${API_URL}/comment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          postId, 
-          username: "You", // Replace with actual username from your auth system
-          comment: commentText 
-        }),
-      });
-    } catch (err) {
-      console.error("Error adding comment:", err);
-    }
+    const username = localStorage.getItem("username");
+    const comments = await makeComment(postId, username, commentText);
   };
 
   // Handle comment click

@@ -76,7 +76,7 @@ exports.getPosts = async(req, res) => {
 exports.like = async(req, res) => {
     try {
         const { postId, username } = req.body;
-        const post = await Post.findOne({ _id: mongoose.Types.ObjectId(postId) });
+        const post = await Post.findById( postId );
         if(!post){
             return res.status(400).json({ message: "Post not found" });
         }
@@ -85,7 +85,7 @@ exports.like = async(req, res) => {
             post.likes.likedBy = post.likes.likedBy.filter(user => user !== username);
         } else {
             post.likes.count = post.likes.count + 1;
-            post.likes.likedBy.push(username);
+            post.likes.likedBy = [...post.likes.likedBy, username];
         }
         await post.save();
         res.json( post.likes );
@@ -98,7 +98,7 @@ exports.like = async(req, res) => {
 exports.makeComment = async(req, res) => {
     try {
         const { postId, username, comment } = req.body;
-        const post = await Post.findOne({ _id: mongoose.Types.ObjectId(postId) });
+        const post = await Post.findById( postId );
         if(!post){
             return res.status(400).json({ message: "Post not found" });
         }
