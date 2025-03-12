@@ -5,7 +5,7 @@ const { makePost, getPosts, like, makeComment } = require('../controllers/postCo
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post('/makePost', upload.single("image"), makePost);
+router.post('/makePost', upload.single("boardingPass"), makePost);
 router.get('/getPosts', getPosts);
 router.post('/like', like);
 router.post('/comment', makeComment);
