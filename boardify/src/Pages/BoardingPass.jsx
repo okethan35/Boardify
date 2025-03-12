@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Navbar from "../components/NavBar.jsx";
 import { getUserId } from "../api/auth.jsx";
 import { getUserData } from "../api/spotify.jsx";
+import { makePost } from "../api/post.jsx";
 import html2canvas from "html2canvas";
 import "../styles/BoardingPass.css";
 
@@ -26,69 +27,62 @@ const BoardingPass = () => {
   };
 
   // Capture the boarding pass element and upload it to the backend.
-  const uploadBoardingPass = () => {
+  const uploadBoardingPass = async () => {
     console.log("uploadBoardingPass called");
+  
     if (!componentRef.current) {
       console.error("Error: componentRef is not set.");
       return;
     }
+  
     console.log("componentRef exists. Starting html2canvas capture.");
-    html2canvas(componentRef.current, {
-      useCORS: true,
-      scale: 2,
-      logging: true,
-      allowTaint: false,
-      backgroundColor: null
-    })
-      .then(canvas => {
-        console.log("Canvas captured.");
+  
+    try {
+      // Capture the canvas using html2canvas
+      const canvas = await html2canvas(componentRef.current, {
+        useCORS: true,
+        scale: 2,
+        logging: true,
+        allowTaint: false,
+        backgroundColor: null,
+      });
+  
+      console.log("Canvas captured.");
+  
+      // Convert the canvas to a Blob
+      const blob = await new Promise((resolve, reject) => {
         canvas.toBlob((blob) => {
           if (!blob) {
-            console.error("Error: toBlob returned a null blob.");
+            reject(new Error("toBlob returned a null blob."));
             return;
           }
-          console.log("Blob created:", blob);
-          const file = new File([blob], "boardingPass.png", { type: "image/png" });
-          console.log("File created:", file);
-          const formData = new FormData();
-          formData.append("image", file);
-          formData.append("userId", localStorage.getItem("userId") || "");
-          formData.append("username", username || "Guest");
-          formData.append("profileImg", localStorage.getItem("profileImg") || "");
-          console.log("FormData prepared:", formData);
-  
-          // Log the data being passed to makePost
-          console.log("Data being passed to makePost:", {
-            image: file,
-            userId: localStorage.getItem("userId") || "",
-            username: username || "Guest",
-            profileImg: localStorage.getItem("profileImg") || "",
-          });
-  
-          fetch(`${API_URL}/post/makePost`, {
-            method: "POST",
-            body: formData,
-          })
-            .then(response => {
-              console.log("Fetch response received:", response);
-              if (!response.ok) {
-                console.error("Fetch response not OK. Status:", response.status);
-              }
-              return response.json();
-            })
-            .then(data => {
-              console.log("Boarding pass uploaded:", data);
-            })
-            .catch(error => {
-              console.error("Error during fetch/upload:", error);
-            });
+          resolve(blob);
         }, "image/png");
-      })
-      .catch(err => {
-        console.error("html2canvas error:", err);
       });
-  };
   
+      console.log("Blob created:", blob);
+  
+      // Create a File object from the Blob
+      const file = new File([blob], "boardingPass.png", { type: "image/png" });
+      console.log("File created:", file);
+  
+      const userId = localStorage.getItem("userId");
+      // Call makePost using fetch
+      const response = await makePost(userId, username, file);
+  
+      console.log("Fetch response received:", response);
+  
+      if (!response.ok) {
+        console.error("Fetch response not OK. Status:", response.status);
+        throw new Error("Failed to upload boarding pass");
+      }
+  
+      const data = await response.json();
+      console.log("Boarding pass uploaded:", data);
+    } catch (error) {
+      console.error("Error during uploadBoardingPass:", error);
+    }
+  };
 
   // When the user clicks the button, show the boarding pass.
   const handleCreateBoardingPass = () => {

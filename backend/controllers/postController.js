@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 exports.makePost = async (req, res) => {
     console.log("makePost route hit!");
     try {
-        const { userId, username, profileImg } = req.body;
+        const { token, username, profileImg } = req.body;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const { userId } = decoded;
         const { name, buffer, contentType } = req.file;
 
         try {

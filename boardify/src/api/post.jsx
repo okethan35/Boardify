@@ -12,9 +12,9 @@ const makePost = async (userId, username, profileImg) => {
       console.log(response)
   
       if (response.ok) {
-        console.log("Post Creation Successful:", data.message);
+        console.log("Post Creation Successful:", response.message);
       } else {
-        console.error("Post Creation Error:", data.message);
+        console.error("Post Creation Error:", response.message);
       }
       } catch (error) {
           console.error("Error Creating Post:", error);
@@ -87,3 +87,5 @@ const makeComment = async (postId, username, comment) => {
       console.error("Error handling comment:", error);
     }
 };
+
+export { makePost, getPosts, like, makeComment };
