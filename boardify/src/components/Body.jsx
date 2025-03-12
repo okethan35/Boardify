@@ -3,7 +3,6 @@ import { like, makeComment } from "../api/post";
 import def_prof_pic from '../assets/default_profile.png';
 import '../styles/Body.css';
 import pass1 from '../assets/boarding_pass_1.jpg';
-import AuthenticateButton from './AuthenticateButton';
 import 'boxicons/css/boxicons.min.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -76,7 +75,6 @@ export default function Body() {
 
   return (
     <div className="body">
-      <AuthenticateButton />
       <h1>Your Feed</h1>
       <hr />
       <div className="feed">

@@ -4,6 +4,7 @@ import { getUserId } from "../api/auth.jsx";
 import { useParams } from "react-router-dom";
 import def_prof_pic from '../assets/default_profile.png';
 import "../styles/Profile.css";
+import AuthenticateButton from '../components/AuthenticateButton';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -48,6 +49,7 @@ const Profile = () => {
     if (!isLoggedIn) {
       return (
         <>
+        <AuthenticateButton />
           <img
             src={def_prof_pic}
             alt="Default Profile"
@@ -72,6 +74,7 @@ const Profile = () => {
     if (!isSpotifyConnected) {
       return (
         <>
+        <AuthenticateButton />
           <h2>Welcome, {localStorage.getItem("username")}</h2>
           <p>You're logged in but not connected to Spotify.</p>
           <p>
@@ -86,6 +89,7 @@ const Profile = () => {
 
     return (
       <>
+      <AuthenticateButton />
         <h2>Welcome, {userData.profile.displayName}</h2>
         <div className="profile-picture-container">
           <img
