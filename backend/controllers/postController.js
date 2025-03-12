@@ -2,6 +2,7 @@ const Post = require("../models/Post.js");
 const mongoose = require("mongoose");
 
 exports.makePost = async (req, res) => {
+    console.log("makePost route hit!");
     try {
         const { userId, username, profileImg } = req.body;
         const { name, buffer, contentType } = req.file;
