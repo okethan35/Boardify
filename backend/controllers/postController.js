@@ -15,7 +15,7 @@ exports.makePost = async (req, res) => {
                 contentType: contentType
             }
         })
-        await newUser.save();
+        await newPost.save();
 
         res.status(201).json({ message: "Post created successfully" });
     } catch (error) {
