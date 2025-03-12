@@ -20,6 +20,10 @@ export default function Body() {
   const username = localStorage.getItem("username");
   const [posts, setPosts] = useState([]);
 
+  const formatLocalTime = (timestamp) => {
+    return new Date(timestamp).toLocaleString();
+  };
+
   // Fetch posts from backend
   useEffect(() => {
     fetch(`${API_URL}/post/getPosts`)
@@ -30,23 +34,20 @@ export default function Body() {
 
   // Handle likes
   const handleLike = async (postId) => {
-      
     try {
-        const likes = await like(postId, username);
-        console.log("COUNT:",likes.count);
-        setPosts((prevPosts) =>
-            prevPosts.map((post) =>
-            post._id === postId
-                ? { ...post, liked: !post.liked, likes: likes }
-                : post
-            )
-        );
-        console.log(posts);
+      const likes = await like(postId, username);
+      console.log("COUNT:", likes.count);
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === postId
+            ? { ...post, liked: !post.liked, likes: likes }
+            : post
+        )
+      );
+      console.log(posts);
     } catch (err) {
-        console.error("Error liking post:", err);
+      console.error("Error liking post:", err);
     }
-
-    
   };
 
   // Handle comment posting
@@ -141,7 +142,7 @@ export default function Body() {
                 <span className="view-more">
                   View all {post.comments?.length || 0} comments
                 </span>
-                <span className="post-time">{post.timeCreated}</span>
+                <span className="post-time">{formatLocalTime(post.timeCreated)}</span>
               </div>
             </div>
           ))}
