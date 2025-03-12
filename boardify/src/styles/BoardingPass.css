@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-  background-color: #3c4b52;
+    background-color: #222222;
     color:rgb(16, 26, 26);
 }
 
@@ -66,7 +66,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
+    width: 150px;
     height: auto;
 }
 /*
