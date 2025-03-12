@@ -295,6 +295,7 @@ const BoardingPass = () => {
           setIsLoggedIn(true);
           const data = await getUserData(userToken);
           setUserData(data.userData);
+          console.log("Profile:", userData.profile);
 
           const barcodeUrl = appendLastPartOfUrl(data.userData.profile.profileURL);
           setSpotifyBarcode(barcodeUrl);
@@ -336,7 +337,17 @@ const BoardingPass = () => {
         <div className="boarding-pass" ref={componentRef}>
           <div className="dotted-line"></div>
           <div className="horizontal-line"></div>
-          <div className="header"></div>
+          <div className="header">
+          <div className="bar-code">
+                {spotifyBarcode && (
+                  <img
+                    id="barcode"
+                    src={spotifyBarcode}
+                    alt="Spotify Barcode"
+                  />
+                )}
+              </div>
+          </div>
 
           <div className="Board">
             <div className="Board-container">
@@ -365,38 +376,22 @@ const BoardingPass = () => {
 
               <div className="details-container">
                 <div>
-                  <strong>To:</strong>{" "}
-                  <span>
-                    {userData.topArtists[4] ||
-                      userData.topArtists[3] ||
-                      userData.topArtists[2] ||
-                      userData.topArtists[1] ||
-                      ""}
-                  </span>
+                  <strong>To: </strong> <span>{userData.topArtists[4] || userData.topArtists[3] || userData.topArtists[2] || userData.topArtists[1] || ""}</span>
                 </div>
                 <div>
                   <strong>Carrier:</strong> <span>Boardify</span>
                 </div>
                 <div>
-                  <strong>Date:</strong>{" "}
-                  <span>
-                    {`${String(new Date().getMonth() + 1).padStart(2, "0")}/${String(
-                      new Date().getDate()
-                    ).padStart(2, "0")}/${new Date().getFullYear()}`}
-                  </span>
+                  <strong>Date:</strong> <span>{`${String((new Date()).getMonth() + 1).padStart(2, '0')}/${String((new Date()).getDate()).padStart(2, '0')}/${(new Date()).getFullYear()}`}</span>
                 </div>
               </div>
 
               <div className="top-tracks-container">
                 <div>
                   <strong>Top Tracks:</strong>
-                  <div>
-                    {userData.topTracks.map((track, index) => (
-                      <li key={index}>
-                        {track.name} by {track.artist}
-                      </li>
-                    ))}
-                  </div>
+                  <div>{userData.topTracks.map((track, index) => (
+                    <li key={index}>{track.name} by {track.artist}</li>
+                  ))}</div>
                 </div>
               </div>
 
@@ -412,6 +407,7 @@ const BoardingPass = () => {
                   />
                 )}
               </div>
+           
             </div>
           </div>
         </div>
@@ -435,7 +431,9 @@ const BoardingPass = () => {
       <Navbar />
       <div className="boarding-pass-container">
         <div className="boarding-pass-box">
-          <div className="boarding-pass-info">{renderContent()}</div>
+          <div className="boarding-pass-info">
+            {renderContent()}
+          </div>
         </div>
       </div>
     </div>
