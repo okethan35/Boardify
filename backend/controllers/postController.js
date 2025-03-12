@@ -9,9 +9,10 @@ exports.makePost = async (req, res) => {
       console.log("TOKEN:", token);
       console.log("USERNAME:", username);
       console.log("PROFILEIMG:", profileImg);
-      if (!token) {
-        return res.status(401).json({ message: "Token is required" });
-      }
+      //if (!token) {
+      //  console.log("HIT THIS ROUTE");
+      //  return res.status(401).json({ message: "Token is required" });
+      //}
       // Verify the token
       let userId;
       try {
