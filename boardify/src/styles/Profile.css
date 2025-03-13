@@ -45,3 +45,16 @@ body {
   font-size: 1rem;
   margin: 0.5rem 0;
 }
+
+.spotify-info ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+  margin: 1rem auto;
+  max-width: 300px;
+}
+  
+.spotify-info li {
+  margin: 0.5rem 0;
+  text-align: center;
+}
