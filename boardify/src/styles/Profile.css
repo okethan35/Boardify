@@ -32,7 +32,7 @@ body {
   object-fit: cover;
   border: 2px solid #f2e5c1ff;
   margin-bottom: 1rem;
-  margin-left: 0rem;
+  margin-left: 0 auto 1rem;
 }
   
 .profile-info h2 {
