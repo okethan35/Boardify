@@ -3,6 +3,6 @@ const { generateQRCode } = require('../controllers/qrController');  // Import th
 
 const router = express.Router();
 
-router.get('/:username', generateQRCode);
+router.get('/getqrCode', generateQRCode);
 
 module.exports = router;
