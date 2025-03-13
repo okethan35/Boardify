@@ -3,7 +3,6 @@ import Navbar from "../components/NavBar.jsx";
 import { getUserId } from "../api/auth.jsx";
 import { getUserData } from "../api/spotify.jsx";
 import { makePost } from "../api/post.jsx";
-import QRCode from "../components/QRCode.jsx";
 import def_prof_pic from '../assets/default_profile.png';
 import html2canvas from "html2canvas";
 import "../styles/BoardingPass.css";
@@ -18,6 +17,8 @@ const BoardingPass = () => {
   const [barcodeLoaded, setBarcodeLoaded] = useState(false);
   const [showBoardingPass, setShowBoardingPass] = useState(false);
   const [uploadTriggered, setUploadTriggered] = useState(false);
+  const [qrCode, setQRCode] = useState(null);
+  const [error, setError] = useState(null);
   const componentRef = useRef(null);
   const username = localStorage.getItem("username");
   const [postId, setPostId] = useState();
@@ -75,6 +76,7 @@ const uploadBoardingPass = async () => {
     if(!profileImg)
       profileImg = def_prof_pic;
     // Call makePost using fetch
+    await setTimeout(2000);
     await makePost(postId, token, username, profileImg, file);
 
   } catch (error) {
@@ -191,6 +193,15 @@ const uploadBoardingPass = async () => {
           const timestamp = currentTime.getTime();
           setPostId(`${username}-${year}-${month}-${day}-${timestamp}`);
           console.log("POST ID:", postId);
+          
+          const response = await fetch(`${API_URL}/qr/${postId}`);
+          const qrCodeData = await response.json();
+          console.log("QR Code Response:", data);
+          if (response.ok) {
+            setQRCode(qrCodeData.qrCode); // QR Code as base64
+          } else {
+            setError(qrCodeData.message || "Failed to load QR code");
+          }  
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -313,7 +324,14 @@ const uploadBoardingPass = async () => {
                       </div>
                     </div>
                   </div>
-                  <QRCode postId={{postId}}/>
+                  <div className="qrCode">
+                    {error && <p style={{ color: "red" }}>{error}</p>}
+                    {qrCode ? (
+                        <img src={qrCode} alt="QR Code" style={{ width: "200px", height: "200px" }} />
+                    ) : (
+                        !error && <p>Loading QR Code...</p>
+                    )}
+                </div>
                 </div>
               </div>
             </div>
