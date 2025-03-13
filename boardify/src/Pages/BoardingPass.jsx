@@ -20,7 +20,7 @@ const BoardingPass = () => {
   const [uploadTriggered, setUploadTriggered] = useState(false);
   const componentRef = useRef(null);
   const username = localStorage.getItem("username");
-  let postId = "";
+  const [postId, setPostId] = useState();
 
   // Helper to build the barcode URL.
   const appendLastPartOfUrl = (url) => {
@@ -189,7 +189,7 @@ const uploadBoardingPass = async () => {
           const month = String(currentTime.getMonth() + 1).padStart(2, "0");
           const day = String(currentTime.getDate()).padStart(2, "0");
           const timestamp = currentTime.getTime();
-          postId = `${username}-${year}-${month}-${day}-${timestamp}`;
+          setPostId(`${username}-${year}-${month}-${day}-${timestamp}`);
           console.log("POST ID:", postId);
         }
       } catch (error) {
@@ -313,7 +313,7 @@ const uploadBoardingPass = async () => {
                       </div>
                     </div>
                   </div>
-                  <QRCode postId={postId}/>
+                  <QRCode postId={{postId}}/>
                 </div>
               </div>
             </div>

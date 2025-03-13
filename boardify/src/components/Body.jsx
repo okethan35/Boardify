@@ -42,7 +42,7 @@ export default function Body() {
       console.log("COUNT:", likes.count);
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
-          post._id === postId
+          post.postId === postId
             ? { ...post, liked: !post.liked, likes: likes }
             : post
         )

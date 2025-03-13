@@ -11,13 +11,6 @@ exports.makePost = async (req, res) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       userId = decoded.userId;
       console.log(decoded);
-      //try {
-      //  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      //  userId = decoded.userId;
-      //  console.log(decoded);
-      //} catch (error) {
-      //  return res.status(401).json({ message: "Invalid or expired token" });
-      //}
       console.log(req.file);
       // Check if file is provided
       if (!req.file) {

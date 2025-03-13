@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const API_URL = process.env.REACT_APP_API_URL; 
 
-export default function QRCode({ postID }) {
+export default function QRCode(postID) {
     const [qrCode, setQRCode] = useState(null);
     const [error, setError] = useState(null);
 
@@ -14,7 +14,7 @@ export default function QRCode({ postID }) {
                 const response = await fetch(`${API_URL}/qr/${postID}`);
                 const data = await response.json();
                 console.log("QR Code Response:", data);
-                
+
                 if (response.ok) {
                     setQRCode(data.qrCode); // QR Code as base64
                 } else {

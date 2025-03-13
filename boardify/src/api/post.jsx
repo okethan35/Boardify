@@ -1,8 +1,10 @@
 const API_URL = process.env.REACT_APP_API_URL; 
 
-const makePost = async (token, username, profileImg, file) => {
+const makePost = async (postId, token, username, profileImg, file) => {
     try {
         const formData = new FormData();
+        formData.append("postId", postId);
+        console.log("post.jsx:", postId);
         formData.append("token", token);
         formData.append("username", username);
         formData.append("profileImg", profileImg);
