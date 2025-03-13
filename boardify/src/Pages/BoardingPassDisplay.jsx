@@ -51,14 +51,14 @@ const BoardingPassDisplay = () => {
             {post ? (
                 <div className="container">
                 <div className="boarding-pass-container">
-                    <div className="post-profile">
+                    <div className="bpd-post-profile">
                         <img
                             src={post.profileImg?.url || def_prof_pic}
                             alt="Profile"
                         />
-                        <div className="name-username">
+                        <div className="bpd-name-username">
                             <Link to={`/profile/${post.username}`}>
-                                <h3 className="profile-name">{post.username}</h3>
+                                <h3 className="bpd-profile-name">{post.username}</h3>
                             </Link>
                         </div>
                     </div>

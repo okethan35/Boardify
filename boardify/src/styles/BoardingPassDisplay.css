@@ -20,7 +20,7 @@
 }
 
 /* Profile section (image & username) */
-.post-profile {
+.bpd-post-profile {
     position: absolute; /* Positioned relative to the boarding pass container */
     top: 160px; /* Move it above the boarding pass */
     left: 10px; /* Move it slightly to the right for better alignment */
@@ -34,7 +34,7 @@
 }
 
 /* Profile image */
-.post-profile img {
+.bpd-post-profile img {
     width: 40px; /* Reduced size for smaller screens */
     height: 40px; /* Reduced size for smaller screens */
     border-radius: 50%;
@@ -43,18 +43,18 @@
 }
 
 /* Name & username */
-.name-username {
+.bpd-name-username {
     margin-left: 8px; /* Reduced margin for smaller screens */
 }
 
-.profile-name {
+.bpd-profile-name {
     font-size: 14px; /* Reduced font size for smaller screens */
     font-weight: bold;
     color: #f2e5c1ff; /* Matches theme */
     text-decoration: none;
 }
 
-.profile-name:hover {
+.bpd-profile-name:hover {
     text-decoration: underline;
 }
 
@@ -75,35 +75,35 @@
         margin-top: 10px; /* Reduced margin for smaller screens */
     }
 
-    .post-profile {
+    .bpd-post-profile {
         top: -15px; /* Adjusted for smaller screens */
         left: 5px; /* Adjusted for smaller screens */
         padding: 6px 10px; /* Reduced padding for smaller screens */
     }
 
-    .post-profile img {
+    .bpd-post-profile img {
         width: 35px; /* Further reduced size for smaller screens */
         height: 35px; /* Further reduced size for smaller screens */
     }
 
-    .profile-name {
+    .bpd-profile-name {
         font-size: 12px; /* Further reduced font size for smaller screens */
     }
 }
 
 @media (max-width: 480px) {
-    .post-profile {
+    .bpd-post-profile {
         top: -10px; /* Adjusted for very small screens */
         left: 0; /* Align to the very edge */
         padding: 4px 8px; /* Minimal padding for very small screens */
     }
 
-    .post-profile img {
+    .bpd-post-profile img {
         width: 30px; /* Smallest size for very small screens */
         height: 30px; /* Smallest size for very small screens */
     }
 
-    .profile-name {
+    .bpd-profile-name {
         font-size: 11px; /* Smallest font size for very small screens */
     }
 }
