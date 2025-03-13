@@ -56,7 +56,7 @@ export default function NavBar() {
             <ul className="search-results">
               {results.map(user => (
                 <li key={user._id} className="search-item">
-                  <Link to={'/profile/${user.username}'}
+                  <Link to={`/profile/${user.username}`}
                   onClick={() => {
                     setQuery("");
                     setResults([]);
