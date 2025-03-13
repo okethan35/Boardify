@@ -5,6 +5,7 @@ import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
 import Profile from "./Pages/Profile";
 import BoardingPass from "./Pages/BoardingPass";
+import QRPage from "./Pages/QRPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:username" element={<Profile />} />
           <Route path="/boarding-pass" element={<BoardingPass />} />
+          <Route path="/boardingPass/:postId" element={<QRPage />} />
         </Routes>
       </BrowserRouter>
     </div>
