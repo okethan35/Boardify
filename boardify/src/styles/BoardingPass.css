@@ -11,8 +11,8 @@
 
 .boarding-pass {
     position: relative;
-    width: 799px;
-    height: 289px;
+    width: 818px;
+    height: 275px;
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(210, 10, 110, 0.2);
@@ -61,14 +61,29 @@
   .details {
     display: grid;
     padding: 45px;
-    display: grid;
     grid-template-columns: 1.1fr 2.6fr;
     font-size: 14px;
-  }
+    width: 700px;
+    height: 77%;
+}
+
+.details-container { 
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1;
+    padding: 10px;
+    padding-bottom: 5px;
+    width: 102%;
+    font-size: 15px;
+    justify-content: flex-end;
+    gap: 10px;
+    }
 
 .details div {
-    padding: 8px;
+    padding: 5px;
     text-align: left;
+    margin-right: 10px;
 }
 
 .bar-code {
@@ -94,7 +109,7 @@
     width: 3px;
     height: 100%;
     position: absolute;
-    left: 70%;
+    left: 72%;
     top: 0;
     border-left: 2px dashed burlywood;
   }
@@ -114,18 +129,6 @@
     padding-left: 34px;
 }
 
-
-
-.details-container { 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    padding-bottom: 5px;
-    width: 90%;
-    font-size: 15px;
-    justify-content: flex-end;
-}
 
 
 .top-tracks-container {
@@ -183,6 +186,8 @@
     display: flex;
     justify-content:space-between;
     align-items: flex-start;
+    width: 100%;
+    padding: 20px;
 }
 
   
