@@ -6,15 +6,7 @@ exports.makePost = async (req, res) => {
     console.log("makePost route hit!");
     try {
       // Check if token is provided
-      const { token, username, profileImg } = req.body;
-      console.log("TOKEN:", token);
-      console.log("USERNAME:", username);
-      console.log("PROFILEIMG:", profileImg);
-      //if (!token) {
-      //  console.log("HIT THIS ROUTE");
-      //  return res.status(401).json({ message: "Token is required" });
-      //}
-      // Verify the token
+      const { postId, token, username, profileImg } = req.body;
       let userId;
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       userId = decoded.userId;
@@ -37,6 +29,7 @@ exports.makePost = async (req, res) => {
       // Create a new post
       try {
         const newPost = new Post({
+          postId: postId,
           userId: userId,
           username: username,
           profileImg: profileImg,

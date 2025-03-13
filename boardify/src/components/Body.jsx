@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { like, makeComment } from "../api/post";
+import { Link } from "react-router-dom";
 import def_prof_pic from '../assets/default_profile.png';
 import '../styles/Body.css';
 import pass1 from '../assets/boarding_pass_1.jpg';
@@ -98,7 +99,9 @@ export default function Body() {
                     alt="Profile"
                   />
                   <div className="name-username">
-                    <h3 className="profile-name">{post.username}</h3>
+                    <Link to={`/profile/${post.username}`}>
+                      <h3 className="profile-name">{post.username}</h3>
+                    </Link>
                   </div>
                 </div>
               </div>
