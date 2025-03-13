@@ -49,8 +49,8 @@ const BoardingPassDisplay = () => {
         <>
             <Navbar/>
             {post ? (
-                <div className="container">
-                <div className="boarding-pass-container">
+                <div className="bpd-container">
+                <div className="bpd-boarding-pass-container">
                     <div className="bpd-post-profile">
                         <img
                             src={post.profileImg?.url || def_prof_pic}
@@ -63,7 +63,7 @@ const BoardingPassDisplay = () => {
                         </div>
                     </div>
                         <img
-                            className="boarding-pass"
+                            className="bpd-boarding-pass"
                             src={`data:${post.boardingPass.contentType};base64,${arrayBufferToBase64(post.boardingPass.image?.data)}`}
                             alt="Boarding Pass"
                         />

@@ -1,5 +1,5 @@
 /* Page background */
-.container {
+.bpd-container {
     position: relative;
     display: flex;
     justify-content: center;
@@ -12,7 +12,7 @@
 }
 
 /* Boarding pass container */
-.boarding-pass-container {
+.bpd-boarding-pass-container {
     position: relative; /* Ensures the profile is positioned relative to this container */
     max-width: 90%; /* Adjusted for better responsiveness */
     width: 100%;
@@ -59,7 +59,7 @@
 }
 
 /* Boarding pass image */
-.boarding-pass {
+.bpd-boarding-pass {
     width: 100%;
     height: auto;
     border-radius: 8px;
