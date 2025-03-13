@@ -1,8 +1,6 @@
 # Boardify
 Boardify is a creative way to display a user's music taste by generating a custom boarding pass based on their Spotify data. 
-
 It combines user’s Spotify listening patterns with a fun, travel-themed personalization can be shared with others on the platform. 
-
 **Note:** This is a project created for UCLA's COM SCI 35L class taught by Professor Eggert in the Winter 2025 quarter.
 
 
