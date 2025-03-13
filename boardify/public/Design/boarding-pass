@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boarding Pass</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #535e73;
+        }
+        .boarding-pass {
+            width: 600px;
+            height: 250px;
+            background: rgb(238, 228, 228);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(210, 10, 110, 0.2);
+            overflow: hidden;
+            border: 2px solid rgb(29, 19, 65);
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .header {
+            background: #995f24;
+            color: rgb(15, 6, 49);
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+            font-variant: bold;
+            width: 50%;
+        }
+        .details {
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 14px;
+            flex: 2;
+        }
+        .details div {
+            padding: 1px;
+            border-bottom: 1px solid #ffffff;
+        }
+        .qr-code {
+            text-align: center;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            flex: 1;
+            padding: 15px;
+        }
+        /*to rotate barcode  temp barcode*/
+        .qr-code img{
+    transform: rotate(270deg); 
+    transition: transform 0.5s ease; 
+
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="boarding-pass">
+        <div class="header">BOARDIFY</div>
+        <div class="details">
+            <div><strong>Passenger:</strong> <span id="passenger-name">John Doe</span></div>
+            <div><strong>Flight:</strong> <span id="flight-number">AA123</span></div>
+            <div><strong>From:</strong> <span id="from-airport">LAX</span></div>
+            <div><strong>To:</strong> <span id="to-airport">JFK</span></div>
+            <div><strong>Seat:</strong> <span id="seat-number">12A</span></div>
+            <div><strong>Date:</strong> <span id="flight-date">2025-03-10</span></div>
+       
+        </div>
+        <div class="qr-code">
+            <img id="barcode" src='https://barcode.tec-it.com/barcode.ashx?data=boardify&code=Code128&translate-esc=on' alt="Barcode">
+        </div>
+    </div>
+
+    <script>
+        function generateBoardingPass(name, flight, from, to, seat, date) {
+            document.getElementById('passenger-name').textContent = name;
+            document.getElementById('flight-number').textContent = flight;
+            document.getElementById('from-airport').textContent = from;
+            document.getElementById('to-airport').textContent = to;
+            document.getElementById('seat-number').textContent = seat;
+            document.getElementById('flight-date').textContent = date;
+            
+            const qrData = `Name:${name}|Flight:${flight}|From:${from}|To:${to}|Seat:${seat}|Date:${date}`;
+            //document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(qrData)}`;
+        }
+
+        // testing
+        generateBoardingPass("Lily Potter ", "BA456", "England", "Scotland", "8C", "2005-04-17");
+    </script>
+
+
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

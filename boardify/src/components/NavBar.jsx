@@ -34,12 +34,8 @@ export default function NavBar() {
     } catch (error) {
       console.error('Error fetching users:', error);
     }
-  };
-  const handleProfileClick = () => {
-    setQuery('');
-    setResults([]);
-  };
 
+  };
   return (
     <div className="nav-bar">
       <div className="logo-box">
@@ -60,9 +56,11 @@ export default function NavBar() {
             <ul className="search-results">
               {results.map(user => (
                 <li key={user._id} className="search-item">
-                  <Link 
-                    to={`/profile/${user.username}`}
-                    onClick={handleProfileClick}
+                  <Link to={`/profile/${user.username}`}
+                  onClick={() => {
+                    setQuery("");
+                    setResults([]);
+                  }}
                   >
                     {user.username}
                   </Link>
@@ -75,12 +73,13 @@ export default function NavBar() {
       <ul className="nav-list">
         <li className="nav-items"><Link to="/">HOME</Link></li>
         <li className="nav-items"><Link to={ profileLink }>PROFILE</Link></li>
+        <li className="nav-items"><Link to="/boarding-pass">BOARDING PASS</Link></li>
         {localStorage.getItem("token") ? (
           <li className="nav-items">
             <Link 
-              to="/home" 
+              to="/" 
               onClick={() => { 
-                localStorage.removeItem("token"); 
+                localStorage.removeItem("token");
                 localStorage.removeItem("username"); 
               }} 
               className="nav-link"
@@ -89,7 +88,7 @@ export default function NavBar() {
             </Link>
           </li>
         ) : (
-          <li className="nav-items"><Link to="/login">LOG IN</Link></li>
+          <li className="nav-items"><Link to="/">LOG IN</Link></li>
   )}
 
       </ul>

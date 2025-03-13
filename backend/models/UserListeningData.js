@@ -7,6 +7,7 @@ const UserListeningDataSchema = new mongoose.Schema({
         artist: {type: String, required: false}
     }],
     topArtists: [{type: String, required: false}],
+    topGenre: {type: String},
     profile: {
         type: {
             displayName: { type: String }, 
