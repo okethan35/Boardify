@@ -11,9 +11,9 @@
 
 .boarding-pass {
     position: relative;
-    width: 741px;
+    width: 799px;
     height: 289px;
-    background: #ffffff;
+    background: #e2dfdf;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(210, 10, 110, 0.2);
     overflow: hidden;
@@ -23,12 +23,8 @@
     flex-direction: row;
     align-content: flex-start;
     justify-content: flex-end;
-    /*display: none;*/
 }
-/*
-.boarding-pass.visible {
-    display: flex;
-}*/
+
 
 .header {
     background: #995f24;
@@ -105,19 +101,15 @@
 ackground-color: burlywood;*/
 
 
-
+/*revised line*/
 .dotted-line {
-    width: 2px;
+    width: 3px;
     height: 100%;
     position: absolute;
     left: 70%;
     top: 0;
-    background: repeating-linear-gradient(to bottom,
-     burlywood 17px,
-      burlywood 20px,
-       transparent 2px, 
-       transparent 30px);
-}
+    border-left: 2px dashed burlywood;
+  }
 
 .Board {
     align-items: center;
@@ -127,7 +119,7 @@ ackground-color: burlywood;*/
 .Board-container {
     font-size: larger;
     display: flex;
-    color: rgb(81, 94, 15);
+    color: rgb(128, 49, 37);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 26px;
     right: 10px;
