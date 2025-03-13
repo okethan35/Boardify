@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import def_prof_pic from '../assets/default_profile.png';
+import Navbar from "../components/NavBar.jsx";
+import "../styles/BoardingPassDisplay.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -45,20 +47,33 @@ const BoardingPassDisplay = () => {
 
     return (
         <>
-            <div className="post-profile">
-                <img
-                    src={post.profileImg?.url || def_prof_pic}
-                    alt="Profile"
-                />
-                <div className="name-username">
-                    <Link to={`/profile/${post.username}`}>
-                        <h3 className="profile-name">{post.username}</h3>
-                    </Link>
+            <Navbar/>
+            {post ? (
+                <div className="container">
+                <div className="boarding-pass-container">
+                    <div className="post-profile">
+                        <img
+                            src={post.profileImg?.url || def_prof_pic}
+                            alt="Profile"
+                        />
+                        <div className="name-username">
+                            <Link to={`/profile/${post.username}`}>
+                                <h3 className="profile-name">{post.username}</h3>
+                            </Link>
+                        </div>
+                    </div>
+                        <img
+                            className="boarding-pass"
+                            src={`data:${post.boardingPass.contentType};base64,${arrayBufferToBase64(post.boardingPass.image?.data)}`}
+                            alt="Boarding Pass"
+                        />
+                    </div>
                 </div>
-            </div>
-            <img src={`data:${post.boardingPass.contentType};base64,${arrayBufferToBase64(post.boardingPass.image?.data)}`} alt="Boarding Pass" />);
+            ) : (
+                <p>Loading...</p>
+            )}
         </>
-    )
+    );
 };
 
 export default BoardingPassDisplay;

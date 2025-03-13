@@ -1,0 +1,109 @@
+/* Page background */
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #222222; /* Matches your theme */
+    padding-top: 0px; /* Ensures no overlap with the navbar */
+}
+
+/* Boarding pass container */
+.boarding-pass-container {
+    position: relative; /* Ensures the profile is positioned relative to this container */
+    max-width: 90%; /* Adjusted for better responsiveness */
+    width: 100%;
+    margin-top: 0px; /* Reduced margin for better spacing */
+}
+
+/* Profile section (image & username) */
+.post-profile {
+    position: absolute; /* Positioned relative to the boarding pass container */
+    top: 160px; /* Move it above the boarding pass */
+    left: 10px; /* Move it slightly to the right for better alignment */
+    display: flex;
+    align-items: center;
+    background: rgba(20, 20, 20, 0.9); /* Dark background for contrast */
+    padding: 8px 12px; /* Reduced padding for smaller screens */
+    border-radius: 12px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    z-index: 1; /* Ensures it sits above the boarding pass */
+}
+
+/* Profile image */
+.post-profile img {
+    width: 40px; /* Reduced size for smaller screens */
+    height: 40px; /* Reduced size for smaller screens */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f2e5c1ff; /* Light border for contrast */
+}
+
+/* Name & username */
+.name-username {
+    margin-left: 8px; /* Reduced margin for smaller screens */
+}
+
+.profile-name {
+    font-size: 14px; /* Reduced font size for smaller screens */
+    font-weight: bold;
+    color: #f2e5c1ff; /* Matches theme */
+    text-decoration: none;
+}
+
+.profile-name:hover {
+    text-decoration: underline;
+}
+
+/* Boarding pass image */
+.boarding-pass {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+    position: relative; /* Ensures it sits below the profile section */
+    z-index: 0; /* Ensures it sits below the profile section */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .boarding-pass-container {
+        max-width: 95%; /* Wider on smaller screens */
+        margin-top: 10px; /* Reduced margin for smaller screens */
+    }
+
+    .post-profile {
+        top: -15px; /* Adjusted for smaller screens */
+        left: 5px; /* Adjusted for smaller screens */
+        padding: 6px 10px; /* Reduced padding for smaller screens */
+    }
+
+    .post-profile img {
+        width: 35px; /* Further reduced size for smaller screens */
+        height: 35px; /* Further reduced size for smaller screens */
+    }
+
+    .profile-name {
+        font-size: 12px; /* Further reduced font size for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .post-profile {
+        top: -10px; /* Adjusted for very small screens */
+        left: 0; /* Align to the very edge */
+        padding: 4px 8px; /* Minimal padding for very small screens */
+    }
+
+    .post-profile img {
+        width: 30px; /* Smallest size for very small screens */
+        height: 30px; /* Smallest size for very small screens */
+    }
+
+    .profile-name {
+        font-size: 11px; /* Smallest font size for very small screens */
+    }
+}
