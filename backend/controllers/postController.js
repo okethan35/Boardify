@@ -59,15 +59,17 @@ exports.getPosts = async(req, res) => {
 
 exports.getPost = async(req, res) => {
     try {
-        const postId = req.query.postId;
+        const { postId } = req.body;
         if (!postId) {
             return res.status(400).json({ message: 'PostId is required' });
         }
-        const post = await Post.findOne({ postId });
+        const post = await Post.findOne({ postId: postId });
         if(!post){
             return res.status(400).json({ message: "No post or error getting post" });
         }
-        res.json({ post });
+
+        console.log("boardingpasspost:", post);
+        res.json(post);
     } catch (error) {
         res.status(500).json({ message: "Error retrieving boarding pass" });
     }
@@ -78,7 +80,7 @@ exports.getPost = async(req, res) => {
 exports.like = async(req, res) => {
     try {
         const { postId, username } = req.body;
-        const post = await Post.findOne({ postId });
+        const post = await Post.findOne({ postId: postId });
         if(!post){
             return res.status(400).json({ message: "Post not found" });
         }
@@ -100,7 +102,7 @@ exports.like = async(req, res) => {
 exports.makeComment = async(req, res) => {
     try {
         const { postId, username, comment } = req.body;
-        const post = await Post.findOne({ postId });
+        const post = await Post.findOne({ postId: postId });
         if(!post){
             return res.status(400).json({ message: "Post not found" });
         }
