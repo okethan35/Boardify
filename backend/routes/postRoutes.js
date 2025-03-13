@@ -7,7 +7,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 router.post('/makePost', upload.single("boardingPass"), makePost);
 router.get('/getPosts', getPosts);
-router.get('/getPost', getPost)
+router.post('/getPost', getPost);
 router.post('/like', like);
 router.post('/comment', makeComment);
 

@@ -20,22 +20,23 @@ const BoardingPassDisplay = () => {
     useEffect(() => {
         const fetchPost = async () => {
           try {
-            const response = await fetch(`${API_URL}/post/getPost?postId=${postId}`, {
-              method: 'GET',
+            const response = await fetch(`${API_URL}/post/getPost`, {
+              method: 'POST',
               headers: { 
                   'Content-Type': 'application/json'
-              }
+              },
+              body: JSON.stringify({ postId })
             });
             const data = await response.json();
             console.log("BOARDINGPASSDATA:", data);
             if (response.ok) {
-              setPost(data); // QR Code as base64
+              setPost(data.post); // QR Code as base64
             }
           } catch (error) {
             console.error("Error fetching post:", error);
           }
         };
-    
+
         fetchPost();
     }, [postId]);
     console.log("POST:",post);

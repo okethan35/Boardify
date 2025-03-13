@@ -59,7 +59,7 @@ exports.getPosts = async(req, res) => {
 
 exports.getPost = async(req, res) => {
     try {
-        const postId = req.query.postId;
+        const { postId } = req.body;
         if (!postId) {
             return res.status(400).json({ message: 'PostId is required' });
         }
