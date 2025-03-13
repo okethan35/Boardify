@@ -67,7 +67,9 @@ exports.getPost = async(req, res) => {
         if(!post){
             return res.status(400).json({ message: "No post or error getting post" });
         }
-        res.json({ post });
+        
+        console.log("boardingpasspost:", post);
+        res.json(post);
     } catch (error) {
         res.status(500).json({ message: "Error retrieving boarding pass" });
     }

@@ -16,22 +16,24 @@ const BoardingPassDisplay = () => {
         bytes.forEach(byte => binary += String.fromCharCode(byte));
         return window.btoa(binary);
       };
-
     useEffect(() => {
         const fetchPost = async () => {
           try {
             const response = await fetch(`${API_URL}/post/getPost`, {
               method: 'POST',
-              headers: { 
-                  'Content-Type': 'application/json'
-              },
+              headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({ postId })
             });
+
+            console.log("Response status:", response.status);
+
             const data = await response.json();
             console.log("BOARDINGPASSDATA:", data);
-            if (response.ok) {
-              setPost(data.post); // QR Code as base64
+            if (!response.ok) {
+                throw new Error(data.message || "Failed to fetch post");
             }
+            setPost(data);
+            console.log("fetched data:", data);
           } catch (error) {
             console.error("Error fetching post:", error);
           }
