@@ -6,11 +6,11 @@ exports.generateQRCode = async (req, res) => {
     const postId = req.query.postId;
     console.log("POSTID:", postId);
     if (!postId) {
-      return res.status(400).json({ message: 'Username is required' });
+      return res.status(400).json({ message: 'PostId is required' });
     }
     const FRONTEND_URL = req.headers.origin
     // Construct the URL where the QR code should redirect to
-    const url = `${FRONTEND_URL}/qr/${postId}`;
+    const url = `${FRONTEND_URL}/boardingPass/${postId}`;
     const qrCode = await qrcode.toDataURL(url);
     res.json({ qrCode });
   } catch (error) {

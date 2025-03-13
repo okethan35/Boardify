@@ -57,6 +57,22 @@ exports.getPosts = async(req, res) => {
     }
 }
 
+exports.getPost = async(req, res) => {
+    try {
+        const postId = req.query.postId;
+        if (!postId) {
+            return res.status(400).json({ message: 'PostId is required' });
+        }
+        const post = await Post.findOne({ postId });
+        if(!post){
+            return res.status(400).json({ message: "No post or error getting post" });
+        }
+        res.json( post );
+    } catch (error) {
+        res.status(500).json({ message: "Error retrieving boarding pass" });
+    }
+}
+
 //TODO: implement functions for updating likes and adding comments.
 
 exports.like = async(req, res) => {

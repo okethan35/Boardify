@@ -1,6 +1,6 @@
 import spotify_logo_black from '../assets/Spotify_Full_Logo_Black.png'
 import '../styles/AuthenticateButton.css'
-import { testButton, connectSpotify } from '../api/spotify.jsx';
+import { connectSpotify } from '../api/spotify.jsx';
 
 export default function AuthenticateButton(){
 

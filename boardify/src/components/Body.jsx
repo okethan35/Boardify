@@ -58,7 +58,7 @@ export default function Body() {
     if (!commentText.trim()) return;
 
     const newComment = { author: "You", comment: commentText };
-    const comments = await makeComment(postId, username, commentText);
+    await makeComment(postId, username, commentText);
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post.postId === postId

@@ -186,27 +186,17 @@ const uploadBoardingPass = async () => {
           img.onerror = (e) => {
             console.error("Failed to load barcode image (from img onerror):", e);
           };
+
+          // Generate postId and update state
           const currentTime = new Date();
           const year = currentTime.getFullYear(); 
           const month = String(currentTime.getMonth() + 1).padStart(2, "0");
           const day = String(currentTime.getDate()).padStart(2, "0");
           const timestamp = currentTime.getTime();
-          setPostId(`${username}-${year}-${month}-${day}-${timestamp}`);
-          console.log("POST ID:", postId);
-          
-          const response = await fetch(`${API_URL}/qr/getqrCode?postId=${postId}`,{
-            method: 'GET',
-            headers: { 
-                'Content-Type': 'application/json'
-            }
-          });
-          const qrCodeData = await response.json();
-          console.log("QR Code Response:", data);
-          if (response.ok) {
-            setQRCode(qrCodeData.qrCode); // QR Code as base64
-          } else {
-            setError(qrCodeData.message || "Failed to load QR code");
-          }  
+          const newPostId = `${username}-${year}-${month}-${day}-${timestamp}`;
+          setPostId(newPostId); // ✅ State updates asynchronously
+
+          console.log("Generated POST ID:", newPostId); // ✅ Log immediately
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -216,7 +206,37 @@ const uploadBoardingPass = async () => {
     };
 
     fetchUserData();
-  }, [username]);
+}, [username]); 
+
+  useEffect(() => {
+    if (!postId) return; // Ensure postId exists before running
+
+    const fetchQRCode = async () => {
+      try {
+        console.log("Fetching QR code for postId:", postId);
+
+        const response = await fetch(`${API_URL}/qr/getqrCode?postId=${postId}`, {
+          method: 'GET',
+          headers: { 
+              'Content-Type': 'application/json'
+          }
+        });
+
+        const qrCodeData = await response.json();
+        console.log("QR Code Response:", qrCodeData);
+
+        if (response.ok) {
+          setQRCode(qrCodeData.qrCode); // QR Code as base64
+        } else {
+          setError(qrCodeData.message || "Failed to load QR code");
+        }
+      } catch (error) {
+        console.error("Error fetching QR code:", error);
+      }
+    };
+
+    fetchQRCode();
+}, [postId]);
 
   const renderContent = () => {
     if (!isLoggedIn) {
