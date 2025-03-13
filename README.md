@@ -45,6 +45,11 @@ npm start
 ```
 
 
+# Note
+Due to limitations of the free version of the Spotify API, new users can't connect their Spotify accounts to their Boardify ones.
+We have to add emails manually to the Spotify developer page for users to conect their Spotify accounts, so new users must ask us for approval.
+
+
 ## Authors
 - Ethan Tran
 - Dhruv Patel
