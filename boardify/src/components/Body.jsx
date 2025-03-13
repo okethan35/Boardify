@@ -61,7 +61,7 @@ export default function Body() {
     const comments = await makeComment(postId, username, commentText);
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
-        post._id === postId
+        post.postId === postId
           ? { ...post, comments: [...post.comments, newComment] }
           : post
       )
@@ -77,7 +77,7 @@ export default function Body() {
 
   // Handle comment click
   const handleCommentClick = (postId, commentIndex) => {
-    const clickedPost = posts.find((post) => post._id === postId);
+    const clickedPost = posts.find((post) => post.postId === postId);
     const clickedComment = clickedPost?.comments[commentIndex];
     if (clickedComment) {
       alert(`Comment by ${clickedComment.author}: "${clickedComment.comment}"`);
@@ -91,7 +91,7 @@ export default function Body() {
       <div className="feed">
         <div className="post-container">
           {posts.map((post) => (
-            <div key={post._id} className="post-box">
+            <div key={post.postId} className="post-box">
               <div className="post-top">
                 <div className="post-profile">
                   <img
@@ -118,24 +118,24 @@ export default function Body() {
                 <div className="actions-icons">
                   <i
                     className={`bx ${post.likes.likedBy.includes(username) ? ' bxs-heart' : 'bx-heart'}`}
-                    onClick={() => handleLike(post._id)}
+                    onClick={() => handleLike(post.postId)}
                   />
                   <i
                     className="bx bx-comment"
                     onClick={() => {
-                      document.getElementById(`comment-input-${post._id}`).focus();
+                      document.getElementById(`comment-input-${post.postId}`).focus();
                     }}
                   />
                 </div>
                 <h3 className="likes">{post.likes.count || 0} likes</h3>
                 <div className="comment">
                    {/* Show only a few comments if not expanded */}
-                   {post.comments.slice(0, expandedPosts[post._id] ? post.comments.length : 2)
+                   {post.comments.slice(0, expandedPosts[post.postId] ? post.comments.length : 2)
                    .map((comment, index) => (
                     <p key={index}>
                       <button
                         className="comment-user-button"
-                        onClick={() => handleCommentClick(post._id, index)}
+                        onClick={() => handleCommentClick(post.postId, index)}
                       >
                         {comment.author}
                       </button>
@@ -145,12 +145,12 @@ export default function Body() {
                 </div>
                 <div className="input-comment">
                   <input
-                    id={`comment-input-${post._id}`}
+                    id={`comment-input-${post.postId}`}
                     type="text"
                     placeholder="Leave a comment!"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        handleComment(post._id, e.target.value);
+                        handleComment(post.postId, e.target.value);
                         e.target.value = "";
                       }
                     }}
@@ -159,9 +159,9 @@ export default function Body() {
                 {post.comments.length > 2 && (
                   <span
                     className="view-more"
-                    onClick={() => toggleComments(post._id)}
+                    onClick={() => toggleComments(post.postId)}
                   >
-                    {expandedPosts[post._id] ? "Hide comments" : `View all ${post.comments.length} comments`}
+                    {expandedPosts[post.postId] ? "Hide comments" : `View all ${post.comments.length} comments`}
                   </span>
                 )}
                 <span className="post-time">{formatLocalTime(post.timeCreated)}</span>
