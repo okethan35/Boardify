@@ -73,7 +73,7 @@ const uploadBoardingPass = async () => {
 
     const token = localStorage.getItem("token");
     console.log("TOKEN:", token);
-    let profileImg = userData.profile.profileImg;
+    let profileImg = userData.profile.profileImg?.url;
     if(!profileImg)
       profileImg = def_prof_pic;
     // Call makePost using fetch

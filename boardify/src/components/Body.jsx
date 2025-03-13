@@ -105,15 +105,17 @@ export default function Body() {
                   </div>
                 </div>
               </div>
-              <img
-                src={
-                  post.boardingPass 
-                    ? `data:${post.boardingPass.contentType};base64,${arrayBufferToBase64(post.boardingPass.image?.data)}`
-                    : pass1
-                }
-                alt="User Post"
-                className="post-image"
-              />
+              <Link to={`/boardingPass/${post.postId}`}>
+                <img
+                  src={
+                    post.boardingPass 
+                      ? `data:${post.boardingPass.contentType};base64,${arrayBufferToBase64(post.boardingPass.image?.data)}`
+                      : pass1
+                  }
+                  alt="User Post"
+                  className="post-image"
+                />
+              </Link>
               <div className="post-bottom">
                 <div className="actions-icons">
                   <i
