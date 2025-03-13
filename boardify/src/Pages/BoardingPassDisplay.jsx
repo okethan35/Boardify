@@ -26,11 +26,10 @@ const BoardingPassDisplay = () => {
                   'Content-Type': 'application/json'
               }
             });
-    
             const data = await response.json();
-
+            console.log("BOARDINGPASSDATA:", data);
             if (response.ok) {
-              setPost(data.post); // QR Code as base64
+              setPost(data); // QR Code as base64
             }
           } catch (error) {
             console.error("Error fetching post:", error);
@@ -39,6 +38,7 @@ const BoardingPassDisplay = () => {
     
         fetchPost();
     }, [postId]);
+    console.log("POST:",post);
 
     return (
         <>
