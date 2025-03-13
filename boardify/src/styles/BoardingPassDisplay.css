@@ -76,12 +76,15 @@
     }
 
     .bpd-post-profile {
-        top: -15px; /* Adjusted for smaller screens */
-        left: 5px; /* Adjusted for smaller screens */
+        left: 50px;
+        top: 55px; /* Adjusted for smaller screens */
+        left: 15px; /* Adjusted for smaller screens */
         padding: 6px 10px; /* Reduced padding for smaller screens */
     }
 
     .bpd-post-profile img {
+        left: -50px;
+        top: -100px;
         width: 35px; /* Further reduced size for smaller screens */
         height: 35px; /* Further reduced size for smaller screens */
     }
@@ -93,17 +96,34 @@
 
 @media (max-width: 480px) {
     .bpd-post-profile {
+        left: -50px;
         top: -10px; /* Adjusted for very small screens */
         left: 0; /* Align to the very edge */
         padding: 4px 8px; /* Minimal padding for very small screens */
     }
 
     .bpd-post-profile img {
-        width: 30px; /* Smallest size for very small screens */
+        left: -50px;
+        top: -5px;
+        width: 300px; /* Smallest size for very small screens */
         height: 30px; /* Smallest size for very small screens */
     }
 
     .bpd-profile-name {
         font-size: 11px; /* Smallest font size for very small screens */
     }
+}
+
+/* Profile section (image & username) */
+.bpd-post-profile {
+    position: absolute; /* Positioned relative to the boarding pass container */
+    top: 184px; /* Move it above the boarding pass */
+    left: 75px; /* Increased from 10px to 60px to move it 50px to the right */
+    display: flex;
+    align-items: center;
+    background: rgba(20, 20, 20, 0.9); /* Dark background for contrast */
+    padding: 8px 12px; /* Reduced padding for smaller screens */
+    border-radius: 12px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    z-index: 1; /* Ensures it sits above the boarding pass */
 }
