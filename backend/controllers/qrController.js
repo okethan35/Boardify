@@ -3,7 +3,7 @@ const qrcode = require('qrcode'); // Import the QR code library
 
 exports.generateQRCode = async (req, res) => {
   try {
-    const postId = req.headers['authorization']?.split(' ')[1];
+    const postId = req.query.postId;
     console.log("POSTID:", postId);
     if (!postId) {
       return res.status(400).json({ message: 'Username is required' });

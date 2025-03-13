@@ -194,11 +194,10 @@ const uploadBoardingPass = async () => {
           setPostId(`${username}-${year}-${month}-${day}-${timestamp}`);
           console.log("POST ID:", postId);
           
-          const response = await fetch(`${API_URL}/qr/getqrCode`,{
+          const response = await fetch(`${API_URL}/qr/getqrCode?postId=${postId}`,{
             method: 'GET',
             headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${postId}` // Include the JWT token
+                'Content-Type': 'application/json'
             }
           });
           const qrCodeData = await response.json();
