@@ -15,7 +15,7 @@ body {
 }
   
 .profile-box {
-  background-color: #433f3a;
+  background-color: #46433c;
   width: 80%;
   max-width: 790px;
   max-height: 1022px;
@@ -58,4 +58,8 @@ body {
 .spotify-info li {
   margin: 1.1rem 0;
   text-align: center;
+}
+
+.airplane-icon{
+color:aliceblue;
 }

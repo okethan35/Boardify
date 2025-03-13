@@ -3,6 +3,7 @@ import Navbar from "../components/NavBar.jsx";
 import { getUserId } from "../api/auth.jsx";
 import { useParams } from "react-router-dom";
 import "../styles/Profile.css";
+import 'boxicons/css/boxicons.min.css';
 import AuthenticateButton from '../components/AuthenticateButton.jsx';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -125,17 +126,17 @@ const Profile = () => {
               target="_blank" 
               rel="noopener noreferrer"
             >
-              Link 
+              <i class='bx bx-paper-plane'></i>
             </a>{" "}
-            to Spotify profile page
+             My Spotify Profile
           </p>
-          <p><strong>Top Artists:</strong></p>
+          <p><strong> ♫⎯⎯⎯♫⎯⎯⎯♫⎯⎯ Top Artists ⎯⎯♫⎯⎯⎯♫⎯⎯⎯♫ </strong></p>
           <ul>
             {userData.topArtists.map((artist, index) => (
               <li key={index}>{artist}</li>
             ))}
           </ul>
-          <p><strong>Top Tracks:</strong></p>
+          <p><strong> ⎯♫⎯⎯⎯♫⎯⎯ Top Tracks ⎯⎯♫⎯⎯⎯♫⎯</strong></p>
           <ul>
             {userData.topTracks.map((track, index) => (
               <li key={index}>{track.name} by {track.artist}</li>
