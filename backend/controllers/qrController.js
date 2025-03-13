@@ -12,6 +12,7 @@ exports.generateQRCode = async (req, res) => {
     // Construct the URL where the QR code should redirect to
     const url = `${FRONTEND_URL}/qr/${username}`;
     const qrCode = await qrcode.toDataURL(url);
+    console.log("QRCODE:", qrCode);
     res.json({ qrCode });
   } catch (error) {
     console.error(error);

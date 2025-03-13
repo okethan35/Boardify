@@ -13,7 +13,8 @@ export default function QRCode({ postID }) {
             try {
                 const response = await fetch(`${API_URL}/qr/${postID}`);
                 const data = await response.json();
-
+                console.log("QR Code Response:", data);
+                
                 if (response.ok) {
                     setQRCode(data.qrCode); // QR Code as base64
                 } else {

@@ -3,6 +3,7 @@ import Navbar from "../components/NavBar.jsx";
 import { getUserId } from "../api/auth.jsx";
 import { getUserData } from "../api/spotify.jsx";
 import { makePost } from "../api/post.jsx";
+import QRCode from "../components/QRCode.jsx";
 import def_prof_pic from '../assets/default_profile.png';
 import html2canvas from "html2canvas";
 import "../styles/BoardingPass.css";
@@ -17,9 +18,9 @@ const BoardingPass = () => {
   const [barcodeLoaded, setBarcodeLoaded] = useState(false);
   const [showBoardingPass, setShowBoardingPass] = useState(false);
   const [uploadTriggered, setUploadTriggered] = useState(false);
-  const [postId, setPostId] = useState();
   const componentRef = useRef(null);
   const username = localStorage.getItem("username");
+  let postId = "";
 
   // Helper to build the barcode URL.
   const appendLastPartOfUrl = (url) => {
@@ -183,11 +184,13 @@ const uploadBoardingPass = async () => {
           img.onerror = (e) => {
             console.error("Failed to load barcode image (from img onerror):", e);
           };
-          const currentTime = Date.now();
-          setPostId(username + "-" + toString(currentTime).split(' ').join("-"));
+          const currentTime = new Date();
+          const year = currentTime.getFullYear(); 
+          const month = String(currentTime.getMonth() + 1).padStart(2, "0");
+          const day = String(currentTime.getDate()).padStart(2, "0");
+          const timestamp = currentTime.getTime();
+          postId = `${username}-${year}-${month}-${day}-${timestamp}`;
           console.log("POST ID:", postId);
-          const qrCode = convertToDataURL(QRCode(postId));
-
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -310,6 +313,7 @@ const uploadBoardingPass = async () => {
                       </div>
                     </div>
                   </div>
+                  <QRCode postId={postId}/>
                 </div>
               </div>
             </div>
