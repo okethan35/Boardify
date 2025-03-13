@@ -2,16 +2,16 @@ import { useState, useEffect } from "react";
 
 const API_URL = process.env.REACT_APP_API_URL; 
 
-export default function QRCode({ username }) {
+export default function QRCode({ postID }) {
     const [qrCode, setQRCode] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (!username) return;
+        if (!postID) return;
 
         const fetchQRCode = async () => {
             try {
-                const response = await fetch(`${API_URL}/qr/${username}`);
+                const response = await fetch(`${API_URL}/qr/${postID}`);
                 const data = await response.json();
 
                 if (response.ok) {
@@ -25,7 +25,7 @@ export default function QRCode({ username }) {
         };
 
         fetchQRCode();
-    }, [username]);
+    }, [postID]);
 
     return (
         <div>
