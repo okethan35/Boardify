@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
 const queryRoutes = require('./routes/queryRoutes');
 const postRoutes = require('./routes/postRoutes');
+const qrRoutes = require('./routes/qrRoutes');
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 app.use('/query', queryRoutes);
 app.use('/post', postRoutes);
+app.use('/qr', qrRoutes);
 
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB Connected"))
