@@ -19,6 +19,8 @@ const arrayBufferToBase64 = (buffer) => {
 export default function Body() {
   const username = localStorage.getItem("username");
   const [posts, setPosts] = useState([]);
+  const [expandedPosts, setExpandedPosts] = useState({});
+
 
   const formatLocalTime = (timestamp) => {
     return new Date(timestamp).toLocaleString();
@@ -63,6 +65,13 @@ export default function Body() {
           : post
       )
     );
+  };
+  //togling w comment visibility ADDED
+  const toggleComments = (postId) => {
+    setExpandedPosts((prev) => ({
+      ...prev,
+      [postId]: !prev[postId],
+    }));
   };
 
   // Handle comment click
@@ -110,12 +119,16 @@ export default function Body() {
                   />
                   <i
                     className="bx bx-comment"
-                    onClick={() => handleComment(post._id, "Wow! What's your playlist?")}
-                  ></i>
+                    onClick={() => {
+                      document.getElementById(`comment-input-${post._id}`).focus();
+                    }}
+                  />
                 </div>
                 <h3 className="likes">{post.likes.count || 0} likes</h3>
                 <div className="comment">
-                  {post.comments?.map((comment, index) => (
+                   {/* Show only a few comments if not expanded */}
+                   {post.comments.slice(0, expandedPosts[post._id] ? post.comments.length : 2)
+                   .map((comment, index) => (
                     <p key={index}>
                       <button
                         className="comment-user-button"
@@ -129,6 +142,7 @@ export default function Body() {
                 </div>
                 <div className="input-comment">
                   <input
+                    id={`comment-input-${post._id}`}
                     type="text"
                     placeholder="Leave a comment!"
                     onKeyDown={(e) => {
@@ -139,9 +153,14 @@ export default function Body() {
                     }}
                   />
                 </div>
-                <span className="view-more">
-                  View all {post.comments?.length || 0} comments
-                </span>
+                {post.comments.length > 2 && (
+                  <span
+                    className="view-more"
+                    onClick={() => toggleComments(post._id)}
+                  >
+                    {expandedPosts[post._id] ? "Hide comments" : `View all ${post.comments.length} comments`}
+                  </span>
+                )}
                 <span className="post-time">{formatLocalTime(post.timeCreated)}</span>
               </div>
             </div>
