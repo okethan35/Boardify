@@ -15,14 +15,15 @@ body {
 }
   
 .profile-box {
-  background-color: #2e2d30;
+  background-color: #433f3a;
   width: 80%;
-  max-width: 600px;
+  max-width: 790px;
+  max-height: 1022px;
   padding: 57px;
-  border-radius: 8px;
+  border-radius: 98px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
   
 .profile-picture {
@@ -55,6 +56,6 @@ body {
 }
   
 .spotify-info li {
-  margin: 0.5rem 0;
+  margin: 1.1rem 0;
   text-align: center;
 }
