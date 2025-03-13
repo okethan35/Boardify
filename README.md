@@ -36,7 +36,7 @@ JWT_SECRET=<Paste the JWT secret>
 ```
 - Finally, run the following code to start the website on the link http://localhost:3000 on your local Chrome browser.
 ```
-cd backend
+cd boardify
 npm start
 ```
 
