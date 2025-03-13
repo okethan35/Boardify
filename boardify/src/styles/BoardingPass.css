@@ -197,3 +197,48 @@
     width: 120px;
     height: 120px;
 }
+
+
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    min-height: 90vh;
+  }
+    
+  .profile-box {
+    background-color: #2e2d30;
+    width: 80%;
+    max-width: 600px;
+    padding: 57px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    margin-top: 2rem;
+  }
+    
+  .profile-picture {
+    width: 194px;
+    height: 191px;
+    border-radius: 52%;
+    object-fit: cover;
+    border: 2px solid #f2e5c1ff;
+    margin-bottom: 1rem;
+    margin-left: 0 auto 1rem;
+  }
+    
+  .profile-info h2 {
+    margin: 0.5rem 0;
+    font-size: 1.8rem;
+    color: #f2e5c1ff;
+  }
+    
+  .profile-info p {
+    line-height: 1.6;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    color: #f2e5c1ff;
+  }
+  
