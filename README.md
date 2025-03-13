@@ -4,13 +4,6 @@ It combines user’s Spotify listening patterns with a fun, travel-themed person
 **Note:** This is a project created for UCLA's COM SCI 35L class taught by Professor Eggert in the Winter 2025 quarter.
 
 
-# Table of Contents
-- [Features](https://github.com/okethan35/Boardify/#Features)
-- [Technologies](https://github.com/okethan35/Boardify/#Technologies)
-- [Setup](https://github.com/okethan35/Boardify/#Setup)
-- [Authors](https://github.com/okethan35/Boardify/#Authors)
-
-
 ## Features
 - **Connect to Spotify:** The website is integrated with the Spotify API, allowing for seamless integration.
 - **Boarding Passes:** Once connected to Spotify, users can generate personalized passes based on their account.
