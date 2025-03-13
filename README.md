@@ -9,7 +9,7 @@ It combines user’s Spotify listening patterns with a fun, travel-themed person
 - **Boarding Passes:** Once connected to Spotify, users can generate personalized passes based on their account.
 - **Search Bar:** Users can search for their friend's profiles to learn more about them and their music tastes.
 - **Interactive Feed Page:** Allows users to like and comment on others' boarding passes, and supports dynamic updates.
-- **QR Codes & Barcodes:** Each pass contains a scannable QR code and Spotify barcode to allow for ease of sharing passes.
+- **QR Codes & Barcodes:** Each pass has a scannable QR code and Spotify barcode, allowing for ease of sharing passes and profiles.
 
 
 ## Technologies

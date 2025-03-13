@@ -13,7 +13,7 @@
     position: relative;
     width: 799px;
     height: 289px;
-    background: #e2dfdf;
+    background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(210, 10, 110, 0.2);
     overflow: hidden;
@@ -123,6 +123,7 @@
     flex-wrap: nowrap;
     padding-bottom: 5px;
     width: 90%;
+    font-size: 15px;
     justify-content: flex-end;
 }
 
@@ -137,7 +138,7 @@
     top: 30px;
     width: 25%;
     height: 102px;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     padding: 10px;
 }
 
@@ -178,3 +179,21 @@
     background-color: #427371; 
 }
 
+.details-and-qr-container{
+    display: flex;
+    justify-content:space-between;
+    align-items: flex-start;
+}
+
+  
+.qrCode {
+    position: absolute;
+    right: 48px;
+    top: 148px;
+    text-align: center;
+}
+
+.qrCode img {
+    width: 120px;
+    height: 120px;
+}
