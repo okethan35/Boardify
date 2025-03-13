@@ -262,7 +262,7 @@ const renderContent = () => {
         </div>
       </>
     );
-  } else if (isLoggedIn || !userData?.profile?.displayName) {
+  } else if (isLoggedIn && !userData?.profile?.displayName) {
     return (
       // Viewing profile for users not logged into the website
       <>
