@@ -1,22 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.970a64a4.css",
-    "main.js": "/static/js/main.cae1e3eb.js",
+    "main.css": "/static/css/main.025d025c.css",
+    "main.js": "/static/js/main.4169e9fd.js",
     "static/js/488.e45baaed.chunk.js": "/static/js/488.e45baaed.chunk.js",
-    "static/media/boarding_pass_2.jpg": "/static/media/boarding_pass_2.1fabad5ffa82b308c033.jpg",
+    "static/media/boxicons.svg": "/static/media/boxicons.9e2b21b135bc7d4c803f.svg",
+    "static/media/boxicons.eot": "/static/media/boxicons.65a8ce52fc5427e8f94d.eot",
+    "static/media/boxicons.woff": "/static/media/boxicons.d12afc36557395143e4b.woff",
+    "static/media/boxicons.ttf": "/static/media/boxicons.db9ddb1898dbd76badca.ttf",
+    "static/media/boxicons.woff2": "/static/media/boxicons.df635aaf04cd75132f62.woff2",
     "static/media/boarding_pass_1.jpg": "/static/media/boarding_pass_1.a3a2b1a264134cbfee7c.jpg",
     "static/media/Spotify_Full_Logo_Black.png": "/static/media/Spotify_Full_Logo_Black.d6e74125b961b7484c8c.png",
     "static/media/logo.png": "/static/media/logo.6d361e8b533d45e933d0.png",
     "static/media/GothamPro-Black.woff": "/static/media/GothamPro-Black.84f14561ba6eb9228833.woff",
-    "static/media/heart-regular.svg": "/static/media/heart-regular.7dce289406e8e4ac122939b1feda3208.svg",
-    "static/media/comment-regular.svg": "/static/media/comment-regular.1f2e09604fc6c1f83dd5e548baf1a231.svg",
     "index.html": "/index.html",
-    "main.970a64a4.css.map": "/static/css/main.970a64a4.css.map",
-    "main.cae1e3eb.js.map": "/static/js/main.cae1e3eb.js.map",
+    "main.025d025c.css.map": "/static/css/main.025d025c.css.map",
+    "main.4169e9fd.js.map": "/static/js/main.4169e9fd.js.map",
     "488.e45baaed.chunk.js.map": "/static/js/488.e45baaed.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.970a64a4.css",
-    "static/js/main.cae1e3eb.js"
+    "static/css/main.025d025c.css",
+    "static/js/main.4169e9fd.js"
   ]
 }
