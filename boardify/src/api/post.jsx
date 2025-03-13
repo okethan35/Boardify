@@ -9,6 +9,9 @@ const makePost = async (postId, token, username, profileImg, file) => {
         formData.append("username", username);
         formData.append("profileImg", profileImg);
         formData.append("boardingPass", file);
+        formData.append("profileImg[url]", profileImg.url);
+        formData.append("profileImg[height]", profileImg.height);
+        formData.append("profileImg[width]", profileImg.width);
         const response = await fetch(`${API_URL}/post/makePost`, {
             method: "POST",
             headers: {},

@@ -73,9 +73,12 @@ const uploadBoardingPass = async () => {
 
     const token = localStorage.getItem("token");
     console.log("TOKEN:", token);
-    let profileImg = userData.profile.profileImg?.url;
-    if(!profileImg)
-      profileImg = def_prof_pic;
+    let profileImg = userData.profile.profileImg || {url: def_prof_pic};
+    profileImg = {
+      url: profileImg.url || def_prof_pic,
+      height: profileImg.height || 0, // Default height
+      width: profileImg.width || 0, // Default width
+    };
     // Call makePost using fetch
     await setTimeout(2000);
     await makePost(postId, token, username, profileImg, file);
