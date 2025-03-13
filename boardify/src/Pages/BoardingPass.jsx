@@ -319,9 +319,9 @@ const uploadBoardingPass = async () => {
 
                   <div className="top-tracks-container">
                     <div>
-                      <strong>Top Tracks:</strong>
+                      <strong>Top Track:</strong>
                       <div>
-                        {userData.topTracks.map((track, index) => (
+                        {userData.topTracks.slice(0, 1).map((track, index) => (
                           <li key={index}>
                             {track.name} by {track.artist}
                           </li>
@@ -332,7 +332,7 @@ const uploadBoardingPass = async () => {
                   <div className="qrCode">
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     {qrCode ? (
-                        <img src={qrCode} alt="QR Code" style={{ width: "200px", height: "200px" }} />
+                        <img src={qrCode} alt="QR Code" style={{ width: "110px", height: "110px" }} />
                     ) : (
                         !error && <p>Loading QR Code...</p>
                     )}
