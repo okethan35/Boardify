@@ -13,6 +13,7 @@ It combines user’s Spotify listening patterns with a fun, travel-themed person
 - **Search Bar:** Users can search for their friend's profiles to learn more about them and their music tastes.
 - **Interactive Feed Page:** Allows users to like and comment on others' boarding passes, and supports dynamic updates.
 - **QR Codes & Barcodes:** Each pass has a scannable QR code and Spotify barcode, allowing for ease of sharing passes and profiles.
+- **Deployed:** We deployed our website to a public domain at the following link: https://boardify-1hwa.onrender.com/
 
 
 ## Technologies
@@ -25,8 +26,13 @@ It combines user’s Spotify listening patterns with a fun, travel-themed person
 
 ## Setup Instructions
 - First, clone a copy of this repository to your local machine
-- Then, run the following code to install dependencies for the backend in order for it to work
+- Make sure that your node version is at least v23.7.0, you can chck this by running the following code
 ```
+node --version
+```
+- Then, in the Boardify directory, run the following code to install the node modules for the website to properly work
+```
+npm i
 cd backend
 npm i
 cd ..
