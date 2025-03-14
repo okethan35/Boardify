@@ -29,6 +29,9 @@ It combines user’s Spotify listening patterns with a fun, travel-themed person
 ```
 cd backend
 npm i
+cd ..
+cd boardify
+npm i
 ```
 - Next, create a .env file in the root of the directory with the following contents, using the secrets if given to you by the developers
 ```
