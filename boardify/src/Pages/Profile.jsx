@@ -141,7 +141,9 @@ const Profile = () => {
               <li key={index}>{track.name} by {track.artist}</li>
             ))}
           </ul>
+          <AuthenticateButton />
         </div>
+        
       </>
     );
   };

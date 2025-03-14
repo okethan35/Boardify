@@ -77,10 +77,11 @@ export default function NavBar() {
         {localStorage.getItem("token") ? (
           <li className="nav-items">
             <Link 
+              reloadDocument
               to="/" 
               onClick={() => { 
                 localStorage.removeItem("token");
-                localStorage.removeItem("username"); 
+                localStorage.removeItem("username");
               }} 
               className="nav-link"
             >
@@ -88,7 +89,7 @@ export default function NavBar() {
             </Link>
           </li>
         ) : (
-          <li className="nav-items"><Link to="/">LOG IN</Link></li>
+          <li className="nav-items"><Link to="/login">LOG IN</Link></li>
   )}
 
       </ul>
