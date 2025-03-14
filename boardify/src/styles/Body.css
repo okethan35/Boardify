@@ -29,6 +29,7 @@ body {
 
 a {
   text-decoration: none;
+  color: lightblue;
 }
 
 li {
@@ -47,15 +48,13 @@ header {
   left: 0;
   z-index: 100;
   width: 100%;
-  /*background: var(--white);*/
-  /*border-bottom: 1px solid hsla(0, 0%, 0%, 0.1);*/
 }
 
 .container {
   max-width: 860px;
   margin: auto;
   width: 100%;
-  text-align: center; /* Ensure container content is centered */
+  text-align: center; 
 }
 
 .nav {
@@ -228,12 +227,11 @@ section {
   padding-top: 10px;
 }
 
-/* Filled heart icon (liked state) */
 .bxs-heart {
   font-size: 2.1rem;
-  color: red; /* Change to your desired liked color */
+  color: red; 
   cursor: pointer;
-  transition: color 0.3s ease; /* Smooth transition */
+  transition: color 0.3s ease; 
 }
 
 /* Optional: Add a hover effect */
