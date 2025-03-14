@@ -41,9 +41,8 @@ SPOTIFY_REDIRECT_URI=https://boardify-6f5u.onrender.com/api/callback
 REACT_APP_API_URL=https://boardify-6f5u.onrender.com
 JWT_SECRET=<Paste the JWT secret>
 ```
-- Finally, run the following code to start the website on the link http://localhost:3000 on your local Chrome browser.
+- Finally, run the following code in the boardify directory to start the website on your local Chrome browser.
 ```
-cd boardify
 npm start
 ```
 
