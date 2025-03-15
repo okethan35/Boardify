@@ -28,8 +28,8 @@ function base64URLEncode(buffer) {
 async function authenticateUser(req, res) {
     // Clear any previous authentication
     userAccessToken = null;
-    const frontendRedirectUrl = "http://localhost:3000";
     const token = req.headers['authorization']?.split(' ')[1]
+    const frontendRedirectUrl = req.headers.origin;
     const codeVerifier = generateRandomString(64);
     const state = JSON.stringify({ token, codeVerifier, frontendRedirectUrl });
     const codeChallenge = base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest());
