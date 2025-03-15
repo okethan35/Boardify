@@ -1,4 +1,4 @@
-![Boardify Logo](./boardify/src/assets/logo.png)
+![Boardify Logo](./frontend/src/assets/logo.png)
 
 
 # Boardify
