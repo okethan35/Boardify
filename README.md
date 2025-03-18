@@ -63,7 +63,7 @@ We have to add emails manually to the Spotify developer page for users to conect
 
 ## Authors
 - Ethan Tran - Did most of the backend, including the database setup and all requests to the database for user auth and information retrieval. Set up most of the front end calls to the backend. Helped create and debug the backend calls to spotify api. Set up the browser routing.
-- Dhruv Patel
+- Dhruv Patel - Full User Authentication, Full Search Bar Functionality, Full QR Code Implementation for Boarding Pass, Logic for Profile Page and Home Page display.
 - Aditya Patil - Full Frontend for Profile page, Spotify API connection backend frontend connection, Entire ReadMe, Backend connection for boarding pass data collection.
 - Pauline Vu - Frontend for Boarding Pass page, made the boarding pass and save ticket buttons, Styled the boarding pass to display data, helped fetch Spotify data to frontend, set up like and comment functions, Created a posting function.
 - Darel Morado
