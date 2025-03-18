@@ -64,6 +64,6 @@ We have to add emails manually to the Spotify developer page for users to conect
 ## Authors
 - Ethan Tran
 - Dhruv Patel
-- Aditya Patil
+- Aditya Patil - Full Frontend for Profile page, Spotify API connection backend frontend connection, Entire ReadMe, Backend connection for boarding pass data collection.
 - Pauline Vu
 - Darel Morado
